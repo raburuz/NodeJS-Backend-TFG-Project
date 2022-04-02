@@ -6,6 +6,7 @@ const { Schema } = mongoose;
 const User = new Schema<UserData>({
   username: {
     type: String,
+    unique: true,
     required: [true, 'Username is required'],
   },
   email: {

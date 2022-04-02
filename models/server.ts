@@ -1,5 +1,6 @@
 import express, { Application } from 'express';
 import cors from 'cors';
+import bodyParser from 'body-parser';
 import { databaseConnection } from '../database/config';
 
 export class Server {
@@ -35,6 +36,9 @@ export class Server {
 
     //Public
     this._app.use(express.static('public'));
+
+    //Parse to string body content
+    this._app.use(bodyParser.text());
   }
 
   async connectDB() {

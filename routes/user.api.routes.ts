@@ -3,15 +3,23 @@ import { Router, Request, Response } from 'express';
 const router = Router();
 
 import {
-  getUser,
-  postUser,
+  loginUserWithoutGoogle,
+  registerUserWithoutGoogle,
   putUser,
   deleteUser,
 } from '../controllers/user.api.controller';
+import {
+  registerUserWithoutGoogleValidators,
+  loginUserWithoutGoogleValidators,
+} from '../middlewares';
 
-router.get('/', getUser);
+router.get('/login', loginUserWithoutGoogleValidators, loginUserWithoutGoogle);
 router.put('/:id', putUser);
-router.post('/', postUser);
+router.post(
+  '/register',
+  registerUserWithoutGoogleValidators,
+  registerUserWithoutGoogle
+);
 router.delete('/', deleteUser);
 
 router.get('*', function (req: Request, res: Response) {

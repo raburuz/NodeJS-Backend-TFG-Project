@@ -10,12 +10,10 @@ export const hashPasswordWithBcrypt = (password: string): string => {
   return hash;
 };
 
-export const checkIfPasswordIsCorrect = async (
-  userId: string,
+export const checkIfPasswordIsCorrectWithHash = async (
+  hashPassword: string,
   plainTextPassword: string
 ): Promise<boolean> => {
-  const user = await UserModel.findById<UserData>(userId);
-  const password = user?.password ?? '';
-  const isCorrectPassword = bcrypt.compareSync(plainTextPassword, password);
+  const isCorrectPassword = bcrypt.compareSync(plainTextPassword, hashPassword);
   return isCorrectPassword;
 };
