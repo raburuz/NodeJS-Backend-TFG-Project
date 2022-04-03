@@ -16,3 +16,4 @@ Dependencies
 2. React Redux
 3. React Thunk
 4. React MUI
+5. React Hook Form
