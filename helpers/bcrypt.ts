@@ -1,6 +1,4 @@
 import bcrypt from 'bcryptjs';
-import { UserData } from '../interfaces';
-import { UserModel } from '../models';
 
 const saltRounds: number = 10;
 

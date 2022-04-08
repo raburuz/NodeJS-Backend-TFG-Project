@@ -8,7 +8,7 @@ import {
 
 const roles: string[] = Object.values(Role);
 
-export const registerUserWithoutGoogleValidators = [
+export const registerUserValidators = [
   check('username', 'Username is required')
     .trim()
     .not()
@@ -45,7 +45,6 @@ export const registerUserWithoutGoogleValidators = [
     .isEmpty()
     .isIn(roles)
     .withMessage('Role is invalid'),
-  check('isGoogle', 'Google field is required').not().isEmpty().isBoolean(),
   check('isValidate', 'Validate field is required').not().isEmpty().isBoolean(),
   check('acceptPolicy', 'Accept Policy is required').not().isEmpty().isDate(),
   validateRequest,

@@ -6,7 +6,7 @@ import {
   emailIsRegisteredInDatabase,
 } from './custom/userCustomValidators';
 
-export const loginUserWithoutGoogleValidators = [
+export const loginUserValidators = [
   check('username', 'Username is required')
     .trim()
     .optional()

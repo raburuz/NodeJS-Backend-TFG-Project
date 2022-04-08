@@ -71,3 +71,33 @@ export const isCorrectPassword: CustomValidator = async (
   }
   return true;
 };
+
+export const userExistsInDatabase: CustomValidator = async (
+  mongoId,
+  { req }
+): Promise<boolean> => {
+  const user: UserData | null = await UserModel.findById<UserData>(mongoId);
+
+  if (!user) {
+    throw new Error('Something was wrong');
+  }
+
+  req.user = user;
+  return true;
+};
+
+export const isOwnEmailAddress: CustomValidator = async (
+  email,
+  { req }
+): Promise<boolean> => {
+  const { email: currentEmail } = req.user;
+  const isOwnEmail = email === currentEmail;
+  const isEmailRegisterInDatabase =
+    (await UserModel.findOne({ email })) ?? false;
+
+  if (!isOwnEmail && isEmailRegisterInDatabase) {
+    throw new Error('Email address is already registered');
+  }
+
+  return true;
+};

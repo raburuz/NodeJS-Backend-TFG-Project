@@ -4,9 +4,16 @@ export interface UserData {
   email: string;
   password: string;
   role: Role;
-  isGoogle: boolean;
   isValidate: boolean;
   acceptPolicy: Date;
+  img?: string;
+}
+
+export interface UpdateUser {
+  role: Role.NORMAL_USER_ROLE | Role.PREMIUM_USER_ROLE;
+  email?: string;
+  password?: string;
+  newPassword?: string;
   img?: string;
 }
 

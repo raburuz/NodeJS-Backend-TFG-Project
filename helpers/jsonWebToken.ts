@@ -5,7 +5,7 @@ const options: SignOptions = {
   expiresIn: '1d',
 };
 
-export const signJWT = (id: string) => {
+export const signJWT = (id: string): Promise<string> => {
   return new Promise((resolve, reject) => {
     const payload: {} = {
       id,
@@ -13,11 +13,21 @@ export const signJWT = (id: string) => {
 
     jwt.sign(payload, privateKey as string, options, (error, token) => {
       if (error) {
-        console.log(error);
-        reject('Something was wrong, the system cant create JWT');
+        reject('Something was wrong, the system cannot create token');
       } else {
-        console.log(token);
-        resolve(token);
+        resolve(token as string);
+      }
+    });
+  });
+};
+
+export const verifyJWT = (token: string): Promise<string> => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, privateKey as string, function (error, decoded) {
+      if (error) {
+        reject('Something was wrong');
+      } else {
+        resolve(decoded as string);
       }
     });
   });

@@ -24,11 +24,6 @@ const User = new Schema<UserData>({
     default: Role.NORMAL_USER_ROLE,
     required: [true, 'Role is required'],
   },
-  isGoogle: {
-    type: Boolean,
-    default: false,
-    required: [true, 'Google Attribute is required'],
-  },
   isValidate: {
     type: Boolean,
     default: false,
