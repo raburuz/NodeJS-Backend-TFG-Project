@@ -2,73 +2,48 @@ export interface Website {
   id?: string;
   templateId: string;
   page: Page;
-  components: {
-    texts?: Text[];
-    buttons?: Button[];
-    images?: Image[];
-    lists?: List[];
-  };
+  components: Component[];
 }
 
 export interface Page {
   backgroundColor: string;
-  margin: PaddingAndMargin;
-  padding: PaddingAndMargin;
   width: number;
 }
-export interface Text {
-  type: ContentType.TEXT;
+
+export interface Component {
+  id: string;
+  type: ContentType;
   order: number;
-  label: string;
-  size: number;
-  color: string;
-  width: number;
-  lineSpacing: number;
-  letterSpacing: number;
-  alignment: TextAlign;
-  appearance: Appearance;
-  margin: PaddingAndMargin;
-  weight: Weight;
+  label: string | string[];
+
+  //optional propertys
+  size?: number;
+  color?: string;
+  width?: number;
+  height?: number;
+  lineSpacing?: number;
+  letterSpacing?: number;
+  alignment?: TextAlign;
+  appearance?: Appearance;
+  margin?: PaddingAndMargin;
+  padding?: PaddingAndMargin;
+  weight?: Weight;
+  backgroundColor?: string;
+  border?: number;
+  style?: BorderStyle | ListStyle;
+  image?: Image;
+  button?: Button;
 }
 
 export interface Button {
-  type: ContentType.BUTTON;
-  order: number;
-  label: string;
-  backgroundColor: string;
-  color: string;
-  width: number;
-  height: number;
-  borderRadius: number;
-  border: number;
-  style: BorderStyle;
-  appearance: string;
+  url?: string;
+  borderRadius?: number;
 }
+
 export interface Image {
-  type: ContentType.IMAGE;
-  order: string;
-  width: number;
   shape: ShapeImage;
-  borderRadius: number;
-  alignment: string;
-  padding: PaddingAndMargin;
-  margin: PaddingAndMargin;
   alt: string;
   url?: string;
-}
-export interface List {
-  type: ContentType.LIST;
-  order: number;
-  style: ListStyle;
-  margin: PaddingAndMargin;
-  width: number;
-  color: string;
-  size: number;
-  weight: string;
-  appearance: string;
-  lineSpacing: number;
-  letterSpacing: number;
-  text: string[];
 }
 
 export interface PaddingAndMargin {
@@ -85,7 +60,7 @@ export enum Weight {
   BOLD = 'bold',
 }
 export enum Appearance {
-  NORMAL = '',
+  NORMAL = 'initial',
   CAPITALIZE = 'capitalize',
   UPPERCASE = 'uppercase',
   LOWERCASE = 'lowercase',

@@ -4,20 +4,10 @@ import { Website } from '../interfaces';
 import { WebsiteModel } from '../models';
 export const createWebsite = async (req: Request, res: Response) => {
   const data: Website = req.body;
-  const sanitazeData: Website = {
-    templateId: data.templateId,
-    page: data.page,
-    components: {
-      texts: data.components.texts,
-      buttons: data.components.buttons,
-      images: data.components.images,
-      lists: data.components.lists,
-    },
-  };
 
   const id = 'Test';
   const token = await signJWT(id);
-  const website = new WebsiteModel(sanitazeData);
+  const website = new WebsiteModel(data);
 
   try {
     website.save();
