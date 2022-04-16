@@ -4,7 +4,7 @@ import { UpdateUser, UserData } from '../interfaces';
 import { UserModel } from '../models';
 
 /**
- * Login User without Google
+ * Login User
  * @param req
  * @param res
  *
@@ -35,7 +35,7 @@ export const loginUser = async (req: Request, res: Response) => {
 };
 
 /**
- * Register User without Google
+ * Register User
  * @param req
  * @param res
  * @returns
@@ -92,7 +92,7 @@ export const updateUser = async (req: Request, res: Response) => {
     );
     const token = await signJWT(id);
 
-    return res.status(201).json({
+    return res.status(200).json({
       ok: true,
       msg: ' Successfully registered ',
       user: {

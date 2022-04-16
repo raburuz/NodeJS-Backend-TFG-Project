@@ -8,6 +8,7 @@ export class Server {
   private _port: string;
   private apiRoutes: {
     userPath: string;
+    websitePath: string;
   };
 
   constructor() {
@@ -16,6 +17,7 @@ export class Server {
     //Paths from rutes
     this.apiRoutes = {
       userPath: '/api/auth/user',
+      websitePath: '/api/auth/website',
     };
 
     //Database Connection
@@ -49,6 +51,10 @@ export class Server {
     this._app.use(
       this.apiRoutes.userPath,
       require('../routes/user.api.routes')
+    );
+    this._app.use(
+      this.apiRoutes.websitePath,
+      require('../routes/website.api.routes')
     );
   }
 
