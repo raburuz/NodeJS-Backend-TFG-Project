@@ -13,11 +13,11 @@ export class Server {
 
   constructor() {
     this._app = express();
-    this._port = process.env.PORT || '8000';
+    this._port = process.env.PORT ?? '8000';
     //Paths from rutes
     this.apiRoutes = {
       userPath: '/api/auth/user',
-      websitePath: '/api/auth/website',
+      websitePath: '/api/website',
     };
 
     //Database Connection

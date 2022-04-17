@@ -17,6 +17,12 @@ export interface UpdateUser {
   img?: string;
 }
 
+export interface Jwt {
+  id: string;
+  iat: string;
+  exp: string;
+}
+
 export enum Role {
   ADMIN_ROLE = 'ADMIN_ROLE',
   PREMIUM_USER_ROLE = 'PREMIUM_USER_ROLE',

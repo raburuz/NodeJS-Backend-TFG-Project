@@ -1,5 +1,6 @@
 export interface Website {
   id?: string;
+  uid?: string;
   templateId: string;
   page: Page;
   components: Component[];

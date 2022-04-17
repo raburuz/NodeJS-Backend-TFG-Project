@@ -1,4 +1,5 @@
 import jwt, { SignOptions } from 'jsonwebtoken';
+import { Jwt } from '../interfaces';
 
 const privateKey: string = process.env.PRIVATE_KEY_JWT || '';
 const options: SignOptions = {
@@ -21,13 +22,13 @@ export const signJWT = (id: string): Promise<string> => {
   });
 };
 
-export const verifyJWT = (token: string): Promise<string> => {
+export const verifyJWT = (token: string): Promise<jwt.JwtPayload> => {
   return new Promise((resolve, reject) => {
     jwt.verify(token, privateKey as string, function (error, decoded) {
       if (error) {
         reject('Something was wrong');
       } else {
-        resolve(decoded as string);
+        resolve(decoded as jwt.JwtPayload);
       }
     });
   });

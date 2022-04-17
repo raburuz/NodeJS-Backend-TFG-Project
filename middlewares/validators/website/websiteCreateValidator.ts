@@ -1,5 +1,6 @@
 import { check } from 'express-validator';
 import { validateRequest } from '../../validateRequest';
+import { isJWTvalidate } from '../custom/jwtCustomValidator';
 
 import {
   Appearance,
@@ -17,7 +18,7 @@ const styles: string[] = Object.values({ ...BorderStyle, ...ListStyle });
 const shapes: string[] = Object.values(ShapeImage);
 
 const pageValidators = [
-  check('page.backgroundColor', 'Page *background Color* is required')
+  check('page.backgroundColor', 'Page *background color* is required')
     .trim()
     .notEmpty()
     .isLength({ min: 7, max: 7 }),
@@ -126,13 +127,13 @@ const componentValidator = [
     .optional()
     .isIn(weights),
   check(
-    'components.backgroundColor',
-    'Components *background Color* property is required'
+    'components.*.backgroundColor',
+    'Components *background color* property is required'
   )
     .trim()
-    .notEmpty()
+    .optional()
     .isLength({ min: 7, max: 7 }),
-  check('components.border', 'Component *border* property is required')
+  check('components.*.border', 'Component *border* property is required')
     .trim()
     .optional()
     .isLength({ min: 1, max: 5 }),
@@ -148,10 +149,7 @@ const componentValidator = [
     .trim()
     .optional()
     .isURL(),
-  check(
-    'components.*.image.shape',
-    'Components Image *alt* property is required'
-  )
+  check('components.*.image.alt', 'Components Image *al* property is required')
     .trim()
     .optional(),
   check(
@@ -175,6 +173,11 @@ const componentValidator = [
 
 export const websiteCreateValidator = [
   check('templateId', 'Template is required').trim().not().isEmpty(),
+  check('x_token', 'Something was wrong')
+    .trim()
+    .not()
+    .isEmpty()
+    .custom(isJWTvalidate),
   ...pageValidators,
   ...componentValidator,
   validateRequest,

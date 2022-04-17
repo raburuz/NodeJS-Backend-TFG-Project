@@ -11,9 +11,11 @@ import {
 } from '../interfaces';
 
 const { Schema } = mongoose;
+const { ObjectId } = Schema.Types;
 
 const Website = new Schema<Website>({
   templateId: { type: String, required: true },
+  uid: { type: ObjectId, required: true },
   page: {
     backgroundColor: { type: String, default: '#ffffff', required: true },
     width: { type: Number, min: 0, max: 100, default: 0, required: true },
@@ -54,8 +56,7 @@ const Website = new Schema<Website>({
       border: { type: Number, min: 1, max: 5, default: 1, required: true },
       style: {
         type: String,
-        enum: BorderStyle,
-        default: BorderStyle.SOLID,
+        enum: { ...BorderStyle, ...ListStyle },
       },
 
       button: {
@@ -70,7 +71,7 @@ const Website = new Schema<Website>({
 
       image: {
         shape: {
-          type: Number,
+          type: String,
           enum: ShapeImage,
           default: ShapeImage.RECTANGLE,
           required: true,
