@@ -10,6 +10,8 @@ import {
   ShapeImage,
   Weight,
 } from '../../../interfaces';
+import { userExistsInDatabase } from '../users/custom/userCustomValidators';
+import { subdomainNameIsRegistered } from './custom/customWebsiteValidators.ts';
 
 const Appearances: string[] = Object.values(Appearance);
 const alignments: string[] = Object.values(TextAlign);
@@ -173,6 +175,17 @@ const componentValidator = [
 
 export const websiteCreateValidator = [
   check('templateId', 'Template is required').trim().not().isEmpty(),
+  check('subdomain', 'Website name is required')
+    .trim()
+    .not()
+    .isEmpty()
+    .custom(subdomainNameIsRegistered),
+  check('uid', 'User Id is required')
+    .trim()
+    .isMongoId()
+    .not()
+    .isEmpty()
+    .custom(userExistsInDatabase),
   check('x_token', 'Something was wrong')
     .trim()
     .not()

@@ -27,6 +27,7 @@ export const loginUser = async (req: Request, res: Response) => {
       token,
     });
   } catch (error) {
+    console.log(error);
     return res.status(500).json({
       ok: false,
       msg: 'Sorry something was wrong, please contact with Admin',

@@ -2,10 +2,12 @@ import express, { Application } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import { databaseConnection } from '../database/config';
+import { corsConfig } from '../helpers';
 
 export class Server {
   private _app: Application;
   private _port: string;
+
   private apiRoutes: {
     userPath: string;
     websitePath: string;
@@ -13,6 +15,7 @@ export class Server {
 
   constructor() {
     this._app = express();
+
     this._port = process.env.PORT ?? '8000';
     //Paths from rutes
     this.apiRoutes = {
@@ -31,7 +34,8 @@ export class Server {
   }
 
   middlewares() {
-    this._app.use(cors());
+    //cors
+    this._app.use(cors(corsConfig));
 
     //read json.body
     this._app.use(express.json());

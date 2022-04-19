@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import { Server } from './models';
 
-dotenv.config();
+dotenv.config({ debug: true });
 
 const server = new Server();
 

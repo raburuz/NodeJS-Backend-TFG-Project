@@ -1,10 +1,11 @@
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      PRIVATE_KEY_JWT: Secret;
       NODE_ENV: 'development' | 'production';
       PORT: number | string;
+      DOMAIN: string;
       MONGO_CONNECTION: string;
+      JWT_PRIVATE_KEY: Secret;
     }
   }
 }

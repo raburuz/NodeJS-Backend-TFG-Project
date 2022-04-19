@@ -15,6 +15,7 @@ const { ObjectId } = Schema.Types;
 
 const Website = new Schema<Website>({
   templateId: { type: String, required: true },
+  subdomain: { type: String, required: true, unique: true, lowercase: true },
   uid: { type: ObjectId, required: true },
   page: {
     backgroundColor: { type: String, default: '#ffffff', required: true },
