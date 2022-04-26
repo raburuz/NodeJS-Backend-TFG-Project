@@ -1,13 +1,15 @@
 import { Button } from '@mui/material';
 import './App.css';
+import { AppRouter } from './routes/AppRouter';
 
 function App() {
   return (
-    <>
-      <h1>Hello </h1>
-      <Button variant="contained">Contained</Button>
-    </>
-  );
+   
+   
+     <AppRouter/>
+   
+   
+   );
 }
 
 export default App;
