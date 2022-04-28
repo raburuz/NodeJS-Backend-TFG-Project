@@ -1,3 +1,5 @@
+import { UserData, Website } from './interfaces';
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
@@ -8,11 +10,11 @@ declare global {
       JWT_PRIVATE_KEY: Secret;
     }
   }
-}
-
-declare namespace Express {
-  export interface Request {
-    user?: UserData;
-    currentUserId?: string;
+  declare namespace Express {
+    interface Request {
+      currentUserId?: string;
+      user?: UserData;
+      website?: Website;
+    }
   }
 }

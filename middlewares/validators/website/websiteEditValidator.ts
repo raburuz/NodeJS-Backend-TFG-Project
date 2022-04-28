@@ -1,6 +1,7 @@
 import { check } from 'express-validator';
 import { validateRequest } from '../../validateRequest';
 import { isJWTvalidate } from '../custom/jwtCustomValidator';
+import { isOwnerWebsite } from './custom/customWebsiteValidators.ts';
 
 import {
   Appearance,
@@ -10,8 +11,10 @@ import {
   ShapeImage,
   Weight,
 } from '../../../interfaces';
-import { userExistsInDatabase } from '../users/custom/userCustomValidators';
-import { subdomainNameIsRegistered } from './custom/customWebsiteValidators.ts';
+import {
+  isOwnerSubdomain,
+  websiteIdExistInDatabase,
+} from './custom/customWebsiteValidators.ts';
 
 const Appearances: string[] = Object.values(Appearance);
 const alignments: string[] = Object.values(TextAlign);
@@ -173,24 +176,29 @@ const componentValidator = [
     }),
 ];
 
-export const websiteCreateValidator = [
+export const websiteEditValidator = [
   check('x_token', 'Something was wrong')
     .trim()
     .not()
     .isEmpty()
     .custom(isJWTvalidate),
+  check('id', `This site can't be found`)
+    .trim()
+    .not()
+    .isEmpty()
+    .isMongoId()
+    .custom(websiteIdExistInDatabase),
   check('templateId', 'Template is required').trim().not().isEmpty(),
   check('subdomain', 'Website name is required')
     .trim()
     .not()
     .isEmpty()
-    .custom(subdomainNameIsRegistered),
-  check('uid', 'User Id is required')
+    .custom(isOwnerSubdomain),
+  check('uid', `This site can't be found`)
     .trim()
-    .isMongoId()
     .not()
     .isEmpty()
-    .custom(userExistsInDatabase),
+    .custom(isOwnerWebsite),
   ...pageValidators,
   ...componentValidator,
   validateRequest,

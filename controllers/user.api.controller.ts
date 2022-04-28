@@ -11,7 +11,7 @@ import { UserModel } from '../models';
  */
 
 export const loginUser = async (req: Request, res: Response) => {
-  const { username, email, id, role }: UserData = req.user;
+  const { username, email, id, role }: UserData = req.user!;
   const user = {
     id,
     username,
@@ -27,7 +27,6 @@ export const loginUser = async (req: Request, res: Response) => {
       token,
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({
       ok: false,
       msg: 'Sorry something was wrong, please contact with Admin',
@@ -95,7 +94,7 @@ export const updateUser = async (req: Request, res: Response) => {
 
     return res.status(200).json({
       ok: true,
-      msg: ' Successfully registered ',
+      msg: ' Successfully Updated ',
       user: {
         id: user?.id,
         username: user?.username,

@@ -6,8 +6,7 @@ export const databaseConnection = async () => {
     console.log('Database Online');
   } catch (error) {
     throw new Error(
-      'Error on Database, Please Contact with Admin ' +
-        process.env.MONGO_CONNECTION
+      'Error on Database Application, Please Contact with Admin '
     );
   }
 };
