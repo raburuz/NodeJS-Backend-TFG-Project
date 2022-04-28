@@ -1,17 +1,20 @@
+import { UserData, Website } from './interfaces';
+
 declare global {
   namespace NodeJS {
     interface ProcessEnv {
-      PRIVATE_KEY_JWT: Secret;
       NODE_ENV: 'development' | 'production';
       PORT: number | string;
+      DOMAIN: string;
       MONGO_CONNECTION: string;
+      JWT_PRIVATE_KEY: Secret;
     }
   }
-}
-
-declare namespace Express {
-  export interface Request {
-    user?: UserData;
-    currentUserId?: string;
+  declare namespace Express {
+    interface Request {
+      currentUserId?: string;
+      user?: UserData;
+      website?: Website;
+    }
   }
 }

@@ -93,10 +93,24 @@ export const isOwnEmailAddress: CustomValidator = async (
   const { email: currentEmail } = req.user;
   const isOwnEmail = email === currentEmail;
   const isEmailRegisterInDatabase =
-    (await UserModel.findOne({ email })) ?? false;
+    (await UserModel.findOne({ email }).lean()) ?? false;
 
   if (!isOwnEmail && isEmailRegisterInDatabase) {
     throw new Error('Email address is already registered');
+  }
+
+  return true;
+};
+
+export const isOwnerAccount: CustomValidator = async (
+  id,
+  { req }
+): Promise<boolean> => {
+  const currentUserId = req.currentUserId;
+  const isOwnerAccount = currentUserId === id;
+
+  if (!isOwnerAccount) {
+    throw new Error('Something was wrong');
   }
 
   return true;

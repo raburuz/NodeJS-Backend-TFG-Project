@@ -1,5 +1,6 @@
 export interface Website {
   id?: string;
+  subdomain: string;
   uid?: string;
   templateId: string;
   page: Page;

@@ -1,11 +1,14 @@
 import express, { Application } from 'express';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import helmet from 'helmet';
 import { databaseConnection } from '../database/config';
+import { corsConfig } from '../helpers';
 
 export class Server {
   private _app: Application;
-  private _port: string;
+  private _port: number;
+
   private apiRoutes: {
     userPath: string;
     websitePath: string;
@@ -13,7 +16,8 @@ export class Server {
 
   constructor() {
     this._app = express();
-    this._port = process.env.PORT ?? '8000';
+
+    this._port = (process.env.PORT as number) ?? 8000;
     //Paths from rutes
     this.apiRoutes = {
       userPath: '/api/auth/user',
@@ -31,7 +35,11 @@ export class Server {
   }
 
   middlewares() {
-    this._app.use(cors());
+    //Secure  Express
+    this._app.use(helmet());
+
+    //cors
+    this._app.use(cors(corsConfig));
 
     //read json.body
     this._app.use(express.json());
