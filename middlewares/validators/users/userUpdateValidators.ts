@@ -3,6 +3,7 @@ import { validateRequest } from '../../validateRequest';
 import { isJWTvalidate } from '../custom/jwtCustomValidator';
 import { isUserRole } from '../custom/roleCustomValidator';
 import { isOwnerAccount } from './custom/userCustomValidators';
+import { isUserDeleted } from '../custom/deleteUserValidator';
 import {
   isCorrectPassword,
   isOwnEmailAddress,
@@ -14,7 +15,8 @@ export const userUpdateValidators = [
     .trim()
     .not()
     .isEmpty()
-    .custom(isJWTvalidate),
+    .custom(isJWTvalidate)
+    .custom(isUserDeleted),
   check('id', 'Something was wrong')
     .trim()
     .not()

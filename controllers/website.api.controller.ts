@@ -51,7 +51,7 @@ export const getDataWebsite = async (req: Request, res: Response) => {
 
 export const editDataWebsite = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { uid, ...website } = req.body;
+  const { uid, isDeleted, ...website } = req.body;
 
   try {
     isValidDomain(req, false);
@@ -60,10 +60,10 @@ export const editDataWebsite = async (req: Request, res: Response) => {
       id,
       {
         ...website,
-        isDeleted: false,
       },
       { new: true }
     );
+
     return res.status(200).json({
       ok: true,
       msg: 'Site found',
@@ -80,9 +80,21 @@ export const editDataWebsite = async (req: Request, res: Response) => {
 
 export const deleteWebsite = async (req: Request, res: Response) => {
   const { id } = req.params;
+  const uid = req.currentUserId;
+
   isValidDomain(req, false);
+
   try {
-    await WebsiteModel.findByIdAndUpdate(id, { isDeleted: true });
+    const token = await signJWT(uid!);
+    const website = await WebsiteModel.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
+    if (website?.isDeleted) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'This user is already deleted ',
+      });
+    }
     return res.status(200).json({
       ok: true,
       msg: 'This website was deleted',

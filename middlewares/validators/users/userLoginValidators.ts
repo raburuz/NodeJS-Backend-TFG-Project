@@ -1,6 +1,7 @@
 import { check } from 'express-validator';
 import { validateRequest } from '../../validateRequest';
 import { isCorrectPassword } from './custom/userCustomValidators';
+import { isUserDeleted } from '../custom/deleteUserValidator';
 import {
   usernameIsRegisteredInDatabase,
   emailIsRegisteredInDatabase,
@@ -12,7 +13,8 @@ export const loginUserValidators = [
     .optional()
     .isLength({ min: 3, max: 254 })
     .withMessage('Username is invalid')
-    .custom(usernameIsRegisteredInDatabase),
+    .custom(usernameIsRegisteredInDatabase)
+    .custom(isUserDeleted),
   check('email', 'Email is required')
     .trim()
     .optional()
@@ -20,7 +22,8 @@ export const loginUserValidators = [
     .normalizeEmail()
     .isEmail()
     .withMessage('Email is invalid')
-    .custom(emailIsRegisteredInDatabase),
+    .custom(emailIsRegisteredInDatabase)
+    .custom(isUserDeleted),
   check('password', 'Password is required')
     .trim()
     .not()

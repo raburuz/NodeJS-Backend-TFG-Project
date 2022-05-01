@@ -21,7 +21,8 @@ export const loginUser = async (req: Request, res: Response) => {
   };
   try {
     const token = await signJWT(id!);
-    res.status(200).json({
+
+    return res.status(200).json({
       ok: true,
       msg: 'Logging Success',
       user,
@@ -54,7 +55,7 @@ export const registerUser = async (req: Request, res: Response) => {
     const token = await signJWT(user.id!);
     return res.status(201).json({
       ok: true,
-      msg: ' Successfully registered ',
+      msg: ' Has been registered Successfully ',
       user: {
         id: user.id,
         username: user.username,
@@ -79,8 +80,14 @@ export const registerUser = async (req: Request, res: Response) => {
  */
 export const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { password, newPassword, role, img, ...newUserData }: UpdateUser =
-    req.body;
+  const {
+    password,
+    newPassword,
+    role,
+    img,
+    isDeleted,
+    ...newUserData
+  }: UpdateUser = req.body;
   type Update = Omit<UpdateUser, 'role'>;
 
   const newUser: Update = newUserData;
@@ -94,10 +101,10 @@ export const updateUser = async (req: Request, res: Response) => {
       id,
       {
         ...newUser,
-        isDeleted: true,
       },
       { new: true }
     );
+
     const token = await signJWT(id);
 
     return res.status(200).json({
@@ -129,17 +136,10 @@ export const deleteUser = async (req: Request, res: Response) => {
   const { id } = req.params;
 
   try {
-    const { 1: user } = await Promise.all([
+    await Promise.all([
       WebsiteModel.updateMany({ uid: id }, { isDeleted: true }),
       UserModel.findByIdAndUpdate(id, { isDeleted: true }),
     ]);
-
-    if (user?.isDeleted) {
-      return res.status(404).json({
-        ok: true,
-        msg: 'This user is already deleted ',
-      });
-    }
 
     return res.status(200).json({
       ok: true,

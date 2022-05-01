@@ -1,4 +1,5 @@
 import { UserData, Website } from './interfaces';
+import { Template } from './interfaces/template';
 
 declare global {
   namespace NodeJS {
@@ -15,6 +16,7 @@ declare global {
       currentUserId?: string;
       user?: UserData;
       website?: Website;
+      template?: Template;
     }
   }
 }

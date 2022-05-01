@@ -7,7 +7,7 @@ export interface UserData {
   isValidate: boolean;
   acceptPolicy: Date;
   img?: string;
-  isDeleted: boolean;
+  isDeleted?: boolean;
 }
 
 export interface UpdateUser {
@@ -16,6 +16,7 @@ export interface UpdateUser {
   password?: string;
   newPassword?: string;
   img?: string;
+  isDeleted?: boolean;
 }
 
 export interface Jwt {
