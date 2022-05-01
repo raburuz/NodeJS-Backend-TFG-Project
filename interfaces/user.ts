@@ -7,6 +7,7 @@ export interface UserData {
   isValidate: boolean;
   acceptPolicy: Date;
   img?: string;
+  isDeleted: boolean;
 }
 
 export interface UpdateUser {

@@ -2,6 +2,7 @@ import { Request, Response } from 'express';
 import { hashPasswordWithBcrypt, signJWT } from '../helpers';
 import { UpdateUser, UserData } from '../interfaces';
 import { UserModel } from '../models';
+import { WebsiteModel } from '../models/website';
 
 /**
  * Login User
@@ -43,7 +44,11 @@ export const loginUser = async (req: Request, res: Response) => {
 export const registerUser = async (req: Request, res: Response) => {
   const { password, ...userData }: UserData = req.body;
   const hashPassword = hashPasswordWithBcrypt(password);
-  const user = new UserModel({ ...userData, password: hashPassword });
+  const user = new UserModel({
+    ...userData,
+    password: hashPassword,
+    isDeleted: false,
+  });
   try {
     user.save();
     const token = await signJWT(user.id!);
@@ -67,7 +72,7 @@ export const registerUser = async (req: Request, res: Response) => {
 };
 
 /**
- * Route for Configure User  {email, password}
+ * Route to Config User / self  {email, password}
  * @param req
  * @param res
  * @returns
@@ -87,7 +92,10 @@ export const updateUser = async (req: Request, res: Response) => {
   try {
     const user: UserData | null = await UserModel.findByIdAndUpdate<UserData>(
       id,
-      { ...newUser },
+      {
+        ...newUser,
+        isDeleted: true,
+      },
       { new: true }
     );
     const token = await signJWT(id);
@@ -111,8 +119,36 @@ export const updateUser = async (req: Request, res: Response) => {
   }
 };
 
-export const deleteUser = (req: Request, res: Response) => {
-  res.json({
-    msg: 'delete API',
-  });
+/**
+ * Route to delete User /self {email, password} -> delete website
+ * @param req
+ * @param res
+ * @returns
+ */
+export const deleteUser = async (req: Request, res: Response) => {
+  const { id } = req.params;
+
+  try {
+    const { 1: user } = await Promise.all([
+      WebsiteModel.updateMany({ uid: id }, { isDeleted: true }),
+      UserModel.findByIdAndUpdate(id, { isDeleted: true }),
+    ]);
+
+    if (user?.isDeleted) {
+      return res.status(404).json({
+        ok: true,
+        msg: 'This user is already deleted ',
+      });
+    }
+
+    return res.status(200).json({
+      ok: true,
+      msg: ' Successfully Deleted ',
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: 'Sorry something was wrong, please contact with Admin',
+    });
+  }
 };

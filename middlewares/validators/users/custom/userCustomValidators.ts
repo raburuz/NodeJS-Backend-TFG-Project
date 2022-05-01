@@ -45,9 +45,12 @@ export const usernameIsRegisteredInDatabase: CustomValidator = async (
   username,
   { req }
 ): Promise<boolean> => {
-  const user: UserData | null = await UserModel.findOne<UserData>({
+  const query = {
     username,
-  });
+    isDeleted: false,
+  };
+
+  const user: UserData | null = await UserModel.findOne<UserData>(query);
   if (!user) {
     throw new Error('User or Password is invalid');
   }

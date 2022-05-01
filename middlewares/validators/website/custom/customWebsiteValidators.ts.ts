@@ -13,7 +13,10 @@ export const websiteExistInDatabase = async (
   req: Request
 ): Promise<Response<any, Record<string, any>> | Website> => {
   const subdomain = req.subdomains.at(-1);
-  const website = await WebsiteModel.findOne<Website>({ subdomain });
+  const website = await WebsiteModel.findOne<Website>({
+    subdomain,
+    isDeleted: false,
+  });
 
   if (!website) {
     throw new Error(`This site can't be found`);
@@ -45,6 +48,7 @@ export const websiteIdExistInDatabase: CustomValidator = async (
   mongoId,
   { req }
 ): Promise<boolean> => {
+  const query = { isDeleted: false };
   const website: Website | null = await WebsiteModel.findById<Website>(mongoId);
   if (!website) {
     throw new Error(`This site can't be found`);

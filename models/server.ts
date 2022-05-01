@@ -5,6 +5,12 @@ import helmet from 'helmet';
 import { databaseConnection } from '../database/config';
 import { corsConfig } from '../helpers';
 
+const BlockClassJS = function (constructor: Function) {
+  Object.seal(constructor);
+  Object.seal(constructor.prototype);
+};
+
+@BlockClassJS
 export class Server {
   private _app: Application;
   private _port: number;

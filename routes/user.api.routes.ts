@@ -1,7 +1,4 @@
 import { Router, Request, Response } from 'express';
-
-const router = Router();
-
 import {
   loginUser,
   registerUser,
@@ -12,15 +9,21 @@ import {
   registerUserValidators,
   loginUserValidators,
   userUpdateValidators,
+  userDeleteValidators,
 } from '../middlewares';
 
+const router = Router();
+
 router.get('/login', loginUserValidators, loginUser);
-router.put('/:id', userUpdateValidators, updateUser);
 router.post('/register', registerUserValidators, registerUser);
-router.delete('/', deleteUser);
+router.put('/:id', userUpdateValidators, updateUser);
+router.put('/:id/delete', userDeleteValidators, deleteUser);
 
 router.get('*', function (req: Request, res: Response) {
-  res.status(404).send('Error 404');
+  return res.status(404).json({
+    ok: false,
+    msg: 'Not found',
+  });
 });
 
 module.exports = router;

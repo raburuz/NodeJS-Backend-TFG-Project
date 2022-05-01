@@ -34,6 +34,7 @@ const User = new Schema<UserData>({
     required: [true, 'Policy Attribute is required'],
   },
   img: String,
+  isDeleted: { type: Boolean },
 });
 
 export const UserModel = mongoose.model('User', User);
