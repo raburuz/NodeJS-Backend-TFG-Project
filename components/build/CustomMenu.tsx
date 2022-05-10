@@ -1,10 +1,11 @@
 import { SyntheticEvent, useState } from 'react';
 import { Tab, Tabs, Box } from '@mui/material';
-import { TabPanel } from '../ui';
-import { CustomMenuLayout } from '../../layouts';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
+
+import { TabPanel } from '../ui';
+import { CustomMenuLayout } from '../../layouts';
 
 export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
@@ -23,11 +24,12 @@ export const CustomMenu = () => {
   return (
     <Box
       sx={{
-        width: 260,
+        width: 330,
         position: 'absolute',
         left: 0,
         top: 0,
         bgcolor: '#313131',
+        zIndex: 9999,
       }}
     >
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
