@@ -1,4 +1,4 @@
-# Beta Project Backend
+# NodeJS-Backend / FTC-Project
 
 If you wanna see full documentations from API Rest Server please go to notion.so (Only developers).
 
