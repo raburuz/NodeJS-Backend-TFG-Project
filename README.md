@@ -1,6 +1,8 @@
 # NodeJS-Backend / FTC-Project
 
-If you wanna see full documentations from API Rest Server please go to notion.so (Only developers).
+If you wanna see full documentations from API Rest Server please go to notion.so 
+https://websitepersonaltemplate.notion.site/NodeJS-Backend-Docs-FTC-Project-ddf0034f4ab44b21a0cf00aa70ae0976
+
 
 ## Project Idea
 
