@@ -1,4 +1,8 @@
-This is a [Next.js](https://nextjs.org/) 
+# Next Free Landing Page Building
+
+## I'm building currently
+
+This is a [Next.js](https://nextjs.org/) Application.
 
 ## How to run this app
 
