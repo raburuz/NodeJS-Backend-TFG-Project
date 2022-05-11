@@ -12,8 +12,12 @@ const BUILD_INITIAL_STATE: BuildState = {
     backgroundColor: '#f9f9f9',
   },
   components: [
-    { type: ContentType.TEXT, id: '321321321312sa', label: 'hola' },
-    { type: ContentType.TEXT, id: 'dadsa', label: 'noneee' },
+    { type: ContentType.TEXT, id: '1', label: '1' },
+    { type: ContentType.TEXT, id: '2', label: '2' },
+    { type: ContentType.TEXT, id: '3', label: '3' },
+    { type: ContentType.TEXT, id: '4', label: '4' },
+    { type: ContentType.TEXT, id: '5', label: '5' },
+    { type: ContentType.TEXT, id: '6', label: '6' },
   ],
 };
 

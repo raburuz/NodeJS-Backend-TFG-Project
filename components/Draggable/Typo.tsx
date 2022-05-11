@@ -6,6 +6,7 @@ import React, {
 } from 'react';
 import style from './Draggable.module.css';
 import { DragContext } from '../../context/drag/DragContext';
+import { useState } from 'react';
 
 interface Props {
   id: string;
@@ -19,8 +20,11 @@ interface Props {
 }
 
 export const Typo = ({ id, label, sx, ...props }: Props) => {
+  const [isDragging, setIsDragging] = useState('');
+  const [isEnter, setIsEnter] = useState(false);
+
   const element = useRef<HTMLDivElement>(null);
-  const { startMoveElement, finishMoveElement, isDragging } =
+  const { startMoveElement, finishMoveElement, onDragEnterElement } =
     useContext(DragContext);
 
   const { p, h1, h2, h3 } = props;
@@ -28,10 +32,22 @@ export const Typo = ({ id, label, sx, ...props }: Props) => {
   const handleDragStart = (event: DragEvent<HTMLParagraphElement>) => {
     event.dataTransfer.setData('text', id);
     startMoveElement(element.current as Node);
+    setIsDragging(style.dragging);
+    setIsEnter(false);
   };
 
   const handleDragEnd = (event: DragEvent<HTMLParagraphElement>) => {
     finishMoveElement();
+    setIsDragging('');
+    setIsEnter(false);
+  };
+  const handleDragEnter = (event: DragEvent<HTMLParagraphElement>) => {
+    onDragEnterElement(element.current as Node);
+    setIsEnter(true);
+  };
+
+  const handleDragLeave = (event: DragEvent<HTMLParagraphElement>) => {
+    setIsEnter(false);
   };
 
   return (
@@ -41,13 +57,16 @@ export const Typo = ({ id, label, sx, ...props }: Props) => {
           draggable="true"
           onDragStart={handleDragStart}
           onDragEnd={handleDragEnd}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
           style={{
             ...sx,
-            margin: '20px 0',
+            padding: '10px 0',
+            margin: 0,
             opacity: isDragging ? 0.3 : 1,
             transition: 'all 0.3s',
           }}
-          className={(isDragging ? style.dragging : '', style.draggable)}
+          className={`${style.draggable} ${isEnter ? style.enterElement : ''}`}
         >
           {label}
         </p>
