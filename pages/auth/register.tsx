@@ -7,6 +7,7 @@ const RegisterScreen = () => {
     title: 'Register',
     description: 'Register',
   };
+
   return (
     <Main metaTags={metaTags}>
       <>

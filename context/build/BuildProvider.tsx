@@ -1,5 +1,5 @@
 import { FC, useReducer } from 'react';
-import { BuildState, ContentType, TypoComponent } from '../../interfaces';
+import { Website, ContentType, TypoComponent } from '../../interfaces';
 import { BuildContext } from './BuildContext';
 import { BuildReducer } from './BuildReducer';
 
@@ -7,17 +7,18 @@ interface Props {
   children: JSX.Element;
 }
 
-const BUILD_INITIAL_STATE: BuildState = {
+const BUILD_INITIAL_STATE: Website = {
   page: {
     backgroundColor: '#f9f9f9',
+    width: 'md',
   },
   components: [
-    { type: ContentType.TEXT, id: '1', label: '1' },
-    { type: ContentType.TEXT, id: '2', label: '2' },
-    { type: ContentType.TEXT, id: '3', label: '3' },
-    { type: ContentType.TEXT, id: '4', label: '4' },
-    { type: ContentType.TEXT, id: '5', label: '5' },
-    { type: ContentType.TEXT, id: '6', label: '6' },
+    { type: 'text', id: '1', label: '1', tag: 'h1', order: 0 },
+    { type: 'text', id: '2', label: '2', tag: 'h2', order: 1 },
+    { type: 'text', id: '3', label: '3', tag: 'h3', order: 2 },
+    { type: 'text', id: '4', label: '4', tag: 'p', order: 3 },
+    { type: 'text', id: '5', label: '5', tag: 'p', order: 4 },
+    { type: 'text', id: '6', label: '6', tag: 'p', order: 5 },
   ],
 };
 

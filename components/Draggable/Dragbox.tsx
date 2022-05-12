@@ -8,18 +8,12 @@ interface Props {
 
 export const Dragbox: FC<Props> = ({ children }) => {
   const dragbox = useRef<HTMLDivElement>(null);
-  const {
-    finishMoveElement,
-    onDragLeaveElement,
-    isDragging,
-    element,
-    enterElement,
-  } = useContext(DragContext);
+  const { finishMoveElement, isDragging, element, enterElement } =
+    useContext(DragContext);
 
   //Draggable element is dropped a drop zone
   const handleDragOver = (event: DragEvent<HTMLDivElement>) => {
     event.preventDefault();
-    console.log(enterElement);
     if (!enterElement) {
       dragbox.current?.appendChild(element as Node);
     }
@@ -32,10 +26,6 @@ export const Dragbox: FC<Props> = ({ children }) => {
   };
 
   const handleDragEnter = (event: DragEvent<HTMLDivElement>) => {};
-
-  const handleDragLeave = (event: DragEvent<HTMLDivElement>) => {
-    onDragLeaveElement();
-  };
 
   return (
     <div

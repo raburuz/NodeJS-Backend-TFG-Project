@@ -1,35 +1,48 @@
 import { StyleHTMLAttributes } from 'react';
 
-export interface BuildState {
+export interface Website {
   page: Page;
-  components: TypoComponent[];
+  components:
+    | TypoComponent[]
+    | ListComponent[]
+    | ButtonComponent[]
+    | ImageComponent[];
 }
 
 export interface Page {
   backgroundColor: string;
-}
-
-export interface TypoComponent {
-  id: string;
-  type: ContentType.TEXT;
-  label: string;
-  h1?: boolean;
-  h2?: boolean;
-  h3?: boolean;
-  p?: boolean;
-
+  width: string;
   sx?: StyleHTMLAttributes<HTMLStyleElement>;
 }
 
-export interface ListComponent {
-  type: ContentType.LIST;
+export interface Component {
+  id: string;
+  type: ContentType;
+  order: number;
+  sx?: StyleHTMLAttributes<HTMLStyleElement>;
+}
+
+export interface TypoComponent extends Component {
+  label: string;
+  tag: TextTags;
+}
+
+export interface ListComponent extends Component {
   id: string;
   items: string[];
 }
 
-export enum ContentType {
-  TEXT = 'text',
-  BUTTON = 'button',
-  IMAGE = 'image',
-  LIST = 'list',
+export interface ButtonComponent extends Component {
+  id: string;
+  url: string;
 }
+
+export interface ImageComponent extends Component {
+  id: string;
+  url: string;
+  alt: string;
+}
+
+export type ContentType = 'text' | 'button' | 'image' | 'list';
+
+export type TextTags = 'h1' | 'h2' | 'h3' | 'p';

@@ -25,7 +25,7 @@ export const CustomMenu = () => {
     <Box
       sx={{
         width: 330,
-        position: 'absolute',
+        position: 'fixed',
         left: 0,
         top: 0,
         bgcolor: '#313131',

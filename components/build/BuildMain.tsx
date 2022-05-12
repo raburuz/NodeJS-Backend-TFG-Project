@@ -4,7 +4,6 @@ import { BuildMenu } from './BuildMenu';
 import { CustomMenu } from './CustomMenu';
 import { DragProvider } from '../../context/drag/DragProvider';
 import { Dragbox, Typo } from '../Draggable';
-import { ContentType } from '../../interfaces';
 
 import { BuildContext } from '../../context/build/BuildContext';
 
@@ -26,7 +25,8 @@ export const BuildMain = () => {
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          height: '100vh',
+          height: '100%',
+          minHeight: '1080px',
           color: '#000',
         }}
       >
@@ -34,14 +34,14 @@ export const BuildMain = () => {
           <Dragbox>
             <>
               {components?.map((component: any) => {
-                if (component.type === ContentType.TEXT) {
+                if (component.type === 'text') {
                   return (
                     <Typo
                       key={component.id}
                       id={component.id}
                       label={component.label}
+                      tag={component.tag}
                       sx={component.sx}
-                      p
                     />
                   );
                 }

@@ -34,7 +34,7 @@ export const BuildMenu = () => {
 
   return (
     <>
-      <Box sx={{ position: 'absolute', right: 20, top: 20 }}>
+      <Box sx={{ position: 'fixed', right: 20, top: 20 }}>
         <ButtonGroup variant="outlined" aria-label="outlined button group">
           <Button
             id="basic-button"

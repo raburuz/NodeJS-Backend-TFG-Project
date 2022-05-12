@@ -1,8 +1,8 @@
 import { createContext } from 'react';
-import { BuildState } from '../../interfaces';
+import { Website } from '../../interfaces';
 import { TypoComponent } from '../../interfaces/components';
 
-interface BuildProps extends BuildState {
+interface BuildProps extends Website {
   addComponent: (component: TypoComponent) => void;
 }
 

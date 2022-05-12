@@ -1,46 +1,76 @@
 import { useState } from 'react';
+import NextLink from 'next/link';
+import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import FormControl from '@mui/material/FormControl';
 import Divider from '@mui/material/Divider';
-import { Checkbox, FormControlLabel, FormGroup, Link } from '@mui/material';
-import NextLink from 'next/link';
+import { FormGroup, Link } from '@mui/material';
+import { Input } from '../form/Input';
+import { Checkbox } from '../form/Checkbox';
+
+interface InputComponent {
+  name: string;
+  label: string;
+  type?: string;
+  defaultValue?: string;
+  rules?: RegisterOptions;
+}
 
 interface State {
   password: string;
   showPassword: boolean;
 }
+interface IFormInput {
+  username: string;
+  email: string;
+  password: string;
+  password2: boolean;
+}
+
+const inputs: InputComponent[] = [
+  {
+    name: 'username',
+    type: 'text',
+    label: 'Username',
+    rules: { required: true },
+  },
+  {
+    name: 'email',
+    type: 'email',
+    label: 'Email',
+    rules: { required: true },
+  },
+  {
+    name: 'password',
+    type: 'password',
+    label: 'Password',
+    rules: { required: true },
+  },
+  {
+    name: 'password2',
+    type: 'password2',
+    label: 'Confirm Password',
+    rules: { required: true },
+  },
+];
 
 export const Register = () => {
   const [values, setValues] = useState<State>({
     password: '',
     showPassword: false,
   });
+  const {
+    control,
+    handleSubmit,
+    watch,
+    formState: { errors },
+  } = useForm<IFormInput>();
 
-  const handleChange =
-    (prop: keyof State) => (event: React.ChangeEvent<HTMLInputElement>) => {
-      setValues({ ...values, [prop]: event.target.value });
-    };
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword,
-    });
-  };
-
-  const handleMouseDownPassword = (
-    event: React.MouseEvent<HTMLButtonElement>
-  ) => {
-    event.preventDefault();
-  };
+  const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
 
   return (
     <>
@@ -52,91 +82,58 @@ export const Register = () => {
       >
         Sign Up
       </Typography>
-      <FormGroup>
-        <Card sx={{ width: '100%', maxWidth: 300 }}>
-          <CardContent
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}
-          >
-            {/*Username*/}
-            <FormControl
-              sx={{ margin: '15px ', width: '28ch' }}
-              variant="standard"
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <FormGroup>
+          <Card sx={{ width: '100%', maxWidth: 300 }}>
+            <CardContent
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
             >
-              <InputLabel htmlFor="username" sx={{ fontSize: 15 }}>
-                Username
-              </InputLabel>
-
-              <Input id="username" type="text" />
-            </FormControl>
-
-            {/*Email*/}
-            <FormControl
-              sx={{ margin: '15px ', width: '28ch' }}
-              variant="standard"
+              {inputs.map((input: InputComponent) => {
+                return (
+                  <div key={input.name}>
+                    <Input
+                      control={control}
+                      name={input.name}
+                      label={input.label}
+                      type={input?.type}
+                      defaultValue={input?.defaultValue}
+                      rules={input?.rules}
+                      errors={errors}
+                    />
+                  </div>
+                );
+              })}
+            </CardContent>
+            <Divider variant="middle" />
+            <CardActions
+              sx={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+                m: 1.5,
+                paddingBottom: '20px',
+              }}
             >
-              <InputLabel htmlFor="email" sx={{ fontSize: 15 }}>
-                Email
-              </InputLabel>
-
-              <Input id="email" type="text" />
-            </FormControl>
-
-            {/*Password*/}
-            <FormControl
-              sx={{ margin: '15px ', width: '28ch' }}
-              variant="standard"
-            >
-              <InputLabel htmlFor="password" sx={{ fontSize: 15 }}>
-                Password
-              </InputLabel>
-
-              <Input id="password" type="password" />
-            </FormControl>
-
-            {/*Confirm Password*/}
-            <FormControl
-              sx={{ margin: '15px ', width: '28ch' }}
-              variant="standard"
-            >
-              <InputLabel htmlFor="password2" sx={{ fontSize: 15 }}>
-                Confirm Password
-              </InputLabel>
-
-              <Input id="password2" type="password" />
-            </FormControl>
-          </CardContent>
-          <Divider variant="middle" />
-          <CardActions
-            sx={{
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-              m: 1.5,
-              paddingBottom: '20px',
-            }}
-          >
-            <FormControlLabel
-              control={<Checkbox size="small" name="acceptPolicity" />}
-              sx={{ marginBottom: 2 }}
-              label={
-                <Typography
-                  component="span"
-                  sx={{ fontSize: 10, fontWeight: 400 }}
-                >
-                  I have read and agreed to the Terms of Use and Privacy Policy
-                </Typography>
-              }
-            />
-            <Button variant="outlined" size="large" fullWidth>
-              Sign Up
-            </Button>
-          </CardActions>
-        </Card>
-      </FormGroup>
+              <Checkbox
+                name={'acceptPolicy'}
+                control={control}
+                label={
+                  ' I have read and agreed to the Terms of Use and Privacy Policy'
+                }
+                rules={{ required: true }}
+                errors={errors}
+              />
+              <Button variant="outlined" size="large" fullWidth type="submit">
+                Sign Up
+              </Button>
+            </CardActions>
+          </Card>
+        </FormGroup>
+      </form>
 
       <Typography component="div" sx={{ m: 3.5, fontSize: '10px' }}>
         Do you have account?{' '}
