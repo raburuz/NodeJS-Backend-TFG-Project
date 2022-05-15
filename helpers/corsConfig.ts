@@ -1,10 +1,4 @@
-const whitelistDomains = [
-  `http://${process.env.DOMAIN}`,
-  `https://${process.env.DOMAIN}`,
-  `https://*.${process.env.DOMAIN}`,
-  `https://www.${process.env.DOMAIN}`,
-  `https://www.*.${process.env.DOMAIN}`,
-];
+const whitelistDomains = [`http://localhost:3000`];
 
 export const corsConfig = {
   origin: (origin: string | undefined, callback: any) => {
