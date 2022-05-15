@@ -8,7 +8,7 @@ export const createWebsite = async (req: Request, res: Response) => {
   const data: Website = req.body;
   data.uid = req.currentUserId;
   const token = await signJWT(data.uid!);
-  const website = new WebsiteModel(data);
+  const website = new WebsiteModel({ ...data, isDelete: false });
 
   try {
     isValidDomain(req, false);
@@ -35,6 +35,7 @@ export const getDataWebsite = async (req: Request, res: Response) => {
   try {
     isValidDomain(req, true);
     const website = await websiteExistInDatabase(req);
+
     return res.status(200).json({
       ok: true,
       msg: 'Site found',
@@ -50,9 +51,11 @@ export const getDataWebsite = async (req: Request, res: Response) => {
 
 export const editDataWebsite = async (req: Request, res: Response) => {
   const { id } = req.params;
-  const { uid, ...website } = req.body;
+  const { uid, isDeleted, ...website } = req.body;
+
   try {
     isValidDomain(req, false);
+    const token = await signJWT(uid);
     const websiteUpdate = await WebsiteModel.findByIdAndUpdate(
       id,
       {
@@ -60,15 +63,46 @@ export const editDataWebsite = async (req: Request, res: Response) => {
       },
       { new: true }
     );
+
     return res.status(200).json({
       ok: true,
       msg: 'Site found',
       websiteUpdate,
+      token,
     });
   } catch (error) {
     return res.status(401).json({
       ok: false,
       msg: `You don’t have permission to access on this server`,
+    });
+  }
+};
+
+export const deleteWebsite = async (req: Request, res: Response) => {
+  const { id } = req.params;
+  const uid = req.currentUserId;
+
+  isValidDomain(req, false);
+
+  try {
+    const token = await signJWT(uid!);
+    const website = await WebsiteModel.findByIdAndUpdate(id, {
+      isDeleted: true,
+    });
+    if (website?.isDeleted) {
+      return res.status(400).json({
+        ok: false,
+        msg: 'This user is already deleted ',
+      });
+    }
+    return res.status(200).json({
+      ok: true,
+      msg: 'This website was deleted',
+    });
+  } catch (error) {
+    return res.status(500).json({
+      ok: false,
+      msg: 'Something was wrong',
     });
   }
 };

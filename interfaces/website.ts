@@ -5,6 +5,7 @@ export interface Website {
   templateId: string;
   page: Page;
   components: Component[];
+  isDeleted?: boolean;
 }
 
 export interface Page {

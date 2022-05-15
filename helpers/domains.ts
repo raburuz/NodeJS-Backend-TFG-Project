@@ -29,7 +29,7 @@ export const isSpecificDomain = (
   host: string,
   isSubdomain: boolean
 ): boolean => {
-  let regex;
+  let regex: RegExp;
   isSubdomain
     ? (regex = new RegExp(`http(s)?://(.+.)?${process.env.DOMAIN}(:d{1,5})?$`))
     : (regex = new RegExp(`http(s)?://${process.env.DOMAIN}(:d{1,5})?$`));

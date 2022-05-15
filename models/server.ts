@@ -1,10 +1,16 @@
 import express, { Application } from 'express';
-import cors from 'cors';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import helmet from 'helmet';
 import { databaseConnection } from '../database/config';
 import { corsConfig } from '../helpers';
 
+const BlockClassJS = function (constructor: Function) {
+  Object.seal(constructor);
+  Object.seal(constructor.prototype);
+};
+
+@BlockClassJS
 export class Server {
   private _app: Application;
   private _port: number;
@@ -12,6 +18,7 @@ export class Server {
   private apiRoutes: {
     userPath: string;
     websitePath: string;
+    templatePath: string;
   };
 
   constructor() {
@@ -22,6 +29,7 @@ export class Server {
     this.apiRoutes = {
       userPath: '/api/auth/user',
       websitePath: '/api/website',
+      templatePath: '/api/template',
     };
 
     //Database Connection
@@ -63,6 +71,10 @@ export class Server {
     this._app.use(
       this.apiRoutes.websitePath,
       require('../routes/website.api.routes')
+    );
+    this._app.use(
+      this.apiRoutes.templatePath,
+      require('../routes/template.api.routes')
     );
   }
 

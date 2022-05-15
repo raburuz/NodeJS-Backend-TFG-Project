@@ -38,6 +38,7 @@ export const emailIsRegisteredInDatabase: CustomValidator = async (
     throw new Error('User or Password is invalid');
   }
   req.user = user;
+  req.currentUserId = user.id;
   return true;
 };
 
@@ -45,14 +46,17 @@ export const usernameIsRegisteredInDatabase: CustomValidator = async (
   username,
   { req }
 ): Promise<boolean> => {
-  const user: UserData | null = await UserModel.findOne<UserData>({
+  const query = {
     username,
-  });
+  };
+
+  const user: UserData | null = await UserModel.findOne<UserData>(query);
   if (!user) {
     throw new Error('User or Password is invalid');
   }
 
   req.user = user;
+  req.currentUserId = user.id;
 
   return true;
 };

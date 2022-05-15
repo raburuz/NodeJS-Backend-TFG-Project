@@ -82,6 +82,9 @@ const Website = new Schema<Website>({
       },
     },
   ],
+  isDeleted: {
+    type: Boolean,
+  },
 });
 
 export const WebsiteModel = mongoose.model('Website', Website);
