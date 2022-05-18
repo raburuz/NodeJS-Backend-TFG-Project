@@ -1,4 +1,4 @@
-# Next Free Landing Page Building
+# Next Free Landing Page Builder
 
 ` I'm building currently `
 
