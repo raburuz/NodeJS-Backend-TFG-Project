@@ -23,6 +23,7 @@ export const Input = (props: Props) => {
     rules,
     errors,
   } = props;
+  console.log(props);
   const haveError =
     errors?.[name as keyof typeof errors] !== undefined ? true : false;
 

@@ -21,12 +21,13 @@ export const BuildMenu = () => {
     setAnchorEl(null);
   };
 
-  const addNewComponet = () => {
+  const addNewComponet  = () => {
     const component: TypoComponent = {
       id: uuidv4(),
-      type: ContentType.TEXT,
+      type: "text",
       label: 'Write something nice',
-      p: true,
+      tag:"p",
+      order: 12331
     };
 
     addComponent(component);
