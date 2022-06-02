@@ -28,7 +28,7 @@ interface IFormInput {
   username: string;
   email: string;
   password: string;
-  password2: boolean;
+  password2: string;
 }
 
 const inputs: InputComponent[] = [
@@ -95,15 +95,7 @@ export const Register = () => {
               {inputs.map((input: InputComponent) => {
                 return (
                   <div key={input.name}>
-                    <Input
-                      control={control}
-                      name={input.name}
-                      label={input.label}
-                      type={input?.type}
-                      defaultValue={input?.defaultValue}
-                      rules={input?.rules}
-                      errors={errors}
-                    />
+                    <Input data={{ ...input, control, errors }} />
                   </div>
                 );
               })}

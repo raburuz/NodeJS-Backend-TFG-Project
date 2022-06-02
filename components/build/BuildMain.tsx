@@ -36,10 +36,10 @@ export const BuildMain = () => {
             <>
               {components?.map((component: any) => {
                 if (component.type === 'text') {
-                  return <Typo data={component} />;
+                  return <Typo key={component.id} data={component} />;
                 }
                 if (component.type === 'list') {
-                  return <List data={component} />;
+                  return <List key={component.id} data={component} />;
                 }
               })}
             </>

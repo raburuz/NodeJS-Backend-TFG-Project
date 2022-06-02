@@ -22,7 +22,7 @@ const BUILD_INITIAL_STATE: Website = {
     },
     { type: 'list', id: '4', order: 2, items: ['99999', 'lista', 'soy', 'yo'] },
     { type: 'list', id: '5', order: 3, items: ['55555', 'lista', 'soy', 'yo'] },
-    { type: 'list', id: '7', order: 4, items: ['000', 'lista', 'soy', 'yo'] },
+    { type: 'list', id: '79', order: 4, items: ['000', 'lista', 'soy', 'yo'] },
   ],
 };
 

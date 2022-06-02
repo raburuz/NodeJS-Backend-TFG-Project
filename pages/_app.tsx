@@ -5,7 +5,7 @@ import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 function MyApp({ Component, pageProps }: AppProps) {
   const theme = createTheme({
     palette: {
-      mode: 'dark',
+      mode: 'light',
     },
   });
   return (

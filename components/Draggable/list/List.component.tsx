@@ -1,0 +1,41 @@
+import { useRef } from 'react';
+import { ListComponent } from '../../../interfaces';
+import { useDraggable } from '../../../hooks/useDraggable';
+import style from './List.module.css';
+
+interface Props {
+  data: ListComponent;
+}
+
+export const List = ({ data }: Props) => {
+  const { id, items, sx } = data;
+
+  const element = useRef<HTMLDivElement>(null);
+  const { isDragging, handleDragEnd, handleDragStart, handleDragEnter } =
+    useDraggable({ element, style: '' });
+  return (
+    <div ref={element} id={id}>
+      <div
+        draggable="true"
+        onDragStart={handleDragStart}
+        onDragEnd={handleDragEnd}
+        onDragEnter={handleDragEnter}
+        className={`${style.draggable} `}
+        style={{
+          opacity: isDragging ? 0.3 : 1,
+          transition: 'all 0.3s',
+        }}
+      >
+        <ul>
+          {items.map((item, index) => {
+            return (
+              <li style={sx} key={`${id}-Item${index}${item}`}>
+                {item}
+              </li>
+            );
+          })}
+        </ul>
+      </div>
+    </div>
+  );
+};
