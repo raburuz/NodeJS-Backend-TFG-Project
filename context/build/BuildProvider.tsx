@@ -1,5 +1,6 @@
 import { FC, useReducer } from 'react';
-import { Website, ContentType, TypoComponent } from '../../interfaces';
+import { Components } from '@mui/material';
+import { Website } from '../../interfaces';
 import { BuildContext } from './BuildContext';
 import { BuildReducer } from './BuildReducer';
 
@@ -13,22 +14,25 @@ const BUILD_INITIAL_STATE: Website = {
     width: 'md',
   },
   components: [
-    { type: 'text', id: '1', label: '1', tag: 'h1', order: 0 },
-    { type: 'text', id: '2', label: '2', tag: 'h2', order: 1 },
-    { type: 'text', id: '3', label: '3', tag: 'h3', order: 2 },
-    { type: 'text', id: '4', label: '4', tag: 'p', order: 3 },
-    { type: 'text', id: '5', label: '5', tag: 'p', order: 4 },
-    { type: 'text', id: '6', label: '6', tag: 'p', order: 5 },
+    {
+      type: 'list',
+      id: '3',
+      order: 1,
+      items: ['211212', 'lista', 'soy', 'yo'],
+    },
+    { type: 'list', id: '4', order: 2, items: ['99999', 'lista', 'soy', 'yo'] },
+    { type: 'list', id: '5', order: 3, items: ['55555', 'lista', 'soy', 'yo'] },
+    { type: 'list', id: '7', order: 4, items: ['000', 'lista', 'soy', 'yo'] },
   ],
 };
 
 export const BuildProvider: FC<Props> = ({ children }) => {
   const [state, dispatch] = useReducer(BuildReducer, BUILD_INITIAL_STATE);
 
-  const addComponent = (component: TypoComponent) => {
+  const addComponent = (components: Components) => {
     dispatch({
       type: 'Build - Add New Component',
-      component,
+      components,
     });
   };
 

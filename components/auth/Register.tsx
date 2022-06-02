@@ -9,8 +9,8 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
 import { FormGroup, Link } from '@mui/material';
-import { Input } from '../form/Input';
-import { Checkbox } from '../form/Checkbox';
+import { Input } from '../form/input/Input.component';
+import { Checkbox } from '../form/Checkbox/Checkbox.component';
 
 interface InputComponent {
   name: string;

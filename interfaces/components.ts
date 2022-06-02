@@ -1,4 +1,5 @@
 import { StyleHTMLAttributes } from 'react';
+export type Components = TypoComponent | ListComponent | ButtonComponent;
 
 export interface Website {
   page: Page;
@@ -28,17 +29,14 @@ export interface TypoComponent extends Component {
 }
 
 export interface ListComponent extends Component {
-  id: string;
   items: string[];
 }
 
 export interface ButtonComponent extends Component {
-  id: string;
   url: string;
 }
 
 export interface ImageComponent extends Component {
-  id: string;
   url: string;
   alt: string;
 }

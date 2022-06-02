@@ -1,10 +1,9 @@
-import { BuildState } from '../../interfaces';
-import { TypoComponent } from '../../interfaces/components';
+import { Components } from '@mui/material';
 
 type Action =
   | {
       type: 'Build - Add New Component';
-      component: TypoComponent;
+      components: Components;
     }
   | {
       type: 'Build - Update One Component';
@@ -15,12 +14,12 @@ type Action =
       backgroundColor: string;
     };
 
-export const BuildReducer = (state: BuildState, action: Action) => {
+export const BuildReducer = (state: any, action: Action) => {
   switch (action.type) {
     case 'Build - Add New Component':
       return {
         ...state,
-        components: [...state.components, action.component],
+        components: [...state.components, action.components],
       };
     case 'Build - Update One Component':
       return {

@@ -6,6 +6,7 @@ import { DragProvider } from '../../context/drag/DragProvider';
 import { Dragbox, Typo } from '../Draggable';
 
 import { BuildContext } from '../../context/build/BuildContext';
+import { List } from '../Draggable/list/List.component';
 
 export const BuildMain = () => {
   const { components, page } = useContext(BuildContext);
@@ -35,15 +36,10 @@ export const BuildMain = () => {
             <>
               {components?.map((component: any) => {
                 if (component.type === 'text') {
-                  return (
-                    <Typo
-                      key={component.id}
-                      id={component.id}
-                      label={component.label}
-                      tag={component.tag}
-                      sx={component.sx}
-                    />
-                  );
+                  return <Typo data={component} />;
+                }
+                if (component.type === 'list') {
+                  return <List data={component} />;
                 }
               })}
             </>
