@@ -9,7 +9,7 @@ import Divider from '@mui/material/Divider';
 import { FormGroup } from '@mui/material';
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import { Input } from '../form/input/Input.component';
-import { loginApi } from '../../api/userApi';
+import { loginApi } from '../../apis/userApi';
 import { LoginInterface } from '../../interfaces';
 
 interface InputComponent {
