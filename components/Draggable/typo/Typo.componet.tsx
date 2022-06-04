@@ -16,8 +16,12 @@ export const Typo: FC<Props> = ({ data }) => {
   const Tag = tag;
   const element = useRef<HTMLDivElement>(null);
 
-  const { isDragging, handleDragEnd, handleDragEnter, handleDragStart } =
-    useDraggable({ element, style: style.draggable });
+  const {
+    isDragging,
+    handleDragEnd,
+    handleDragEnter,
+    handleDragStart,
+  } = useDraggable({ element, style: style.draggable });
 
   return (
     <div ref={element} id={id}>
@@ -27,11 +31,12 @@ export const Typo: FC<Props> = ({ data }) => {
         onDragEnd={handleDragEnd}
         onDragEnter={handleDragEnter}
         style={{
-          ...sx,
+          textAlign: 'center',
           padding: '10px ',
           margin: 0,
           opacity: isDragging ? 0.3 : 1,
           transition: 'all 0.3s',
+          ...sx,
         }}
         className={`${style.draggable} `}
       >

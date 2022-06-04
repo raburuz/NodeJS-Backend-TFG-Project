@@ -49,8 +49,7 @@ export const Input = ({ data }: Props) => {
 
       {errors && (
         <FormHelperText id="my-helper-text">
-          {errors[name as keyof typeof errors]?.type === 'required' &&
-            `${label} is required`}
+          {errors[name as keyof typeof errors]?.message}
         </FormHelperText>
       )}
     </FormControl>

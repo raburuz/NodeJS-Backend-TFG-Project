@@ -1,5 +1,4 @@
-import { useState } from 'react';
-
+import Link from 'next/link';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -7,7 +6,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import Divider from '@mui/material/Divider';
-import Link from 'next/link';
 import { FormGroup } from '@mui/material';
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import { Input } from '../form/input/Input.component';
@@ -35,13 +33,15 @@ const inputs: InputComponent[] = [
     name: 'username',
     type: 'text',
     label: 'Username',
-    rules: { required: true },
+    rules: { required: 'This field is required' },
   },
   {
     name: 'password',
     type: 'password',
     label: 'Password',
-    rules: { required: true },
+    rules: {
+      required: 'This field is required',
+    },
   },
 ];
 

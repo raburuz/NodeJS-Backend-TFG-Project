@@ -1,0 +1,9 @@
+.btn {
+  display: block;
+  color: #ffffff;
+  background-color: #000000;
+  margin: 10px 0;
+  padding: 10px 25px;
+  text-align: center;
+  width: 100%;
+}

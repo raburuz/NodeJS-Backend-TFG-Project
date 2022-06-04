@@ -7,8 +7,11 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { v4 as uuidv4 } from 'uuid';
 import { BuildContext } from '../../context';
-import { ContentType } from '../../interfaces';
-import { TypoComponent } from '../../interfaces/components';
+import {
+  TypoComponent,
+  ListComponent,
+  ButtonComponent,
+} from '../../interfaces/components';
 
 export const BuildMenu = () => {
   const { addComponent } = useContext(BuildContext);
@@ -20,16 +23,29 @@ export const BuildMenu = () => {
   const handleClose = () => {
     setAnchorEl(null);
   };
+  const typography: TypoComponent = {
+    id: uuidv4(),
+    type: 'text',
+    label:
+      'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum',
+    tag: 'p',
+    order: 12331,
+  };
+  const list: ListComponent = {
+    id: uuidv4(),
+    type: 'list',
+    order: 2313,
+    items: ['item-1', 'item-2', 'item-3'],
+  };
+  const button: ButtonComponent = {
+    id: uuidv4(),
+    type: 'button',
+    order: 132421,
+    label: 'Button',
+    url: 'http://localhost:3000/',
+  };
 
-  const addNewComponet  = () => {
-    const component: TypoComponent = {
-      id: uuidv4(),
-      type: "text",
-      label: 'Write something nice',
-      tag:"p",
-      order: 12331
-    };
-
+  const addNewComponet = (component: any) => {
     addComponent(component);
   };
 
@@ -60,10 +76,10 @@ export const BuildMenu = () => {
           'aria-labelledby': 'basic-button',
         }}
       >
-        <MenuItem onClick={addNewComponet}>Text</MenuItem>
-        <MenuItem onClick={handleClose}>List</MenuItem>
-        <MenuItem onClick={handleClose}>Image</MenuItem>
-        <MenuItem onClick={handleClose}>Button</MenuItem>
+        <MenuItem onClick={() => addNewComponet(typography)}>Text</MenuItem>
+        <MenuItem onClick={() => addNewComponet(list)}>List</MenuItem>
+        <MenuItem onClick={() => addNewComponet(button)}>Button</MenuItem>
+        <MenuItem onClick={handleClose}>Imagen</MenuItem>
       </Menu>
     </>
   );

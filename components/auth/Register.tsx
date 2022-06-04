@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import NextLink from 'next/link';
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
+import { validate } from 'email-validator';
 
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -11,6 +12,10 @@ import Divider from '@mui/material/Divider';
 import { FormGroup, Link } from '@mui/material';
 import { Input } from '../form/input/Input.component';
 import { Checkbox } from '../form/Checkbox/Checkbox.component';
+
+const isValidEmail = (email: string) => {
+  return validate(email) ? undefined : 'Email is invalid';
+};
 
 interface InputComponent {
   name: string;
@@ -36,25 +41,34 @@ const inputs: InputComponent[] = [
     name: 'username',
     type: 'text',
     label: 'Username',
-    rules: { required: true },
+    rules: { required: 'This field is required' },
   },
   {
     name: 'email',
     type: 'email',
     label: 'Email',
-    rules: { required: true },
+    rules: {
+      required: 'This field is required',
+      validate: isValidEmail,
+    },
   },
   {
     name: 'password',
     type: 'password',
     label: 'Password',
-    rules: { required: true },
+    rules: {
+      required: 'This field is required',
+      minLength: { value: 8, message: 'Min length is 8 characters' },
+    },
   },
   {
     name: 'password2',
     type: 'password2',
     label: 'Confirm Password',
-    rules: { required: true },
+    rules: {
+      required: 'This field is required',
+      minLength: { value: 8, message: 'Min length is 8 characters' },
+    },
   },
 ];
 
@@ -82,7 +96,7 @@ export const Register = () => {
       >
         Sign Up
       </Typography>
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <FormGroup>
           <Card sx={{ width: '100%', maxWidth: 300 }}>
             <CardContent

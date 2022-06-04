@@ -7,6 +7,7 @@ import { Dragbox, Typo } from '../Draggable';
 
 import { BuildContext } from '../../context/build/BuildContext';
 import { List } from '../Draggable/list/List.component';
+import { Button } from '../Draggable/button/Button.component';
 
 export const BuildMain = () => {
   const { components, page } = useContext(BuildContext);
@@ -16,6 +17,12 @@ export const BuildMain = () => {
       style={{
         position: 'relative',
         backgroundColor: page.backgroundColor,
+        lineHeight: 1.5,
+        backgroundImage:
+          'radial-gradient(#ddd 1px,transparent 0),radial-gradient(#ddd 1px,transparent 0)',
+        backgroundPosition: '0 0,25px 25px',
+        backgroundAttachment: 'fixed',
+        backgroundSize: '50px 50px',
       }}
     >
       <BuildMenu />
@@ -40,6 +47,9 @@ export const BuildMain = () => {
                 }
                 if (component.type === 'list') {
                   return <List key={component.id} data={component} />;
+                }
+                if (component.type === 'button') {
+                  return <Button key={component.id} data={component} />;
                 }
               })}
             </>
