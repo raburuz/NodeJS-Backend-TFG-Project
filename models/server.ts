@@ -19,6 +19,7 @@ export class Server {
     userPath: string;
     websitePath: string;
     templatePath: string;
+    tokenPath: string;
   };
 
   constructor() {
@@ -30,6 +31,7 @@ export class Server {
       userPath: '/api/auth/user',
       websitePath: '/api/website',
       templatePath: '/api/template',
+      tokenPath: '/api/token',
     };
 
     //Database Connection
@@ -75,6 +77,11 @@ export class Server {
     this._app.use(
       this.apiRoutes.templatePath,
       require('../routes/template.api.routes')
+    );
+
+    this._app.use(
+      this.apiRoutes.tokenPath,
+      require('../routes/token.api.routes')
     );
   }
 
