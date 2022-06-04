@@ -9,6 +9,8 @@ import Divider from '@mui/material/Divider';
 import { FormGroup } from '@mui/material';
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import { Input } from '../form/input/Input.component';
+import { loginApi } from '../../api/userApi';
+import { LoginInterface } from '../../interfaces';
 
 interface InputComponent {
   name: string;
@@ -16,16 +18,6 @@ interface InputComponent {
   type?: string;
   defaultValue?: string;
   rules?: RegisterOptions;
-}
-
-interface State {
-  password: string;
-  showPassword: boolean;
-}
-interface IFormInput {
-  username?: string;
-  email?: string;
-  password: string;
 }
 
 const inputs: InputComponent[] = [
@@ -51,9 +43,11 @@ export const Login = () => {
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<IFormInput>();
+  } = useForm<LoginInterface>();
 
-  const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
+  const onSubmit: SubmitHandler<LoginInterface> = async data => {
+    await loginApi(data);
+  };
 
   return (
     <>
