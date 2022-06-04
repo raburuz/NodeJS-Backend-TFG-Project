@@ -6,11 +6,14 @@ const userApi = axios.create({
   baseURL: `${api.baseUrl}${api.user}`,
 });
 
-export const loginApi = async (data: LoginInterface) => {
+export const loginApi = async (userData: LoginInterface) => {
   try {
-    const response = await userApi.post(`/login`, data);
-    console.log(response);
-  } catch (error) {
-    console.log('Something was wrong');
+    const response = await userApi.post(`/login`, userData);
+    const { data } = response;
+    return data;
+  } catch (error: any) {
+    return {
+      error: true,
+    };
   }
 };

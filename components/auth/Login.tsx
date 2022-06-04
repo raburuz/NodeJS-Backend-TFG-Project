@@ -1,3 +1,4 @@
+import { useContext, useState } from 'react';
 import Link from 'next/link';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -6,11 +7,12 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import Divider from '@mui/material/Divider';
-import { FormGroup } from '@mui/material';
+import { FormGroup, Snackbar } from '@mui/material';
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import { Input } from '../form/input/Input.component';
 import { loginApi } from '../../apis/userApi';
 import { LoginInterface } from '../../interfaces';
+import { AuthContext } from '../../context';
 
 interface InputComponent {
   name: string;
@@ -38,6 +40,9 @@ const inputs: InputComponent[] = [
 ];
 
 export const Login = () => {
+  const { login } = useContext(AuthContext);
+  const [snackbar, setSnackbar] = useState(false);
+
   const {
     control,
     handleSubmit,
@@ -46,7 +51,16 @@ export const Login = () => {
   } = useForm<LoginInterface>();
 
   const onSubmit: SubmitHandler<LoginInterface> = async data => {
-    await loginApi(data);
+    const userResponse = await loginApi(data);
+    if (userResponse.ok) {
+      login(userResponse.user);
+      return;
+    }
+    setSnackbar(true);
+  };
+
+  const handleClose = () => {
+    setSnackbar(false);
   };
 
   return (
@@ -117,6 +131,13 @@ export const Login = () => {
       <Typography component="div" sx={{ m: 3.5, fontSize: '10px' }}>
         Forgot your password?
       </Typography>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={snackbar}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        message="Something was wrong please check user/password"
+      />
     </>
   );
 };
