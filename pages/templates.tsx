@@ -3,8 +3,8 @@ import { Main } from '../layouts';
 import { TemplateItem } from '../components/template';
 
 const metaTags: MetaTags = {
-  title: 'Templates',
-  description: 'Create your own Landing Page',
+  title: 'Websites',
+  description: 'Websites make it by users',
 };
 
 const BuildScreen = () => {

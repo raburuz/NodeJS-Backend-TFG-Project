@@ -1,38 +1,27 @@
-import { User } from '../../interfaces';
-export { initialUser } from './initialState';
+import { User, Auth } from '../../interfaces';
 
 type Action =
   | {
-      type: 'Login - Auth Login User';
+      type: '[Auth] - Auth Login User';
       user: User;
     }
   | {
-      type: 'Update - Auth Update User';
+      type: '[Auth] - Auth Update User';
       user: User;
-    }
-  | {
-      type: 'Logout - Auth Logout User';
     };
-export const AuthReducer = (state: User, action: Action) => {
+export const AuthReducer = (state: Auth, action: Action) => {
   switch (action.type) {
-    case 'Login - Auth Login User':
+    case '[Auth] - Auth Login User':
       return {
         ...state,
-        ...action.user,
+        user: action.user,
         isLoggedIn: true,
       };
-    case 'Update - Auth Update User':
+    case '[Auth] - Auth Update User':
       return {
         ...state,
-        ...action.user,
+        user: action.user,
         isLoggedIn: true,
-      };
-    case 'Logout - Auth Logout User':
-      return {
-        email: '',
-        username: '',
-        role: '',
-        isLoggedIn: false,
       };
 
     default:

@@ -1,4 +1,4 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useState, useContext } from 'react';
 import { useRouter } from 'next/router';
 
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -8,11 +8,21 @@ import SettingsApplicationsTwoToneIcon from '@mui/icons-material/SettingsApplica
 import FiberNewTwoToneIcon from '@mui/icons-material/FiberNewTwoTone';
 import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import { Box, Grid } from '@mui/material';
-import Link from 'next/link';
+import { AuthContext } from '../../context/auth/AuthContext';
 
 export const Navbar = () => {
+  const { userData, logout } = useContext(AuthContext);
   const [value, setValue] = useState('recents');
   const router = useRouter();
+  const { isLoggedIn } = userData;
+
+  const onAuthLink = (href: string) => {
+    if (!isLoggedIn) {
+      router.push(href);
+      return;
+    }
+    logout();
+  };
 
   const onLink = (href: string) => {
     router.push(href);
@@ -50,33 +60,36 @@ export const Navbar = () => {
               maxWidth: 500,
             }}
           >
-            <BottomNavigationAction
-              label="Build"
-              value="build"
-              icon={<FiberNewTwoToneIcon />}
-              onClick={() => onLink('/build')}
-            />
+            {isLoggedIn && (
+              <BottomNavigationAction
+                label="Build"
+                value="build"
+                icon={<FiberNewTwoToneIcon />}
+                onClick={() => onLink('/build')}
+              />
+            )}
 
             <BottomNavigationAction
-              label="Templates"
-              value="templates"
+              label="Websites"
+              value="Websites"
               icon={<FolderIcon />}
               onClick={() => onLink('/templates')}
             />
 
             <BottomNavigationAction
-              label="Login"
-              value="login"
+              label={isLoggedIn ? 'Logout' : 'Login'}
+              value={isLoggedIn ? 'Logout' : 'Login'}
               icon={<AccountCircleTwoToneIcon />}
-              onClick={() => onLink('/auth/login')}
+              onClick={() => onAuthLink(`/auth/login?page=${router.asPath}`)}
             />
-
-            <BottomNavigationAction
-              label="Settings"
-              value="settings"
-              icon={<SettingsApplicationsTwoToneIcon />}
-              onClick={() => onLink('/templates')}
-            />
+            {isLoggedIn && (
+              <BottomNavigationAction
+                label="Settings"
+                value="settings"
+                icon={<SettingsApplicationsTwoToneIcon />}
+                onClick={() => onLink('/templates')}
+              />
+            )}
           </BottomNavigation>
         </Grid>
       </Grid>

@@ -1,7 +1,7 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
-import { AuthProvider } from '../context/auth/AuthProvider';
+import { AuthProvider } from '../context';
 
 function MyApp({ Component, pageProps }: AppProps) {
   const theme = createTheme({
@@ -13,7 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <AuthProvider>
-      <Component {...pageProps} />
+        <Component {...pageProps} />
       </AuthProvider>
     </ThemeProvider>
   );

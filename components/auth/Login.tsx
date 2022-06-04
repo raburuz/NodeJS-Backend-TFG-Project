@@ -1,5 +1,8 @@
 import { useContext, useState } from 'react';
 import Link from 'next/link';
+import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
+import Cookies from 'js-cookie';
+
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -8,11 +11,12 @@ import Typography from '@mui/material/Typography';
 
 import Divider from '@mui/material/Divider';
 import { FormGroup, Snackbar } from '@mui/material';
-import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
+
 import { Input } from '../form/input/Input.component';
-import { loginApi } from '../../apis/userApi';
+import { loginApi } from '../../apis/authApi';
 import { LoginInterface } from '../../interfaces';
 import { AuthContext } from '../../context';
+import { useRouter } from 'next/router';
 
 interface InputComponent {
   name: string;
@@ -40,27 +44,35 @@ const inputs: InputComponent[] = [
 ];
 
 export const Login = () => {
+  const router = useRouter();
   const { login } = useContext(AuthContext);
-  const [snackbar, setSnackbar] = useState(false);
-
+  const [showError, setShowError] = useState(false);
+  const [blockButton, setBlockButton] = useState(false);
+  const destination = router.query.page?.toString() ?? '/';
   const {
     control,
     handleSubmit,
-    watch,
+    resetField,
     formState: { errors },
   } = useForm<LoginInterface>();
 
   const onSubmit: SubmitHandler<LoginInterface> = async data => {
-    const userResponse = await loginApi(data);
-    if (userResponse.ok) {
-      login(userResponse.user);
-      return;
-    }
-    setSnackbar(true);
+    setBlockButton(true);
+    const isValidLogin = await login(data);
+    setTimeout(() => {
+      setBlockButton(false);
+      if (!isValidLogin) {
+        setShowError(true);
+        resetField('password');
+        return;
+      }
+
+      router.replace(destination);
+    }, 500);
   };
 
   const handleClose = () => {
-    setSnackbar(false);
+    setShowError(false);
   };
 
   return (
@@ -99,7 +111,13 @@ export const Login = () => {
                 m: 1.5,
               }}
             >
-              <Button type="submit" variant="contained" size="large" fullWidth>
+              <Button
+                type="submit"
+                variant="contained"
+                size="large"
+                fullWidth
+                disabled={blockButton}
+              >
                 Login In
               </Button>
             </CardActions>
@@ -119,8 +137,13 @@ export const Login = () => {
               >
                 Don't have an account yet? Sign up for free!
               </Typography>
-              <Link href="/auth/register">
-                <Button variant="outlined" size="large" fullWidth>
+              <Link href={`/auth/register?page=${destination}`}>
+                <Button
+                  variant="outlined"
+                  size="large"
+                  fullWidth
+                  disabled={blockButton}
+                >
                   Sign Up
                 </Button>
               </Link>
@@ -133,7 +156,7 @@ export const Login = () => {
       </Typography>
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={snackbar}
+        open={showError}
         autoHideDuration={3000}
         onClose={handleClose}
         message="Something was wrong please check user/password"

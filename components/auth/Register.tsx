@@ -12,6 +12,7 @@ import Divider from '@mui/material/Divider';
 import { FormGroup, Link } from '@mui/material';
 import { Input } from '../form/input/Input.component';
 import { Checkbox } from '../form/Checkbox/Checkbox.component';
+import { useRouter } from 'next/router';
 
 const isValidEmail = (email: string) => {
   return validate(email) ? undefined : 'Email is invalid';
@@ -25,10 +26,6 @@ interface InputComponent {
   rules?: RegisterOptions;
 }
 
-interface State {
-  password: string;
-  showPassword: boolean;
-}
 interface IFormInput {
   username: string;
   email: string;
@@ -73,16 +70,14 @@ const inputs: InputComponent[] = [
 ];
 
 export const Register = () => {
-  const [values, setValues] = useState<State>({
-    password: '',
-    showPassword: false,
-  });
+  const router = useRouter();
   const {
     control,
     handleSubmit,
     watch,
     formState: { errors },
   } = useForm<IFormInput>();
+  const destination = router.query.page?.toString() ?? '/';
 
   const onSubmit: SubmitHandler<IFormInput> = data => console.log(data);
 
@@ -143,7 +138,7 @@ export const Register = () => {
 
       <Typography component="div" sx={{ m: 3.5, fontSize: '10px' }}>
         Do you have account?{' '}
-        <NextLink href="/auth/login">
+        <NextLink href={`/auth/login?page=${destination}`}>
           <Link>Log In</Link>
         </NextLink>
       </Typography>

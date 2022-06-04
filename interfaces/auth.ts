@@ -3,11 +3,15 @@ export interface User {
   email: string;
   username: string;
   role?: string;
-  isLoggedIn?: boolean;
 }
 
 export interface LoginInterface {
   username?: string;
   email?: string;
   password: string;
+}
+
+export interface Auth {
+  user: User | null;
+  isLoggedIn?: boolean;
 }

@@ -1,9 +1,14 @@
 import axios from 'axios';
 import { LoginInterface } from '../interfaces';
 import { api } from './api';
+import Cookies from 'js-cookie';
 
 const userApi = axios.create({
   baseURL: `${api.baseUrl}${api.user}`,
+});
+
+const tokenApi = axios.create({
+  baseURL: `${api.baseUrl}${api.token}`,
 });
 
 export const loginApi = async (userData: LoginInterface) => {
@@ -16,4 +21,11 @@ export const loginApi = async (userData: LoginInterface) => {
       error: true,
     };
   }
+};
+
+export const revalidateToken = async () => {
+  const x_token = Cookies.get('x_token') ?? null;
+  const response = await tokenApi.post('/revalidate', { x_token });
+  const { data } = response;
+  return data;
 };
