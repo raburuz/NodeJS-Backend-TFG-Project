@@ -1,9 +1,9 @@
 import Head from 'next/head';
 import dynamic from 'next/dynamic';
-import { BuildProvider } from '../context';
-import { Metas } from '../components/Structural';
+import { BuildProvider } from '../../context';
+import { Metas } from '../../components/Structural';
 const BuildMain = dynamic(
-  () => import('../components/build').then((mod: any) => mod.BuildMain),
+  () => import('../../components/build').then((mod: any) => mod.BuildMain),
   {
     ssr: false,
   }
