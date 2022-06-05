@@ -1,5 +1,6 @@
 import '../styles/globals.css';
 import type { AppProps } from 'next/app';
+import { SessionProvider } from 'next-auth/react';
 import { createTheme, CssBaseline, ThemeProvider } from '@mui/material';
 import { AuthProvider } from '../context';
 
@@ -9,13 +10,17 @@ function MyApp({ Component, pageProps }: AppProps) {
       mode: 'light',
     },
   });
+
   return (
-    <ThemeProvider theme={theme}>
-      <CssBaseline />
+    <SessionProvider>
       <AuthProvider>
-        <Component {...pageProps} />
+        <ThemeProvider theme={theme}>
+          <CssBaseline />
+
+          <Component {...pageProps} />
+        </ThemeProvider>
       </AuthProvider>
-    </ThemeProvider>
+    </SessionProvider>
   );
 }
 

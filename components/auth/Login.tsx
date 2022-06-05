@@ -1,8 +1,8 @@
-import { useContext, useState } from 'react';
+import { useState } from 'react';
+import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { signIn } from 'next-auth/react';
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
-import Cookies from 'js-cookie';
-
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -13,10 +13,7 @@ import Divider from '@mui/material/Divider';
 import { FormGroup, Snackbar } from '@mui/material';
 
 import { Input } from '../form/input/Input.component';
-import { loginApi } from '../../apis/authApi';
 import { LoginInterface } from '../../interfaces';
-import { AuthContext } from '../../context';
-import { useRouter } from 'next/router';
 
 interface InputComponent {
   name: string;
@@ -45,7 +42,6 @@ const inputs: InputComponent[] = [
 
 export const Login = () => {
   const router = useRouter();
-  const { login } = useContext(AuthContext);
   const [showError, setShowError] = useState(false);
   const [blockButton, setBlockButton] = useState(false);
   const destination = router.query.page?.toString() ?? '/';
@@ -58,17 +54,23 @@ export const Login = () => {
 
   const onSubmit: SubmitHandler<LoginInterface> = async data => {
     setBlockButton(true);
-    const isValidLogin = await login(data);
+
+    await signIn('credentials', {
+      username: data.username,
+      password: data.password,
+    });
+    /*
     setTimeout(() => {
       setBlockButton(false);
-      if (!isValidLogin) {
+      if (true) {
         setShowError(true);
         resetField('password');
         return;
       }
 
-      router.replace(destination);
+     
     }, 500);
+    */
   };
 
   const handleClose = () => {

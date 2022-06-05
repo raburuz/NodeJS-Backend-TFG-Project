@@ -1,12 +1,14 @@
 import { FC, useReducer, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import { signOut, useSession } from 'next-auth/react';
+import Cookies from 'js-cookie';
+
 import { Auth, User } from '../../interfaces';
 import { AuthContext } from './AuthContext';
 import { AuthReducer } from './AuthReducer';
 import { initialUser } from './initialState';
 import { LoginInterface } from '../../interfaces/auth';
 import { loginApi, revalidateToken } from '../../apis/authApi';
-import Cookies from 'js-cookie';
-import { useRouter } from 'next/router';
 
 interface Props {
   children: JSX.Element;
@@ -15,12 +17,18 @@ interface Props {
 export const AUTH_INITIAL_STATE: Auth = initialUser;
 
 export const AuthProvider: FC<Props> = ({ children }) => {
-  const router = useRouter();
   const [userData, dispatch] = useReducer(AuthReducer, AUTH_INITIAL_STATE);
-  useEffect(() => {
-    checkToken();
-  }, []);
+  const { data, status } = useSession();
+  const router = useRouter();
 
+  useEffect(() => {
+    if (status === 'authenticated') {
+      Cookies.set('x_token', data.token as string);
+      loginUser(data.user as User);
+    }
+  }, [status, data]);
+
+  /*
   const checkToken = async () => {
     const data = await revalidateToken();
     const { user, token } = data;
@@ -38,7 +46,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
     }
     return false;
   };
-
+*/
   const loginUser = (user: User) => {
     dispatch({
       type: '[Auth] - Auth Login User',
@@ -59,11 +67,11 @@ export const AuthProvider: FC<Props> = ({ children }) => {
 
   const logout = () => {
     Cookies.remove('x_token');
-    router.reload();
+    signOut();
   };
 
   return (
-    <AuthContext.Provider value={{ userData, login, updateUser, logout }}>
+    <AuthContext.Provider value={{ userData, updateUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

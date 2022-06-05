@@ -1,12 +1,14 @@
 import { NextFetchEvent, NextRequest, NextResponse } from 'next/server';
 
 export async function middleware(req: NextRequest, ev: NextFetchEvent) {
+  const url = req.nextUrl.clone().origin;
   const { x_token = '' } = req.cookies;
   const body = {
     x_token,
   };
-  const url = req.nextUrl.clone().origin;
+
   const requestedPage = req.page.name;
+
   try {
     const response = await fetch('http://localhost:3003/api/token/revalidate', {
       method: 'post',

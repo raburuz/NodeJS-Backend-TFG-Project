@@ -12,6 +12,7 @@ const tokenApi = axios.create({
 });
 
 export const loginApi = async (userData: LoginInterface) => {
+  console.log(userData);
   try {
     const response = await userApi.post(`/login`, userData);
     const { data } = response;

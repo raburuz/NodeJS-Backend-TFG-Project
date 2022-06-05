@@ -16,11 +16,7 @@ export const Navbar = () => {
   const router = useRouter();
   const { isLoggedIn } = userData;
 
-  const onAuthLink = (href: string) => {
-    if (!isLoggedIn) {
-      router.push(href);
-      return;
-    }
+  const onAuthLink = () => {
     logout();
   };
 
@@ -80,7 +76,11 @@ export const Navbar = () => {
               label={isLoggedIn ? 'Logout' : 'Login'}
               value={isLoggedIn ? 'Logout' : 'Login'}
               icon={<AccountCircleTwoToneIcon />}
-              onClick={() => onAuthLink(`/auth/login?page=${router.asPath}`)}
+              onClick={() =>
+                isLoggedIn
+                  ? onAuthLink()
+                  : onLink(`/auth/login?page=${router.asPath}`)
+              }
             />
             {isLoggedIn && (
               <BottomNavigationAction
