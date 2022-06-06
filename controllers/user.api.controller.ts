@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { hashPasswordWithBcrypt, signJWT } from '../helpers';
-import { UpdateUser, UserData } from '../interfaces';
+import { Role, UpdateUser, UserData } from '../interfaces';
 import { UserModel } from '../models';
 import { WebsiteModel } from '../models/website';
 
@@ -45,9 +45,12 @@ export const loginUser = async (req: Request, res: Response) => {
 export const registerUser = async (req: Request, res: Response) => {
   const { password, ...userData }: UserData = req.body;
   const hashPassword = hashPasswordWithBcrypt(password);
+  const role: Role = Role.NORMAL_USER_ROLE;
   const user = new UserModel({
     ...userData,
     password: hashPassword,
+    role,
+    isValidate: false,
     isDeleted: false,
   });
   try {
