@@ -29,23 +29,9 @@ export const registerUserValidators = [
     .trim()
     .not()
     .isEmpty()
-    .isStrongPassword({
-      minLength: 8,
-      minLowercase: 1,
-      minUppercase: 1,
-      minNumbers: 1,
-      minSymbols: 1,
-    })
-    .withMessage(
-      'Password must be greater than 8 and contain at least one Uppercase letter, one Lowercase letter, one Number and one Symbol'
-    ),
-  check('role', 'Role is required')
-    .trim()
-    .not()
-    .isEmpty()
-    .isIn(roles)
-    .withMessage('Role is invalid'),
-  check('isValidate', 'Validate field is required').not().isEmpty().isBoolean(),
+    .isLength({ min: 8 })
+    .withMessage('Password must be greater than 8'),
+
   check('acceptPolicy', 'Accept Policy is required').not().isEmpty().isDate(),
   validateRequest,
 ];
