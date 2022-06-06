@@ -7,8 +7,6 @@ import { Auth, User } from '../../interfaces';
 import { AuthContext } from './AuthContext';
 import { AuthReducer } from './AuthReducer';
 import { initialUser } from './initialState';
-import { LoginInterface } from '../../interfaces/auth';
-import { loginApi, revalidateToken } from '../../apis/authApi';
 
 interface Props {
   children: JSX.Element;

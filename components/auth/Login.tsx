@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import Divider from '@mui/material/Divider';
-import { FormGroup, Snackbar } from '@mui/material';
+import { FormGroup } from '@mui/material';
 
 import { Input } from '../form/input/Input.component';
 import { LoginInterface } from '../../interfaces';
@@ -42,7 +42,6 @@ const inputs: InputComponent[] = [
 
 export const Login = () => {
   const router = useRouter();
-  const [showError, setShowError] = useState(false);
   const [blockButton, setBlockButton] = useState(false);
   const destination = router.query.page?.toString() ?? '/';
   const {
@@ -59,22 +58,6 @@ export const Login = () => {
       username: data.username,
       password: data.password,
     });
-    /*
-    setTimeout(() => {
-      setBlockButton(false);
-      if (true) {
-        setShowError(true);
-        resetField('password');
-        return;
-      }
-
-     
-    }, 500);
-    */
-  };
-
-  const handleClose = () => {
-    setShowError(false);
   };
 
   return (
@@ -156,13 +139,6 @@ export const Login = () => {
       <Typography component="div" sx={{ m: 3.5, fontSize: '10px' }}>
         Forgot your password?
       </Typography>
-      <Snackbar
-        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-        open={showError}
-        autoHideDuration={3000}
-        onClose={handleClose}
-        message="Something was wrong please check user/password"
-      />
     </>
   );
 };

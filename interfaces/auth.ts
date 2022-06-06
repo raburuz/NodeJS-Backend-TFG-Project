@@ -9,6 +9,7 @@ export interface LoginInterface {
   username?: string;
   email?: string;
   password: string;
+  acceptPolicy?: string;
 }
 
 export interface Auth {

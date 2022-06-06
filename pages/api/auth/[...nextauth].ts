@@ -2,6 +2,7 @@ import NextAuth from 'next-auth';
 import CredentialsProvider from 'next-auth/providers/credentials';
 import { loginApi } from '../../../apis/authApi';
 import { User } from '../../../interfaces';
+import { signOut } from 'next-auth/react';
 export default NextAuth({
   // Configure one or more authentication providers
   providers: [
@@ -31,6 +32,7 @@ export default NextAuth({
   //Custom pages
   pages: {
     signIn: '/auth/login',
+    signOut: '',
     newUser: '/auth/register',
   },
 

@@ -30,3 +30,17 @@ export const revalidateToken = async () => {
   const { data } = response;
   return data;
 };
+
+export const registerApi = async (userData: LoginInterface) => {
+  try {
+    await userApi.post(`/register`, userData);
+    return {
+      error: false,
+    };
+  } catch (error: any) {
+    console.log(error);
+    return {
+      error: true,
+    };
+  }
+};

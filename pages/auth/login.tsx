@@ -1,13 +1,23 @@
 import { GetServerSideProps } from 'next';
-import { Container, Grid } from '@mui/material';
+import { Container, Grid, Snackbar } from '@mui/material';
 import { Login } from '../../components/auth/Login';
 import { Main } from '../../layouts/Main';
 import { getSession } from 'next-auth/react';
+import { useState } from 'react';
 
-const LoginScreen = () => {
+interface Props {
+  error?: boolean;
+}
+
+const LoginScreen = ({ error }: Props) => {
+  const [hasError, setHasError] = useState(error);
   const metaTags = {
     title: 'Login',
     description: 'Login',
+  };
+
+  const handleClose = () => {
+    setHasError(false);
   };
 
   return (
@@ -33,6 +43,13 @@ const LoginScreen = () => {
               }}
             >
               <Login />
+              <Snackbar
+                anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+                open={!!hasError}
+                autoHideDuration={3000}
+                onClose={handleClose}
+                message="Something was wrong please check user/password"
+              />
             </Container>
           </Grid>
         </Grid>
@@ -46,23 +63,28 @@ export const getServerSideProps: GetServerSideProps = async ({
   query,
 }) => {
   const session = await getSession({ req });
-
-  console.log('***sessionnnnn*******');
-  console.log(session);
-
-  const { page = '/' } = query;
+  const { callbackUrl = null } = query;
 
   if (session) {
     return {
       redirect: {
-        destination: page.toString(),
+        destination: '/templates',
         permanent: false,
       },
+      props: {
+        error: false,
+      },
+    };
+  }
+  if (callbackUrl) {
+    return {
+      redirect: { destination: '/auth/login', permanent: false },
+      props: { error: true },
     };
   }
 
   return {
-    props: {},
+    props: { error: false },
   };
 };
 
