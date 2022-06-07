@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
 import Divider from '@mui/material/Divider';
-import { FormGroup } from '@mui/material';
+import { FormGroup,Snackbar } from '@mui/material';
 
 import { Input } from '../form/input/Input.component';
 import { LoginInterface } from '../../interfaces';
@@ -42,6 +42,7 @@ const inputs: InputComponent[] = [
 
 export const Login = () => {
   const router = useRouter();
+  const [showError, setShowError] = useState(false);
   const [blockButton, setBlockButton] = useState(false);
   const destination = router.query.page?.toString() ?? '/';
   const {
@@ -60,8 +61,12 @@ export const Login = () => {
     });
   };
 
+  const handleClose = () => {
+    setShowError(false);
+  };
+  
   return (
-    <>
+<>
       <Typography
         variant="h4"
         component="div"
@@ -72,7 +77,7 @@ export const Login = () => {
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormGroup>
-          <Card sx={{ width: '100%', maxWidth: 300 }}>
+          <Card sx={{ width: '100%', maxWidth: 300, background:'transparent' }}>
             <CardContent
               sx={{
                 display: 'flex',
@@ -102,6 +107,7 @@ export const Login = () => {
                 size="large"
                 fullWidth
                 disabled={blockButton}
+                sx={{background: '#3f0466', color:'white'}}
               >
                 Login In
               </Button>
@@ -128,6 +134,7 @@ export const Login = () => {
                   size="large"
                   fullWidth
                   disabled={blockButton}
+                  sx={{background: '#3f0466', color:'white',border:'0'}}
                 >
                   Sign Up
                 </Button>
@@ -139,6 +146,13 @@ export const Login = () => {
       <Typography component="div" sx={{ m: 3.5, fontSize: '10px' }}>
         Forgot your password?
       </Typography>
+      <Snackbar
+        anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
+        open={showError}
+        autoHideDuration={3000}
+        onClose={handleClose}
+        message="Something was wrong please check user/password"
+      />
     </>
   );
 };

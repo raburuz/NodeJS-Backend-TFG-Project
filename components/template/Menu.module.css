@@ -1,0 +1,120 @@
+@import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
+
+.containerMenu{
+    font-family: "Montserrat";
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: center;
+    flex-flow: wrap row;
+}
+
+
+/*-----------------------------------Information-------------------------------*/
+.informationMenu{
+    width: 60%;
+    height: 300px;
+    text-align: center;
+    margin-top: 50px;
+}
+
+.titleInfoMenu{
+    font-size: 3em;
+    color: rgb(194, 196, 199);
+}
+
+.textInfoMenu{
+    margin: 50px;
+    font-size: 1.3em;
+}
+/*-----------------------------------Template-------------------------------*/
+.templatesMenu{
+    width: 100%;
+    height: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-flow: wrap row;
+}
+
+.templateMenu{
+    background-color: #7785a3;
+    width: 500px;
+    height: 300px;
+    margin: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.botonSelect{
+    display: none;
+    background-color: #9a70bd;
+    padding: 20px;
+    cursor: pointer;
+}
+
+
+.templateMenu:hover{
+    background-color: #7375794d;
+}
+
+.templateMenu:hover > .botonSelect{
+    display: block;
+}
+
+
+/*-----------------------------------Mediaqueries-------------------------------*/
+
+@media all and (max-width:780px){
+    .informationMenu{
+        width: 80%;
+    }
+
+    .titleInfoMenu{
+        font-size: 2.5em;
+    }
+}
+
+@media all and (max-width:490px){
+    .titleInfoMenu{
+        font-size: 2.2em;
+    }
+
+    .textInfoMenu{
+        font-size: 1.2em;
+    }
+
+    .logBack{
+        width: 40px;
+        height: 40px;
+    }
+
+    .lista{
+        padding: 10px;
+    }
+
+    .separador{
+        margin: 5px;
+    }
+
+    .element{
+    margin: 0;
+    }
+}
+
+@media all and (max-width:430px){
+    .informationMenu{
+        width: 95%;
+    }
+
+    .titleInfoMenu{
+        font-size: 2em;
+    }
+
+    .textInfoMenu{
+        font-size: 1.1em;
+    }
+}
+
+

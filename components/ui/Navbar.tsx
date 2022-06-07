@@ -10,6 +10,11 @@ import AccountCircleTwoToneIcon from '@mui/icons-material/AccountCircleTwoTone';
 import { Box, Grid } from '@mui/material';
 import { AuthContext } from '../../context/auth/AuthContext';
 
+import Image from 'next/image'
+import nombre from '../images/nombre.png'
+import style from './Navbar.module.css'
+import { Link } from '@mui/material';
+
 export const Navbar = () => {
   const { userData, logout } = useContext(AuthContext);
   const [value, setValue] = useState('recents');
@@ -41,7 +46,9 @@ export const Navbar = () => {
               paddingLeft: 10,
             }}
           >
-            BaduBai
+            <div className={style.nombre}>
+              <Link href="/"><Image src={nombre}/></Link> 
+            </div>
           </Box>
         </Grid>
         <Grid item xs={8} md={5}>
@@ -54,6 +61,7 @@ export const Navbar = () => {
               alignItems: 'flex-end',
               marginLeft: 5,
               maxWidth: 500,
+              background:'transparent'
             }}
           >
             {isLoggedIn && (
@@ -62,6 +70,7 @@ export const Navbar = () => {
                 value="build"
                 icon={<FiberNewTwoToneIcon />}
                 onClick={() => onLink('/build')}
+                sx={{color:'white'}}
               />
             )}
 
@@ -70,6 +79,7 @@ export const Navbar = () => {
               value="Websites"
               icon={<FolderIcon />}
               onClick={() => onLink('/templates')}
+              sx={{color:'white'}}
             />
 
             <BottomNavigationAction
@@ -81,6 +91,7 @@ export const Navbar = () => {
                   ? onAuthLink()
                   : onLink(`/auth/login?page=${router.asPath}`)
               }
+              sx={{color:'white'}}
             />
             {isLoggedIn && (
               <BottomNavigationAction
@@ -88,6 +99,7 @@ export const Navbar = () => {
                 value="settings"
                 icon={<SettingsApplicationsTwoToneIcon />}
                 onClick={() => onLink('/templates')}
+                sx={{color:'white'}}
               />
             )}
           </BottomNavigation>
