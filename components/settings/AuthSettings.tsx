@@ -1,5 +1,4 @@
-
-  
+ 
 import React, { useContext } from 'react';
 import { RegisterOptions } from 'react-hook-form';
 import Tabs from '@mui/material/Tabs';
@@ -84,9 +83,11 @@ function a11yProps(index: number) {
     setValue(newValue);
   };
 
+  const { userData } = useContext(AuthContext);
+
   return (
     <Box
-      sx={{}}
+      sx={{width:'100%'}}
     >
     {/* //   <Tabs 
     //     orientation="vertical"
@@ -126,7 +127,7 @@ function a11yProps(index: number) {
          Item Seven
       </TabPanel> */}
         <div className={style.Contsetting}>
-            <h1>User setting</h1>
+            <h1 className={style.titleUser}>User setting</h1>
             <div className={style.log}>
                 <div className={style.imagePerfil}>
                 <Stack direction="row" spacing={10}>
@@ -134,9 +135,9 @@ function a11yProps(index: number) {
                 </Stack>
                 </div>
                 <div className= {style.inputPerfil}>
-                    <TextField value="Nombre" id="margin-none" sx={{border:'1px solid #bdbdbd'}}/>
-                    <TextField value="Email" id="margin-none" sx={{border:'1px solid #bdbdbd'}}/>
-                    <TextField value="Contraseña" id="margin-none" sx={{border:'1px solid #bdbdbd'}}/>
+                    <TextField value={userData.user?.username} id="margin-none" sx={{border:'1px solid #bdbdbd'}}/>
+                    <TextField value={userData.user?.email} id="margin-none" sx={{border:'1px solid #bdbdbd'}}/>
+                    <TextField value="*******" id="margin-none" sx={{border:'1px solid #bdbdbd'}}/>
                     <Button variant="text" sx={{background:'purple',color:'white'}}>Update</Button>
                 </div>
             </div>

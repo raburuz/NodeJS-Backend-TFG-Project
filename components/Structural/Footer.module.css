@@ -28,3 +28,17 @@ margin:10px;
 width: 100%;
 text-align: center;
 }
+
+@media all and (max-width:490px){
+  .lista{
+    padding: 10px;
+  }
+
+  .separador{
+    margin: 5px;
+  }
+
+  .element{
+    margin: 5px;
+  }
+}

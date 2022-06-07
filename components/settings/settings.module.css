@@ -27,3 +27,9 @@
     justify-content: space-around;
     align-items: center;
 }
+
+@media all and (max-width:600px){
+    .titleUser{
+        text-align: center;
+    }
+}

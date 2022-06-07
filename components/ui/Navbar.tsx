@@ -43,7 +43,7 @@ export const Navbar = () => {
               alignItems: 'center',
               width: '10%',
               height: '100%',
-              paddingLeft: 10,
+              paddingLeft: 5,
             }}
           >
             <div className={style.nombre}>
@@ -59,7 +59,7 @@ export const Navbar = () => {
             sx={{
               display: 'flex',
               alignItems: 'flex-end',
-              marginLeft: 5,
+              marginLeft: 10,
               maxWidth: 500,
               background:'transparent'
             }}

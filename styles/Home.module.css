@@ -11,7 +11,7 @@
   justify-content: center;
   align-items: center; */
   background-image: linear-gradient(30deg, rgba(121,82,119,0.975) 30%, #355192 85%);
-  height: 100%;
+  height: auto;
   background-position: center, center;
   background-repeat: no-repeat;
 }
@@ -143,7 +143,7 @@
   .cont{
     width: 100%;
     height: auto;
-    margin-top:50px ;
+    margin:50px ;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -210,7 +210,7 @@
 
   .information{
     width: 100%;
-    height: 1000px;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -218,7 +218,7 @@
 
   .info{
     width: 80%;
-    height: 900px;
+    height: auto;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -237,139 +237,25 @@
 
   .infoText{
     font-weight: normal;
+    font-size: 1.2em;
   }
 
   .titleInfo{
     color: rgb(194, 196, 199);
+    font-size: 2.3em;
   }
 
   .templates{
     width: 100%;
-    height: 500px;
+    height: auto;
   }
 
-  #caja {
-    -moz-animation: automatizacion 15s infinite linear;
-    -o-animation: automatizacion 15s infinite linear;
-    -webkit-animation: automatizacion 15s infinite linear;
-    animation: automatizacion 15s infinite linear;
-    -webkit-transition: all 0.75s ease;
-    -moz-transition: all 0.75s ease;
-    -ms-transition: all 0.75s ease;
-    -o-transition: all 0.75s ease;
-    transition: all 0.75s ease;
-    height: 500px;
-    width: 300%;
-  }
-
-  #contenido {
-      margin: 0 auto;
-      overflow: hidden;
-      text-align: left;
-  }
-
-  .imagenes{
-      height: 600px !important;
-      width: 600px;
-      border: 1px solid red;
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
-  }
-
-  .carrusel {
-      float: left;
-      width: 1100px;
-      height: 1000px;
-  }
-
-  @-moz-keyframes automatizacion {
-    0% {
-        margin-left: 0;
-    }
-
-    30% {
-        margin-left: 0;
-    }
-
-    35% {
-        margin-left: -100%;
-    }
-
-    65% {
-        margin-left: -100%;
-    }
-
-    70% {
-        margin-left: -200%;
-    }
-
-    95% {
-        margin-left: -200%;
-    }
-
-    100% {
-        margin-left: 0;
-    }
-  }
-
-  @-webkit-keyframes automatizacion {
-    0% {
-        margin-left: 0;
-    }
-
-    30% {
-        margin-left: 0;
-    }
-
-    35% {
-        margin-left: -100%;
-    }
-
-    65% {
-        margin-left: -100%;
-    }
-
-    70% {
-        margin-left: -200%;
-    }
-
-    95% {
-        margin-left: -200%;
-    }
-
-    100% {
-        margin-left: 0;
-    }
-  }
-
-  @keyframes automatizacion {
-    0% {
-        margin-left: 0;
-    }
-
-    30% {
-        margin-left: 0;
-    }
-
-    35% {
-        margin-left: -100%;
-    }
-
-    65% {
-        margin-left: -100%;
-    }
-
-    70% {
-        margin-left: -200%;
-    }
-
-    95% {
-        margin-left: -200%;
-    }
-
-    100% {
-        margin-left: 0;
-    }
+  #caja{
+    display: flex;
+    flex-flow: wrap row;
+    justify-content: space-around;
+    align-items: center;
+    margin-bottom: 50px;
   }
 
   /*----------------------------------MEDIAQUERIES--------------------------------*/
@@ -379,48 +265,36 @@
       padding: 30px;
     }
 
-    .titleInfo{
-      font-size: 2.5em;
-    }
-
     .textInfo{
       margin-bottom: 30px;
-    }
-
-    .infoText{
-      font-size: 1.3em;
     }
   }
 
   @media all and (max-width:490px){
+    
     .textInformation{
       padding: 30px;
       height: 450px;
     }
 
-    .textInfo{
+    .info{
       width: 90%;
     }
 
+    .textInfo{
+      width: 90%;
+      font-size: 1.1em;
+    }
+
     .titleInfo{
-      font-size: 2.2em;
+      font-size: 2em;
     }
 
     .infoText{
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
 
-    .lista{
-      padding: 10px;
-    }
 
-    .separador{
-      margin: 5px;
-    }
-
-    .element{
-      margin: 0;
-    }
   }
 
   @media all and (max-width:420px){
@@ -431,13 +305,5 @@
     .textInfo{
       margin-bottom: 90px;
     }
-
-    .titleInfo{
-      font-size: 2em;
-    }
   }
 
-
-  .css-2ll248-MuiGrid-root{
-    height: auto !important;
-}
