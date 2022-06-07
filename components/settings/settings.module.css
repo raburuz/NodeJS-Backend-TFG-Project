@@ -1,0 +1,29 @@
+.Contsetting{
+    width: 100%;
+    height: auto;
+    font-family: "Montserrat";
+}
+
+.log{
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-flow: wrap row;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.imagePerfil{
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+}
+
+.inputPerfil{
+    width: 500px;
+    height: 400px;
+    display: flex;
+    flex-flow: wrap column;
+    justify-content: space-around;
+    align-items: center;
+}
