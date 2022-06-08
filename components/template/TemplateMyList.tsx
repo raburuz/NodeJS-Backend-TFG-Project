@@ -1,6 +1,7 @@
 import style from './Menu.module.css'
 import { useContext } from 'react';
 import { AuthContext } from '../../context/auth/AuthContext';
+import Link from 'next/link';
 
 
 export const TemplateMyList = () => {
@@ -18,10 +19,10 @@ export const TemplateMyList = () => {
             <div className={style.templatesMenu}>
               {
                 isLoggedIn &&
-                <div className={style.templateMenu}><a href="/build" className={style.botonSelect}>Choose</a></div>
+                <div className={style.templateMenu}><Link href="/build" className={style.botonSelect}>Choose</Link></div>
                 
               }
-                <div className={style.templateMenu}><a href="/index" className={style.botonSelect}>Choose</a></div>
+                <div className={style.templateMenu}><Link href="/index" className={style.botonSelect}>Choose</Link></div>
                 
             </div>
         </div>
