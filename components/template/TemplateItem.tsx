@@ -34,7 +34,7 @@ export const TemplateItem = () => {
             aria-label="Template for build your page"
             centered
           >
-            <Tab label="Last Websites" {...a11yProps(0)} />
+            <Tab label="Last Websites" {...a11yProps(0)}/>
             {isLoggedIn && <Tab label="My Websites" {...a11yProps(1)} />}
           </Tabs>
         </Box>

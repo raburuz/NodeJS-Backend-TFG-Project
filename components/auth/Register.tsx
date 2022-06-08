@@ -128,7 +128,7 @@ export const Register = () => {
       </Typography>
       <form onSubmit={handleSubmit(onSubmit)} noValidate>
         <FormGroup>
-          <Card sx={{ width: '100%', maxWidth: 300 }}>
+          <Card sx={{ width: '100%', maxWidth: 300, background:'transparent' }}>
             <CardContent
               sx={{
                 display: 'flex',
@@ -189,6 +189,7 @@ export const Register = () => {
                 fullWidth
                 type="submit"
                 disabled={blockButton}
+                sx={{background: '#3f0466', color:'white',border:'0'}}
               >
                 Sign Up
               </Button>
@@ -197,10 +198,10 @@ export const Register = () => {
         </FormGroup>
       </form>
 
-      <Typography component="div" sx={{ m: 3.5, fontSize: '10px' }}>
+      <Typography component="div" sx={{ m: 3.5, fontSize: '15px'}}>
         Do you have account?{' '}
         <NextLink href={`/auth/login?page=${destination}`}>
-          <Link>Log In</Link>
+          <Link sx={{color:'#FFFFFF',textDecoration:'none'}} href={`/auth/login?page=${destination}`}>Log In</Link>
         </NextLink>
       </Typography>
     </>
