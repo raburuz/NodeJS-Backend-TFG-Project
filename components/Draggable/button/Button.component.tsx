@@ -33,7 +33,7 @@ export const Button = ({ data }: Props) => {
           justifyContent: 'center',
         }}
       >
-        <a className={style.btn} href={url} style={sx} target="_blank">
+        <a className={style.btn} href={url} style={sx} target="_blank" rel='noreferrer'>
           {label}
         </a>
       </div>

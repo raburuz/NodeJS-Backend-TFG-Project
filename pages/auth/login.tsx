@@ -68,7 +68,7 @@ export const getServerSideProps: GetServerSideProps = async ({
   if (session) {
     return {
       redirect: {
-        destination: '/templates',
+        destination: '/',
         permanent: false,
       },
       props: {

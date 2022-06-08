@@ -2,6 +2,7 @@ import { SyntheticEvent, useState, useContext } from 'react';
 import { Tab, Tabs, Box } from '@mui/material';
 import { TabPanel } from '../ui';
 import { TemplateList } from './TemplateList';
+import { TemplateMyList } from './TemplateMyList';
 import { AuthContext } from '../../context/auth/AuthContext';
 
 export const TemplateItem = () => {
@@ -42,7 +43,7 @@ export const TemplateItem = () => {
           <TemplateList />
         </TabPanel>
         <TabPanel value={value} index={1}>
-          <TemplateList />
+          <TemplateMyList />
         </TabPanel>
         <TabPanel value={value} index={2}>
           <TemplateList />

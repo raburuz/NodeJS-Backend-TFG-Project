@@ -22,6 +22,7 @@ export default NextAuth({
         console.log(user);
         //SOmething was wrong
         if (user.error) {
+          console.log("error")
           return null;
         }
         return user;
@@ -53,7 +54,6 @@ export default NextAuth({
 
     async session({ session, token }) {
       const data = token.user as any;
-
       session.token = data.token as string;
       session.user = data.user as User;
       return session;

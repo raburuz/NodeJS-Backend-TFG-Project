@@ -13,18 +13,24 @@ import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 
+import { AuthContext } from '../context';
+import React, { useContext } from 'react';
+
 const Home: NextPage = () => {
   const metaTags: MetaTags = {
     title: '',
     description: '',
   };
 
+  const { userData } = useContext(AuthContext);
+  console.log(userData)
+
   return (
     <Main metaTags={metaTags}>
       <>
         <div className={styles.container}>
           <div className={styles.cont}>
-            <div className={styles.logo}><Image className={styles.log} src={logo} /></div>
+            <div className={styles.logo}><Image alt="logo" className={styles.log} src={logo} /></div>
             <div className={styles.textInfo}>A place where you can create your page quickly and easily. Let your imagination fly.</div>
             {/* <div className={styles.menu}><Link href='/menu' sx={{color:'#FFFFFF'}}>Choose your template</Link></div>
         <div className={styles.login}><Link href='/auth/login' sx={{color:'#FFFFFF'}}>Login</Link></div>

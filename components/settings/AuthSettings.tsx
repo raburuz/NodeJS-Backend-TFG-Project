@@ -44,9 +44,6 @@ interface InputComponent {
     },
   ];
 
-
-
-
 function TabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
   const { userData, logout } = useContext(AuthContext);
@@ -84,6 +81,7 @@ function a11yProps(index: number) {
   };
 
   const { userData } = useContext(AuthContext);
+  console.log(userData)
 
   return (
     <Box

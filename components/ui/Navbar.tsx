@@ -47,7 +47,7 @@ export const Navbar = () => {
             }}
           >
             <div className={style.nombre}>
-              <Link href="/"><Image src={nombre}/></Link> 
+              <Link href="/"><Image alt="puzzle" src={nombre}/></Link> 
             </div>
           </Box>
         </Grid>
