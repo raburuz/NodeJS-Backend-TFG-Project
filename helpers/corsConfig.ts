@@ -1,4 +1,4 @@
-const whitelistDomains = [`http://localhost:3000`];
+const whitelistDomains = [`http://localhost:3000`, 'https://vercel.com/raburuz/puzzle'];
 
 export const corsConfig = {
   origin: (origin: string | undefined, callback: any) => {

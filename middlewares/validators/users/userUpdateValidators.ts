@@ -46,15 +46,7 @@ export const userUpdateValidators = [
   check('newPassword', 'Password is required')
     .trim()
     .optional()
-    .isStrongPassword({
-      minLength: 8,
-      minLowercase: 1,
-      minUppercase: 1,
-      minNumbers: 1,
-      minSymbols: 1,
-    })
-    .withMessage(
-      'Password must be greater than 8 and contain at least one Uppercase letter, one Lowercase letter, one Number and one Symbol'
-    ),
+    .isLength({ min: 8 })
+    .withMessage('Password must be greater than 8'),
   validateRequest,
 ];
