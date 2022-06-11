@@ -3,7 +3,11 @@
     height: auto;
     font-family: "Montserrat";
 }
+.confirmpassword{
 
+    font-family: "Montserrat";
+    font-size: 0.9em;
+}
 .log{
     width: 100%;
     height: auto;

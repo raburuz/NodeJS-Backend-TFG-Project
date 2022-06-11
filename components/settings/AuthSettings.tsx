@@ -18,6 +18,7 @@ import { validate } from 'email-validator';
 import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
+import { useRouter } from 'next/router';
 
 
 
@@ -34,10 +35,18 @@ interface InputComponent {
 
  export function AuthSettings() {
   const { userData, logout,updateUser } = useContext(AuthContext);
-
+  const router = useRouter();
   const [open, setOpen] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const {
+    control,
+    handleSubmit,
+    resetField,
+    formState: { errors },
+  } = useForm<SettingsUserInterface>();
+
+
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
@@ -71,7 +80,7 @@ interface InputComponent {
 
         updateUser(value);
         setOpenSuccess(true);
-
+        router.push("/templates");
       }
 
 
@@ -154,14 +163,7 @@ interface InputComponent {
   const handleOpen = () => setOpenModal(true);
   const handleCloseModal = () => setOpenModal(false);
   
-  const {
-    control,
-    handleSubmit,
-    resetField,
-    formState: { errors },
-  } = useForm<SettingsUserInterface>();
 
-  const username = inputs[0];
 
 
   return (
@@ -177,7 +179,7 @@ interface InputComponent {
                     <Avatar  sx={{ width: 250, height: 250 }} alt="Usuario" src="/static/images/avatar/1.jpg" />
                 </Stack>
                 </div>
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form id='my-form' onSubmit={handleSubmit(onSubmit)}>
                 <div className= {style.inputPerfil}>
                         {inputs.filter( i => i.name !== 'password').map((input: InputComponent) => {
                           
@@ -208,7 +210,9 @@ interface InputComponent {
           }}
       >
         <Fade in={openModal}>
+        
           <Box sx={styleModal} >
+          <b className={style.confirmpassword}>Please enter the password to confirm:  </b>
           {
               inputs.filter( i => i.name == 'password').map((input: InputComponent) => {
 
@@ -226,7 +230,7 @@ interface InputComponent {
                     })
 
           }
-<Button  type="submit" onClick={handleOpen} variant="text" sx={{background:'purple',color:'white'}}>Update</Button> 
+             <Button  type="submit"  form='my-form' variant="text" sx={{background:'purple',color:'white'}}>Update</Button> 
           </Box>
         </Fade>
       </Modal>
