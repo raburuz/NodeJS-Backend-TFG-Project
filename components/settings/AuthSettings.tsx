@@ -45,7 +45,7 @@ interface InputComponent {
     resetField,
     formState: { errors },
   } = useForm<SettingsUserInterface>();
-
+  console.log(userData);
 
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
