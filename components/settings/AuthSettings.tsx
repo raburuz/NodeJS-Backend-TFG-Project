@@ -1,6 +1,5 @@
- 
-import React, { useContext } from 'react';
-import { RegisterOptions } from 'react-hook-form';
+import React, { useContext, useState } from 'react';
+import { RegisterOptions, useForm,SubmitHandler } from 'react-hook-form';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
@@ -11,12 +10,16 @@ import Avatar from '@mui/material/Avatar';
 import Stack from '@mui/material/Stack';
 import { AuthContext } from '../../context';
 import style from './settings.module.css'
+import { SettingsUserInterface } from '../../interfaces';
+import { Input } from '../form/input/Input.component';
+import { updateApi } from '../../apis/authApi';
+import { Alert, Snackbar } from '@mui/material';
+import { validate } from 'email-validator';
+import Backdrop from '@mui/material/Backdrop';
+import Modal from '@mui/material/Modal';
+import Fade from '@mui/material/Fade';
 
-interface TabPanelProps {
-  children?: React.ReactNode;
-  index: number;
-  value: number;
-}
+
 
 
 interface InputComponent {
@@ -27,103 +30,137 @@ interface InputComponent {
     rules?: RegisterOptions;
   }
   
+
+
+ export function AuthSettings() {
+  const { userData, logout,updateUser } = useContext(AuthContext);
+
+  const [open, setOpen] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSuccess(false);
+    setOpen(false);
+  };
+  const isValidEmail = (email: string) => {
+    return validate(email) ? undefined : 'Email is invalid';
+  };
+  const onSubmit: SubmitHandler<SettingsUserInterface> = async data => {
+    
+
+
+ 
+    setOpenModal(false);
+    if(userData != null){
+
+      const value = await updateApi(data,userData.user?.id ?? '');
+
+          console.log(data);
+      if(value.hasOwnProperty('error')){
+        
+        
+     
+        setOpen(true);
+        
+        
+      }else{
+        
+
+        updateUser(value);
+        setOpenSuccess(true);
+
+      }
+
+
+    }
+ 
+
+  }
+
+  const styleModal = {
+    position: 'absolute' as 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'gray',
+    border: '2px solid #000',
+    boxShadow: 24,
+    p: 4,
+  };
+
+
+  const inputPassword: InputComponent[] = [  {
+    name: 'password',
+    type: 'password',
+    label: 'Password',
+    rules: {
+      required: 'This field is required'
+    },
+   
+  },
+];
+
   const inputs: InputComponent[] = [
     {
       name: 'username',
       type: 'text',
       label: 'Username',
-      rules: { required: 'This field is required' },
-    },
-    {
-      name: 'password',
-      type: 'password',
-      label: 'Password',
+      defaultValue:userData.user?.username,
       rules: {
         required: 'This field is required',
+    
       },
+    },
+  
+    {
+      name: 'newPassword',
+      type: 'password',
+      label: 'New Password',
+     
+    },
+    {
+      name: 'email',
+      type: 'email',
+      label: 'Email',
+      defaultValue:userData.user?.email,
+      rules: {
+        required: 'This field is required',
+        validate: isValidEmail,
+      },
+     
+    },
+    {
+      name: 'role',
+      type: 'hidden',
+      label:'',
+      defaultValue: 'NORMAL_USER_ROLE',
+
+     
     },
   ];
 
-function TabPanel(props: TabPanelProps) {
-  const { children, value, index, ...other } = props;
-  const { userData, logout } = useContext(AuthContext);
+  const handleOpen = () => setOpenModal(true);
+  const handleCloseModal = () => setOpenModal(false);
+  
+  const {
+    control,
+    handleSubmit,
+    resetField,
+    formState: { errors },
+  } = useForm<SettingsUserInterface>();
 
-  console.log(userData);
-  return (
-    <div
-      role="tabpanel"
-      hidden={value !== index}
-      id={`vertical-tabpanel-${index}`}
-      aria-labelledby={`vertical-tab-${index}`}
-      {...other}
-    >
-      {value === index && (
-        <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
-        </Box>
-      )}
-    </div>
-  );
-}
+  const username = inputs[0];
 
-function a11yProps(index: number) {
-  return {
-    id: `vertical-tab-${index}`,
-    'aria-controls': `vertical-tabpanel-${index}`,
-  };
-}
-
- export function AuthSettings() {
-  const [value, setValue] = React.useState(0);
-
-  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
-    setValue(newValue);
-  };
-
-  const { userData } = useContext(AuthContext);
-  console.log(userData)
 
   return (
     <Box
       sx={{width:'100%'}}
     >
-    {/* //   <Tabs 
-    //     orientation="vertical"
-    //     variant="scrollable"
-    //     value={value}
-    //     onChange={handleChange}
-    //     aria-label="Vertical tabs example"
-    //     sx={{ borderRight: 1, borderColor: 'divider' }}
-    //   >
-    //     <Tab label="Item One" {...a11yProps(0)} />
-    //     <Tab label="Item Two" {...a11yProps(1)} />
-    //     <Tab label="Item Three" {...a11yProps(2)} />
-    //     <Tab label="Item Four" {...a11yProps(3)} />
-    //     <Tab label="Item Five" {...a11yProps(4)} />
-    //     <Tab label="Item Six" {...a11yProps(5)} />
-    //     <Tab label="Item Seven" {...a11yProps(6)} />
-    //   </Tabs>
-    //   <TabPanel value={value} index={0}>
-    //     Item One
-    //   </TabPanel>
-    //   <TabPanel value={value} index={1}>
-    //     Item Two
-    //   </TabPanel>
-    //   <TabPanel value={value} index={2}>
-    //     Item Three
-    //   </TabPanel>
-    //   <TabPanel value={value} index={3}>
-    //     Item Four
-    //   </TabPanel>
-    /  <TabPanel value={value} index={4}>
-         Item Five
-       </TabPanel>
-       <TabPanel value={value} index={5}>
-         Item Six
-       </TabPanel>
-       <TabPanel value={value} index={6}>
-         Item Seven
-      </TabPanel> */}
+ 
         <div className={style.Contsetting}>
             <h1 className={style.titleUser}>User setting</h1>
             <div className={style.log}>
@@ -132,15 +169,59 @@ function a11yProps(index: number) {
                     <Avatar  sx={{ width: 250, height: 250 }} alt="Usuario" src="/static/images/avatar/1.jpg" />
                 </Stack>
                 </div>
+                <form onSubmit={handleSubmit(onSubmit)}>
                 <div className= {style.inputPerfil}>
-                    <TextField value={userData.user?.username} id="margin-none" sx={{border:'1px solid #bdbdbd'}}/>
-                    <TextField value={userData.user?.email} id="margin-none" sx={{border:'1px solid #bdbdbd'}}/>
-                    <TextField value="*******" id="margin-none" sx={{border:'1px solid #bdbdbd'}}/>
-                    <Button variant="text" sx={{background:'purple',color:'white'}}>Update</Button>
+                        {inputs.map((input: InputComponent) => {
+                          return (
+                            <div key={input.name}>
+                              <Input data={{ ...input, control, errors }} />
+                            </div>
+                          );
+                      })}
+                    <Button onClick={handleOpen} variant="text" sx={{background:'purple',color:'white'}}>Confirm</Button>
                 </div>
+                <Modal
+        aria-labelledby="transition-modal-title"
+        aria-describedby="transition-modal-description"
+        open={openModal}
+        onClose={handleCloseModal}
+        closeAfterTransition
+        BackdropComponent={Backdrop}
+        BackdropProps={{
+          timeout: 500,
+        }}
+      >
+        <Fade in={openModal}>
+          <Box sx={styleModal} >
+          {inputPassword.map((input: InputComponent) => {
+                          return (
+                            <div key={input.name}>
+                              <Input data={{ ...input, control, errors }} />
+                            </div>
+                          );
+                      })}
+
+<Button  type="submit" onClick={handleOpen} variant="text" sx={{background:'purple',color:'white'}}>Update</Button> 
+          </Box>
+        </Fade>
+      </Modal>
+                </form>
+                <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                      User or Password is invalid
+                  </Alert>
+                </Snackbar>
+                <Snackbar open={openSuccess} autoHideDuration={4000} onClose={handleClose}>
+                  <Alert onClose={handleClose} severity="success" sx={{ width: '100%' }}>
+                    Your profile has been successfully edited
+                  </Alert>
+                </Snackbar>
+         
+               
             </div>
         </div>  
     </Box>
     
   );
 }
+

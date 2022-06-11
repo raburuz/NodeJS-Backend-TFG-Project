@@ -1,5 +1,5 @@
 import axios from 'axios';
-import { LoginInterface } from '../interfaces';
+import { LoginInterface, SettingsUserInterface } from '../interfaces';
 import { api } from './api';
 import Cookies from 'js-cookie';
 
@@ -23,7 +23,29 @@ export const loginApi = async (userData: LoginInterface) => {
     };
   }
 };
-
+export const updateApi = async (userData: SettingsUserInterface,id: string ) => {
+  const cookie = Cookies.get('x_token') ?? '';
+  
+  console.log(userData);
+  
+    try {
+      const response = await userApi.put(`/${id}`, userData,{
+        headers:{
+          'x_token': cookie,
+  
+        }
+      });
+    
+      const { data } = response;
+      return data;
+    } catch (error: any) {
+   
+      return {
+        error: error,
+      };
+    }
+  };
+  
 export const revalidateToken = async () => {
   const x_token = Cookies.get('x_token') ?? null;
   const response = await tokenApi.post('/revalidate', { x_token });
