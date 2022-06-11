@@ -115,7 +115,15 @@ interface InputComponent {
     
       },
     },
-  
+    {
+      name: 'password',
+      type: 'password',
+      label: 'Password',
+      rules: {
+        required: 'This field is required'
+      },
+     
+    },
     {
       name: 'newPassword',
       type: 'password',
@@ -171,36 +179,53 @@ interface InputComponent {
                 </div>
                 <form onSubmit={handleSubmit(onSubmit)}>
                 <div className= {style.inputPerfil}>
-                        {inputs.map((input: InputComponent) => {
-                          return (
-                            <div key={input.name}>
-                              <Input data={{ ...input, control, errors }} />
-                            </div>
+                        {inputs.filter( i => i.name !== 'password').map((input: InputComponent) => {
+                          
+                          
+                          
+                         return(
+                          
+                        
+                              <div key={input.name}>
+                                <Input data={{ ...input, control, errors }} />
+                              </div>
+                    
+                          
+                          
                           );
                       })}
                     <Button onClick={handleOpen} variant="text" sx={{background:'purple',color:'white'}}>Confirm</Button>
                 </div>
-                <Modal
-        aria-labelledby="transition-modal-title"
-        aria-describedby="transition-modal-description"
-        open={openModal}
-        onClose={handleCloseModal}
-        closeAfterTransition
-        BackdropComponent={Backdrop}
-        BackdropProps={{
-          timeout: 500,
-        }}
+      <Modal
+          aria-labelledby="transition-modal-title"
+          aria-describedby="transition-modal-description"
+          open={openModal}
+          onClose={handleCloseModal}
+          closeAfterTransition
+          BackdropComponent={Backdrop}
+          BackdropProps={{
+            timeout: 500,
+          }}
       >
         <Fade in={openModal}>
           <Box sx={styleModal} >
-          {inputPassword.map((input: InputComponent) => {
-                          return (
-                            <div key={input.name}>
-                              <Input data={{ ...input, control, errors }} />
-                            </div>
-                          );
-                      })}
+          {
+              inputs.filter( i => i.name == 'password').map((input: InputComponent) => {
 
+  
+                    return(
+                                              
+                                            
+                      <div key={input.name}>
+                        <Input data={{ ...input, control, errors }} />
+                      </div>
+
+
+
+                    );
+                    })
+
+          }
 <Button  type="submit" onClick={handleOpen} variant="text" sx={{background:'purple',color:'white'}}>Update</Button> 
           </Box>
         </Fade>
