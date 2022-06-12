@@ -67,7 +67,8 @@ interface InputComponent {
 
       const value = await updateApi(data,userData.user?.id ?? '');
 
-          console.log(data);
+          console.log(value);
+   
       if(value.hasOwnProperty('error')){
         
         
@@ -78,9 +79,12 @@ interface InputComponent {
       }else{
         
 
-        updateUser(value);
+        updateUser(value.user);
         setOpenSuccess(true);
-        router.push("/templates");
+        setTimeout(() => {
+          router.push("/templates");
+        }, 5000);
+       
       }
 
 

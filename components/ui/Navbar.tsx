@@ -98,7 +98,7 @@ export const Navbar = () => {
                 label="Settings"
                 value="settings"
                 icon={<SettingsApplicationsTwoToneIcon />}
-                onClick={() => onLink('/settings/settings')}
+                onClick={() => onLink('/settings/')}
                 sx={{color:'white'}}
               />
             )}

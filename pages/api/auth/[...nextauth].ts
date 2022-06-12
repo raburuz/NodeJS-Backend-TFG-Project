@@ -6,6 +6,7 @@ import { signOut } from 'next-auth/react';
 import { type } from 'os';
 export default NextAuth({
   // Configure one or more authentication providers
+  secret: process.env.AUTH_SECRET,
   providers: [
     CredentialsProvider({
       name: 'Custom Login',
@@ -45,7 +46,9 @@ export default NextAuth({
     updateAge: 86400, //1day
   },
 
-  jwt: {},
+  jwt: {
+    secret:'secretjwt',
+  },
   callbacks: {
     async jwt({ token, user, account }) {
       if (typeof user !== typeof undefined) {
