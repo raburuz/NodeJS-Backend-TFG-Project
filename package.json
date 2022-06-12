@@ -19,6 +19,7 @@
     "next": "12.1.6",
     "next-auth": "^4.3.4",
     "react": "18.1.0",
+    "react-color-palette": "^6.2.0",
     "react-dom": "18.1.0",
     "react-haiku": "^2.0.1",
     "react-hook-form": "^7.32.0",

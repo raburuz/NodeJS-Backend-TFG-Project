@@ -1,19 +1,27 @@
-import { SyntheticEvent, useState } from 'react';
+import { SyntheticEvent, useContext, useState } from 'react';
 import { Tab, Tabs, Box } from '@mui/material';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
-
+import { ColorPicker, useColor } from "react-color-palette";
 import { TabPanel } from '../ui';
 import { CustomMenuLayout } from '../../layouts';
+import { BuildContext } from '../../context';
 
 export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
-
+  const [color, setColor] = useColor("hex", "#121212");
+  const {state,addComponent,changeColorPage }  =  useContext(BuildContext);
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
+  console.log(state);
+  const handleChangeColor = (value:object ) => {
 
+    console.log(value);
+
+
+  }
   const a11yProps = (index: number) => {
     return {
       id: `simple-tab-${index}`,
@@ -46,7 +54,8 @@ export const CustomMenu = () => {
       </Box>
       <TabPanel value={value} index={0}>
         <CustomMenuLayout>
-          <h1>Hola</h1>
+        <ColorPicker width={300} height={128} color={color}
+                   onChange={handleChangeColor} hideHSV dark />
         </CustomMenuLayout>
       </TabPanel>
       <TabPanel value={value} index={1}>
