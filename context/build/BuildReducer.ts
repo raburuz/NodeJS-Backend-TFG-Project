@@ -6,6 +6,10 @@ type Action =
       components: Components;
     }
   | {
+      type: 'Build - Active Component';
+      activeComponent: {};
+    }
+  | {
       type: 'Build - Update One Component';
       backgroundColor: string;
     }
@@ -21,6 +25,11 @@ export const BuildReducer = (state: any, action: Action) => {
         ...state,
         components: [...state.components, action.components],
       };
+      case 'Build - Active Component':
+        return {
+          ...state,
+          active:action.activeComponent,
+        };
     case 'Build - Update One Component':
       return {
         ...state,

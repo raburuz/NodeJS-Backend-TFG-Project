@@ -12,7 +12,7 @@ export const initialValue: Website = {
       label: 'Mi Página Estatica No Code',
       id: uuidv4(),
       tag: 'h1',
-      order: 1,
+      order: 0,
       sx: {},
     },
     {
@@ -86,4 +86,5 @@ export const initialValue: Website = {
       sx: {},
     },
   ],
+  active: {},
 };

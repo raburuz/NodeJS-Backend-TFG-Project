@@ -11,7 +11,7 @@ import { Button } from '../Draggable/button/Button.component';
 
 export const BuildMain = () => {
   const { components, page } = useContext(BuildContext);
-
+  
   return (
     <main
       style={{
@@ -40,10 +40,10 @@ export const BuildMain = () => {
       >
         <DragProvider>
           <Dragbox>
-            <>
+          <>
               {components?.map((component: any) => {
                 if (component.type === 'text') {
-                  return <Typo key={component.id} data={component} />;
+                  return <Typo key={component.id} data={component}/>;
                 }
                 if (component.type === 'list') {
                   return <List key={component.id} data={component} />;

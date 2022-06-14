@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { RegisterOptions, useForm,SubmitHandler } from 'react-hook-form';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -19,7 +19,7 @@ import Backdrop from '@mui/material/Backdrop';
 import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { useRouter } from 'next/router';
-
+import { useSession} from "next-auth/react"
 
 
 
@@ -35,8 +35,10 @@ interface InputComponent {
 
  export function AuthSettings() {
   const { userData, logout,updateUser } = useContext(AuthContext);
+  const { data: session } = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(false);
+  const [user, setUser] = useState(session?.user);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openModal, setOpenModal] = useState(false);
   const {
@@ -45,8 +47,11 @@ interface InputComponent {
     resetField,
     formState: { errors },
   } = useForm<SettingsUserInterface>();
-  console.log(userData);
-
+  console.log(userData?.user);
+  useEffect(() => {
+  
+  }, [])
+  
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
@@ -83,7 +88,7 @@ interface InputComponent {
         setOpenSuccess(true);
         setTimeout(() => {
           router.push("/templates");
-        }, 5000);
+        }, 4000);
        
       }
 
@@ -122,7 +127,7 @@ interface InputComponent {
       name: 'username',
       type: 'text',
       label: 'Username',
-      defaultValue:userData.user?.username,
+      defaultValue:userData?.user?.username,
       rules: {
         required: 'This field is required',
     
@@ -147,7 +152,7 @@ interface InputComponent {
       name: 'email',
       type: 'email',
       label: 'Email',
-      defaultValue:userData.user?.email,
+      defaultValue:userData?.user?.email,
       rules: {
         required: 'This field is required',
         validate: isValidEmail,

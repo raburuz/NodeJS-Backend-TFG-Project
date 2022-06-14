@@ -3,8 +3,9 @@ import { Website } from '../../interfaces';
 import { Components } from '../../interfaces/components';
 
 interface BuildProps extends Website {
-  state: Website;
+  state: {};
   addComponent: (component: Components) => void;
+  activeComponent: (activeComponent: object) => void;
   changeColorPage: (backgroundColor: string) => void;
 }
 

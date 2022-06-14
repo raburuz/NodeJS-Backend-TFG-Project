@@ -20,6 +20,13 @@ export const BuildProvider: FC<Props> = ({ children }) => {
       components,
     });
   };
+  const activeComponent = (activeComponent: object) => {
+    dispatch({
+      type: 'Build - Active Component',
+      activeComponent,
+    });
+  };
+  
   const changeColorPage = (backgroundColor: string) => {
     dispatch({
       type: 'Build - Change Color Page',
@@ -27,7 +34,7 @@ export const BuildProvider: FC<Props> = ({ children }) => {
     });
   };
   return (
-    <BuildContext.Provider value={{ ...state, addComponent,changeColorPage  }}>
+    <BuildContext.Provider value={{ ...state, addComponent,changeColorPage,activeComponent  }}>
       {children}
     </BuildContext.Provider>
   );

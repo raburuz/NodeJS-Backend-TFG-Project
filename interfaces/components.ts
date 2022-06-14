@@ -8,6 +8,7 @@ export interface Website {
     | ListComponent[]
     | ButtonComponent[]
     | ImageComponent[];
+  active:{}
 }
 
 export interface Page {
