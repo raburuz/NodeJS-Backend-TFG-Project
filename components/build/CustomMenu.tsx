@@ -1,5 +1,5 @@
 import { SyntheticEvent, useContext, useState } from 'react';
-import { Tab, Tabs, Box } from '@mui/material';
+import { Tab, Tabs, Box, Typography } from '@mui/material';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
@@ -10,9 +10,9 @@ import { BuildContext } from '../../context';
 import style from './custommenu.module.css'
 import Slider, { SliderThumb } from '@mui/material/Slider';
 import { styled } from '@mui/material/styles';
-
-
-
+import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
+import FilterListIcon from '@mui/icons-material/FilterList';
+import ImageIcon from '@mui/icons-material/Image';
 
 const PrettoSlider = styled(Slider)({
   color: 'linear-gradient(30deg, rgba(121,82,119,0.975) 30%, #355192 85%)',
@@ -60,7 +60,10 @@ const PrettoSlider = styled(Slider)({
 export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
-  const {active,addComponent,changeColorPage }  =  useContext(BuildContext);
+  const [heigth, setHeigth] = useState(5);
+  const {active,addComponent,changeColorPage,updateActiveComponent }  =  useContext(BuildContext);
+  const [activeModify, setActiveComponent] = useState(active);
+
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -69,6 +72,23 @@ export const CustomMenu = () => {
   const handleChangeColor = (value:string ) => {
     setColor(value)
     changeColorPage(value);
+
+
+  }
+  const handleChangeHeigth = (event:any ) => {
+    
+
+    setHeigth(event.target.value)
+    setActiveComponent((prevState:any) => ({
+                    // object that we want to update
+          ...prevState,    // keep all other key-value pairs
+          sx: {
+            ...prevState.sx,
+            heigth: event.target.value
+          }      // update the value of specific key
+      
+    }));
+    updateActiveComponent(activeModify);
 
 
   }
@@ -97,20 +117,33 @@ export const CustomMenu = () => {
           aria-label="Crate your page here"
           centered
         >
-          <Tab icon={<TextFieldsIcon />} {...a11yProps(0)} />
+          {
+           (active.type === 'text') ? (<Tab icon={<TextFieldsIcon />} {...a11yProps(0)}  /> ): 
+           (active.type === 'button') ?  (<Tab icon={<RadioButtonUncheckedIcon />} {...a11yProps(0)} />) : (active.type === 'list') ?
+           (<Tab icon={<FilterListIcon />} {...a11yProps(0)} />) : (active.type === 'image') ? (<Tab icon={<ImageIcon />} {...a11yProps(0)} />) :
+           (<Tab icon={<TextFieldsIcon />} {...a11yProps(0)}  /> )
+          } 
+    
+
           <Tab icon={<ColorLensIcon />} {...a11yProps(1)} />
           <Tab icon={<EnhancedEncryptionIcon />} {...a11yProps(2)} />
         </Tabs>
       </Box>
-      <TabPanel value={value} index={0}>
-        <CustomMenuLayout >
-        
+      <TabPanel value={value} index={0} >
+     
+        <Typography sx={{color:'white'}}>Width:</Typography>
         <PrettoSlider
             valueLabelDisplay="auto"
             aria-label="pretto slider"
             defaultValue={20}
           />
-        </CustomMenuLayout>
+        <Typography sx={{color:'white'}}>Heigth:</Typography>
+        <PrettoSlider
+            valueLabelDisplay="auto"
+            aria-label="pretto slider"
+            value={heigth}
+            onChange={handleChangeHeigth}
+          />
       </TabPanel>
       <TabPanel value={value} index={1}>
         <CustomMenuLayout>

@@ -5,6 +5,7 @@ import { Components } from '../../interfaces/components';
 interface BuildProps extends Website {
   state: {};
   addComponent: (component: Components) => void;
+  updateActiveComponent: (component: object) => void;
   activeComponent: (activeComponent: object) => void;
   changeColorPage: (backgroundColor: string) => void;
 }

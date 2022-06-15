@@ -1,5 +1,6 @@
 import { Components } from '@mui/material';
 
+import {Component} from '../../interfaces'
 type Action =
   | {
       type: 'Build - Add New Component';
@@ -9,6 +10,9 @@ type Action =
       type: 'Build - Active Component';
       activeComponent: {};
     }
+  | {
+      type: 'Build - Update Active Component';
+      components: Component;    }
   | {
       type: 'Build - Update One Component';
       backgroundColor: string;
@@ -30,10 +34,24 @@ export const BuildReducer = (state: any, action: Action) => {
           ...state,
           active:action.activeComponent,
         };
-    case 'Build - Update One Component':
+      case 'Build - Update One Component':
       return {
         ...state,
       };
+      case 'Build - Update Active Component':
+
+        return {
+            ...state,
+            components: state.components.map(
+                (c:any) =>{
+                  if(c.id === action.components.id){
+                    return {...c,sx:action.components.sx}
+                  }
+                  return c;
+                }
+                // (c.id === action.components.id ) ? action.components : c
+            )
+        };
     case 'Build - Change Color Page':
       return {
         ...state,

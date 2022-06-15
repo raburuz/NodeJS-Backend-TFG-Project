@@ -4,7 +4,7 @@ import { Website } from '../../interfaces';
 import { BuildContext } from './BuildContext';
 import { BuildReducer } from './BuildReducer';
 import { initialValue } from './initialValue';
-
+import {Component} from '../../interfaces'
 interface Props {
   children: JSX.Element;
 }
@@ -26,6 +26,12 @@ export const BuildProvider: FC<Props> = ({ children }) => {
       activeComponent,
     });
   };
+  const updateActiveComponent = (components: Component) => {
+    dispatch({
+      type: 'Build - Update Active Component',
+      components,
+    });
+  };
   
   const changeColorPage = (backgroundColor: string) => {
     dispatch({
@@ -34,7 +40,7 @@ export const BuildProvider: FC<Props> = ({ children }) => {
     });
   };
   return (
-    <BuildContext.Provider value={{ ...state, addComponent,changeColorPage,activeComponent  }}>
+    <BuildContext.Provider value={{ ...state, addComponent,changeColorPage,activeComponent,updateActiveComponent }}>
       {children}
     </BuildContext.Provider>
   );

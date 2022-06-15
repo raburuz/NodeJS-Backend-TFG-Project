@@ -1,4 +1,5 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
+import { BuildContext } from '../../../context';
 import { useDraggable } from '../../../hooks/useDraggable';
 import { ButtonComponent } from '../../../interfaces';
 import style from './Button.module.css';
@@ -10,15 +11,20 @@ interface Props {
 export const Button = ({ data }: Props) => {
   const { id, label, order, url, sx } = data;
   const element = useRef<HTMLDivElement>(null);
+  const {activeComponent} =  useContext(BuildContext);
   const {
     isDragging,
     handleDragEnd,
     handleDragStart,
     handleDragEnter,
   } = useDraggable({ element, style: '' });
+  const handleActiveClick = ( data:any) => {
+    console.log(data);
+     activeComponent(data);
 
+  }
   return (
-    <div ref={element} id={id}>
+    <div ref={element} id={id} onClick={() => handleActiveClick(data)}>
       <div
         draggable="true"
         onDragStart={handleDragStart}

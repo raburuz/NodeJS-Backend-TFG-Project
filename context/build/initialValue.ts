@@ -1,5 +1,6 @@
 import { Website } from '../../interfaces/components';
 import { v4 as uuidv4 } from 'uuid';
+import { Component } from '../../interfaces/components';
 
 export const initialValue: Website = {
   page: {
@@ -86,5 +87,10 @@ export const initialValue: Website = {
       sx: {},
     },
   ],
-  active: {},
+  active: {  
+      type: 'text',
+      id: uuidv4(),
+      order: 7,
+      sx: {},
+},
 };
