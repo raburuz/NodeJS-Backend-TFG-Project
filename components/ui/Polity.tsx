@@ -10,7 +10,7 @@ export const Polity = () => {
         </header>
         <div className={style.infoPolity}>
             <h1 className={style.h1}>About us</h1>
-            <p>Our website address is: https://puzzle.com</p>
+            <p>Our website address is: https://puzzle-omega.vercel.app/</p>
 
             <h1 className={style.h1}>Comments</h1>
             <p>When visitors leave comments on the website, we collect the data displayed in the comment form, as well as the visitor's IP address and browser user agent string to help spam detection.</p>

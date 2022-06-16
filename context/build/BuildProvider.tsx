@@ -21,12 +21,14 @@ export const BuildProvider: FC<Props> = ({ children }) => {
     });
   };
   const activeComponent = (activeComponent: object) => {
+ 
     dispatch({
       type: 'Build - Active Component',
       activeComponent,
     });
   };
   const updateActiveComponent = (components: Component) => {
+    console.log(components)
     dispatch({
       type: 'Build - Update Active Component',
       components,

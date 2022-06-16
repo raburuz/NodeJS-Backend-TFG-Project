@@ -1,4 +1,4 @@
-import { useRef, FC, StyleHTMLAttributes, useContext, useState } from 'react';
+import { useRef, FC, StyleHTMLAttributes, useContext, useState, useEffect } from 'react';
 import style from './Typo.module.css';
 import { TextTags } from '../../../interfaces';
 import { useDraggable } from '../../../hooks/useDraggable';
@@ -17,17 +17,24 @@ export const Typo: FC<Props> = ({ data }) => {
   const Tag = tag;
   const element = useRef<HTMLDivElement>(null);
   const  [select,setSelect] = useState(false);
-  const {state,activeComponent} = useContext(BuildContext);
+
+  const {active,activeComponent} = useContext(BuildContext);
+
   const {
     isDragging,
     handleDragEnd,
     handleDragEnter,
     handleDragStart,
   } = useDraggable({ element, style: style.draggable });
+ 
 
-
+  useEffect(() => {
+ 
+  }, [active])
+  
   const handleActiveClick = ( data:any) => {
-    console.log(data);
+    console.log(data)
+
      activeComponent(data);
     if(select){
       setSelect(false);

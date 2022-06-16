@@ -1,4 +1,4 @@
-import { SyntheticEvent, useContext, useState } from 'react';
+import { SyntheticEvent, useContext, useEffect, useState } from 'react';
 import { Tab, Tabs, Box, Typography } from '@mui/material';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
@@ -61,14 +61,24 @@ export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
   const [heigth, setHeigth] = useState(5);
-  const {active,addComponent,changeColorPage,updateActiveComponent }  =  useContext(BuildContext);
+  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent }  =  useContext(BuildContext);
+
+
+  useEffect(() => {
+    setActiveComponent(active)
+  }, [active])
+
   const [activeModify, setActiveComponent] = useState(active);
 
+  useEffect(() => {
+    updateActiveComponent(activeModify)
+  }, [activeModify])
+  
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
   
-  console.log(active);
+  console.log(activeModify);
   const handleChangeColor = (value:string ) => {
     setColor(value)
     changeColorPage(value);
@@ -77,21 +87,24 @@ export const CustomMenu = () => {
   }
   const handleChangeHeigth = (event:any ) => {
     
-
+    console.log(event.target.value)
     setHeigth(event.target.value)
-    setActiveComponent((prevState:any) => ({
-                    // object that we want to update
-          ...prevState,    // keep all other key-value pairs
+    setActiveComponent((state:any) => ({
+                    
+          ...state,    
           sx: {
-            ...prevState.sx,
-            heigth: event.target.value
-          }      // update the value of specific key
+            ...state.sx,
+            height: event.target.value
+          }      
       
     }));
     updateActiveComponent(activeModify);
 
 
   }
+
+
+  
   const a11yProps = (index: number) => {
     return {
       id: `simple-tab-${index}`,

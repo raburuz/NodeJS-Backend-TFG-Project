@@ -88,9 +88,12 @@ export const initialValue: Website = {
     },
   ],
   active: {  
-      type: 'text',
-      id: uuidv4(),
-      order: 7,
-      sx: {},
+    type:'',
+    label:'',
+    id:'',
+    order:'',
+    sx:{},
+    
+
 },
 };

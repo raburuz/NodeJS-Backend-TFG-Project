@@ -18,6 +18,7 @@ export const Button = ({ data }: Props) => {
     handleDragStart,
     handleDragEnter,
   } = useDraggable({ element, style: '' });
+  
   const handleActiveClick = ( data:any) => {
     console.log(data);
      activeComponent(data);

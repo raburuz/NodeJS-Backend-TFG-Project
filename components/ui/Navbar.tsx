@@ -15,6 +15,13 @@ import nombre from '../images/nombre.png'
 import style from './Navbar.module.css'
 import { Link } from '@mui/material';
 
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
+import MenuIcon from '@mui/icons-material/Menu';
+
 export const Navbar = () => {
   const { userData, logout } = useContext(AuthContext);
   const [value, setValue] = useState('recents');

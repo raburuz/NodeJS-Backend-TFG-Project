@@ -32,7 +32,7 @@ export const BuildReducer = (state: any, action: Action) => {
       case 'Build - Active Component':
         return {
           ...state,
-          active:action.activeComponent,
+          active: action.activeComponent,
         };
       case 'Build - Update One Component':
       return {
