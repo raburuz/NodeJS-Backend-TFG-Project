@@ -48,16 +48,16 @@ const Home: NextPage = () => {
                       <CardMedia
                         component="img"
                         height="140"
-                        image='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png'
+                        image='https://cms-assets.tutsplus.com/cdn-cgi/image/width=850/uploads/users/346/posts/32708/image/portfolio_template10.jpg'
                         alt="green iguana"
                       />
                       <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Lizard
+                        <Typography gutterBottom variant="h5" component="div" sx={{fontFamily:'Montserrat'}}>
+                          That attracts at a glance
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lizards are a widespread group of squamate reptiles, with over 6,000
-                          species, ranging across all continents except Antarctica
+                        <Typography variant="body2" color="text.secondary" sx={{fontFamily:'Montserrat'}}>
+                          Well, use that experience to your advantage in your portfolio. 
+                          Use all the elements and all the tools at your disposal so that whoever sees your portfolio cannot resist and has to contact you.
                         </Typography>
                       </CardContent>
                     </Card>
@@ -65,16 +65,16 @@ const Home: NextPage = () => {
                       <CardMedia
                         component="img"
                         height="140"
-                        image='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png'
+                        image='https://s.tmimgcdn.com/scr/400x250/232900/dolunay-portafolio-creativo-plantilla-html-multiproposito-y-personal_232930-2-original.png'
                         alt="green iguana"
                       />
                       <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Lizard
+                        <Typography gutterBottom variant="h5" component="div" sx={{fontFamily:'Montserrat'}}>
+                        Reflect who you are  
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lizards are a widespread group of squamate reptiles, with over 6,000
-                          species, ranging across all continents except Antarctica
+                        <Typography variant="body2" color="text.secondary" sx={{fontFamily:'Montserrat'}}>
+                        Although on many occasions it is a factor that is left in the background, it should not happen. 
+                        Think that the web design portfolio has to convey your personality as a professional.
                         </Typography>
                       </CardContent>
                     </Card>
@@ -82,16 +82,16 @@ const Home: NextPage = () => {
                       <CardMedia
                         component="img"
                         height="140"
-                        image='https://upload.wikimedia.org/wikipedia/commons/thumb/b/b6/Image_created_with_a_mobile_phone.png/640px-Image_created_with_a_mobile_phone.png'
+                        image='https://s.tmimgcdn.com/wp-content/uploads/2015/10/55114-photographer-portfolio-18.jpg?width=800&height=0'
                         alt="green iguana"
                       />
                       <CardContent>
-                        <Typography gutterBottom variant="h5" component="div">
-                          Lizard
+                        <Typography gutterBottom variant="h5" component="div" sx={{fontFamily:'Montserrat'}}>
+                          Portfolio must be innovative
                         </Typography>
-                        <Typography variant="body2" color="text.secondary">
-                          Lizards are a widespread group of squamate reptiles, with over 6,000
-                          species, ranging across all continents except Antarctica
+                        <Typography variant="body2" color="text.secondary" sx={{fontFamily:'Montserrat'}}>
+                          It is clear that the work of the web designer is one hundred percent creative. This implies that, if the project you want to show can be shown from 
+                          a different perspective, it is an obligation.
                         </Typography>
                       </CardContent>
                     </Card>
