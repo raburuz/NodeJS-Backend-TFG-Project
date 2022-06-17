@@ -1,5 +1,5 @@
 import { SyntheticEvent, useContext, useEffect, useState } from 'react';
-import { Tab, Tabs, Box, Typography } from '@mui/material';
+import { Tab, Tabs, Box, Typography, TextField } from '@mui/material';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
@@ -61,7 +61,13 @@ export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
   const [heigth, setHeigth] = useState(5);
-  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent }  =  useContext(BuildContext);
+  const [width, setWidth] = useState(5);
+  const [colors, setColors] = useState("#121212");
+  const [size, setSize] = useState(5);
+  const [changeLabel, setChangeLabel] = useState(5);
+  const [background, setbackground] = useState("#121212");
+  const [radius, setradius] = useState(5);
+  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent, changeTextElement }  =  useContext(BuildContext);
 
 
   useEffect(() => {
@@ -74,43 +80,129 @@ export const CustomMenu = () => {
     updateActiveComponent(activeModify)
   }, [activeModify])
   
+  useEffect(() => {
+    setLabelComponent(active)
+  }, [active])
+
+  const [LabelComponent, setLabelComponent] = useState(active);
+
+  useEffect(() => {
+    updateActiveComponent(LabelComponent)
+  }, [LabelComponent])
+
+
+
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
   
   console.log(activeModify);
+
+
   const handleChangeColor = (value:string ) => {
     setColor(value)
     changeColorPage(value);
-
-
   }
+
+
   const handleChangeHeigth = (event:any ) => {
-    
     console.log(event.target.value)
     setHeigth(event.target.value)
-    setActiveComponent((state:any) => ({
-                    
+    setActiveComponent((state:any) => ({       
           ...state,    
           sx: {
             ...state.sx,
             height: event.target.value
           }      
-      
     }));
     updateActiveComponent(activeModify);
-
-
   }
 
+  const handleChangeWidth = (event:any ) => {
+    console.log(event.target.value)
+    setWidth(event.target.value)
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            width: event.target.value
+          }      
+    }));
+    updateActiveComponent(activeModify);
+  }
 
-  
+  const handleColor = (value:any ) => {
+    console.log(value)
+    setColors(value)
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            color: value
+          }      
+    }));
+    updateActiveComponent(activeModify);
+  }
+
+  const handleBackground = (value:any ) => {
+    console.log(value)
+    setbackground(value)
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            background: value
+          }      
+    }));
+    updateActiveComponent(activeModify);
+  }
+
+  const handleChangeSize = (event:any ) => {
+    console.log(event.target.value)
+    setSize(event.target.value)
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            fontSize: event.target.value
+          }      
+    }));
+    updateActiveComponent(activeModify);
+  }
+
+  const handleChangeRadius = (event:any ) => {
+    console.log(event.target.value)
+    setradius(event.target.value)
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            borderRadius: event.target.value
+          }      
+    }));
+    updateActiveComponent(activeModify);
+  }
+
+  const handleChangeLabel = (event:any ) => {
+    console.log("label"+event.target.value)
+    setChangeLabel(event.target.value)
+    setActiveComponent((state:any) => ({       
+          ...state,         
+         label:event.target.value
+          
+    }));
+    updateActiveComponent(activeModify);
+  }
+
   const a11yProps = (index: number) => {
     return {
       id: `simple-tab-${index}`,
       'aria-controls': `simple-tabpanel-${index}`,
     };
   };
+
+  const { onInputChange, defaultData, t } = this.props;
+    console.log("f"+defaultData);
 
   return (
     <Box
@@ -146,29 +238,59 @@ export const CustomMenu = () => {
      
         <Typography sx={{color:'white'}}>Width:</Typography>
         <PrettoSlider
-            valueLabelDisplay="auto"
+            // valueLabelDisplay="auto"
             aria-label="pretto slider"
-            defaultValue={20}
+            value={width}
+            onChange={handleChangeWidth}
+            max={830}
           />
         <Typography sx={{color:'white'}}>Heigth:</Typography>
         <PrettoSlider
-            valueLabelDisplay="auto"
+            // valueLabelDisplay="auto"
             aria-label="pretto slider"
             value={heigth}
             onChange={handleChangeHeigth}
+            max={150}
+          />         
+        <Typography sx={{color:'white'}}>Size:</Typography>
+        <PrettoSlider
+            valueLabelDisplay="auto"
+            aria-label="pretto slider"
+            value={size}
+            onChange={handleChangeSize}
+          />
+        <Typography sx={{color:'white'}}>Border:</Typography>
+        <PrettoSlider
+            valueLabelDisplay="auto"
+            aria-label="pretto slider"
+            value={radius}
+            onChange={handleChangeRadius}
+            max={100}
           />
       </TabPanel>
       <TabPanel value={value} index={1}>
+      <Typography sx={{color:'white'}}>Background color :</Typography>
         <CustomMenuLayout>
             <HexColorPicker className={style.reactColorful} color={color} onChange={handleChangeColor} />
-   
+        </CustomMenuLayout>
+        <Typography sx={{color:'white'}}>Color text:</Typography>
+        <CustomMenuLayout>
+            <HexColorPicker className={style.reactColorful} color={colors} onChange={handleColor} />
+        </CustomMenuLayout>
+        <Typography sx={{color:'white'}}>Background:</Typography>
+        <CustomMenuLayout>
+            <HexColorPicker className={style.reactColorful} color={background} onChange={handleBackground} />
         </CustomMenuLayout>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <CustomMenuLayout>
           <h1>Hola</h1>
+          
         </CustomMenuLayout>
+        <TextField id="outlined-basic" label="Outlined" variant="outlined" onChange={handleChangeLabel}/>
       </TabPanel>
     </Box>
   );
 };
+
+

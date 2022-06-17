@@ -28,7 +28,7 @@ const inputs: InputComponent[] = [
     name: 'username',
     type: 'text',
     label: 'Username',
-    rules: { required: 'This field is required' },
+    rules: { required: 'This field is required',  },
   },
   {
     name: 'password',
@@ -83,12 +83,13 @@ export const Login = () => {
                 display: 'flex',
                 flexDirection: 'column',
                 alignItems: 'center',
+                
               }}
             >
               {inputs.map((input: InputComponent) => {
                 return (
                   <div key={input.name}>
-                    <Input data={{ ...input, control, errors }} />
+                    <Input data={{ ...input, control, errors, }} />
                   </div>
                 );
               })}

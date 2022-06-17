@@ -12,6 +12,7 @@ import {
   ListComponent,
   ButtonComponent,
 } from '../../interfaces/components';
+import Link from 'next/link';
 
 export const BuildMenu = () => {
   const { addComponent } = useContext(BuildContext);
@@ -42,7 +43,7 @@ export const BuildMenu = () => {
     type: 'button',
     order: 132421,
     label: 'Button',
-    url: 'http://localhost:3000/',
+    // url: '',
   };
 
   const addNewComponet = (component: any) => {
@@ -63,7 +64,7 @@ export const BuildMenu = () => {
             Add
           </Button>
           <Button>Save</Button>
-          <Button>Settings</Button>
+          <Link href={'/'}><Button>Back home</Button></Link>
         </ButtonGroup>
       </Box>
 
