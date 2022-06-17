@@ -1,5 +1,5 @@
-import { SyntheticEvent, useContext, useEffect, useState } from 'react';
-import { Tab, Tabs, Box, Typography } from '@mui/material';
+import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
+import { Tab, Tabs, Box, Typography, Snackbar, Alert } from '@mui/material';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
@@ -13,6 +13,9 @@ import { styled } from '@mui/material/styles';
 import RadioButtonUncheckedIcon from '@mui/icons-material/RadioButtonUnchecked';
 import FilterListIcon from '@mui/icons-material/FilterList';
 import ImageIcon from '@mui/icons-material/Image';
+import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
+
 
 const PrettoSlider = styled(Slider)({
   color: 'linear-gradient(30deg, rgba(121,82,119,0.975) 30%, #355192 85%)',
@@ -61,9 +64,10 @@ export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
   const [heigth, setHeigth] = useState(5);
-  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent }  =  useContext(BuildContext);
-
-
+  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent }  =  useContext(BuildContext);
+  const [open, setOpen] = useState(false);
+  const [openSuccess, setOpenSuccess] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
     setActiveComponent(active)
   }, [active])
@@ -73,12 +77,28 @@ export const CustomMenu = () => {
   useEffect(() => {
     updateActiveComponent(activeModify)
   }, [activeModify])
-  
+
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+    setOpenSuccess(false);
+    setOpen(false);
+  };
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
-  
+  const   handleClickDelete = (id:string ) => {
+    deletedComponent(id);
+  }
+
   console.log(activeModify);
+
+  
+  const onFileInputChange = ({target}:any) => {
+    console.log(target.file);
+
+  }
   const handleChangeColor = (value:string ) => {
     setColor(value)
     changeColorPage(value);
@@ -89,18 +109,25 @@ export const CustomMenu = () => {
     
     console.log(event.target.value)
     setHeigth(event.target.value)
-    setActiveComponent((state:any) => ({
-                    
-          ...state,    
-          sx: {
-            ...state.sx,
-            height: event.target.value
-          }      
+    if(active.type === ''){
+      setOpen(true);
+    }else{
       
-    }));
-    updateActiveComponent(activeModify);
+     
+            setActiveComponent((state:any) => ({
+                            
+              ...state,    
+              sx: {
+                ...state.sx,
+                height: event.target.value
+              }      
+          
+        }));
+        updateActiveComponent(activeModify);
 
 
+      
+    }
   }
 
 
@@ -113,9 +140,10 @@ export const CustomMenu = () => {
   };
 
   return (
+    <>
     <Box
       sx={{
-        width: 330,
+        width: 300,
         position: 'fixed',
         left: 0,
         top: 0,
@@ -135,6 +163,7 @@ export const CustomMenu = () => {
            (active.type === 'button') ?  (<Tab icon={<RadioButtonUncheckedIcon />} {...a11yProps(0)} />) : (active.type === 'list') ?
            (<Tab icon={<FilterListIcon />} {...a11yProps(0)} />) : (active.type === 'image') ? (<Tab icon={<ImageIcon />} {...a11yProps(0)} />) :
            (<Tab icon={<TextFieldsIcon />} {...a11yProps(0)}  /> )
+           
           } 
     
 
@@ -142,6 +171,8 @@ export const CustomMenu = () => {
           <Tab icon={<EnhancedEncryptionIcon />} {...a11yProps(2)} />
         </Tabs>
       </Box>
+
+      
       <TabPanel value={value} index={0} >
      
         <Typography sx={{color:'white'}}>Width:</Typography>
@@ -155,8 +186,15 @@ export const CustomMenu = () => {
             valueLabelDisplay="auto"
             aria-label="pretto slider"
             value={heigth}
+            max={400}
             onChange={handleChangeHeigth}
           />
+          <Box sx={{display:'flex',justifyContent:'space-evenly'}}>
+            <Box sx={{color:'white',backgroundColor:'#355192',borderRadius:'15px',width:'50px',textAlign:'center',cursor:'pointer'}} onClick={() => fileInputRef.current?.click()}  hidden={(active.type === 'image') ? false : true }><UploadFileIcon/></Box>
+            <Box sx={{color:'white',backgroundColor:'#355192',borderRadius:'15px',width:'50px',textAlign:'center',cursor:'pointer'}} onClick={() =>   handleClickDelete(active.id)} hidden={(active.type === '') ? true : false }><DeleteForeverIcon/></Box>
+          </Box>
+          <input type="file" onChange={onFileInputChange}  ref={fileInputRef as React.LegacyRef<HTMLInputElement>} style={{display:'none'}}/>
+          
       </TabPanel>
       <TabPanel value={value} index={1}>
         <CustomMenuLayout>
@@ -170,5 +208,11 @@ export const CustomMenu = () => {
         </CustomMenuLayout>
       </TabPanel>
     </Box>
+    <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                  You have to select a component to remove it
+                  </Alert>
+     </Snackbar>
+    </>
   );
 };

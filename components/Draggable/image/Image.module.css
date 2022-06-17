@@ -1,0 +1,21 @@
+.img {
+  display: block;
+  color: #ffffff;
+  background-image: url(../../images/no-foto.png);
+  background-repeat: no-repeat;
+  margin: 10px 0;
+  padding: 10px 25px;
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+.imgUploaded {
+  display: block;
+  color: #ffffff;
+  margin: 10px 0;
+  padding: 10px 25px;
+  text-align: center;
+  width: 100%;
+ height: 100%;
+}

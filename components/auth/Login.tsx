@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
-import { signIn } from 'next-auth/react';
+import { getSession, signIn } from 'next-auth/react';
 import { RegisterOptions, SubmitHandler, useForm } from 'react-hook-form';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
@@ -45,6 +45,15 @@ export const Login = () => {
   const [showError, setShowError] = useState(false);
   const [blockButton, setBlockButton] = useState(false);
   const destination = router.query.page?.toString() ?? '/';
+  const session = getSession();
+  
+  
+  if(session === null){
+
+    setShowError(true);
+
+ }
+ console.log(session)
   const {
     control,
     handleSubmit,
@@ -55,10 +64,16 @@ export const Login = () => {
   const onSubmit: SubmitHandler<LoginInterface> = async data => {
     setBlockButton(true);
 
-    await signIn('credentials', {
+    const response = await signIn('credentials', {
       username: data.username,
       password: data.password,
     });
+
+ console.log(response)
+    if(response === undefined){
+      setShowError(true);
+    }
+    
   };
 
   const handleClose = () => {

@@ -43,7 +43,7 @@ export const Typo: FC<Props> = ({ data }) => {
 
   }
   return (
-    <div ref={element} id={id}>
+    <div ref={element} id={id} style={{width:'100%',height:'100%'}}>
       <Tag
         draggable="true"
         onDragStart={handleDragStart}
@@ -56,6 +56,7 @@ export const Typo: FC<Props> = ({ data }) => {
           opacity: isDragging ? 0.3 : 1,
           transition: 'all 0.3s',
           ...sx,
+          
         }}
         className={`${style.draggable} ${select ? style.selected : ''} `}
         onClick={() => handleActiveClick(data)}

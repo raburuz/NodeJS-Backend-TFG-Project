@@ -11,6 +11,7 @@ import {
   TypoComponent,
   ListComponent,
   ButtonComponent,
+  ImageComponent,
 } from '../../interfaces/components';
 
 export const BuildMenu = () => {
@@ -43,6 +44,16 @@ export const BuildMenu = () => {
     order: 132421,
     label: 'Button',
     url: 'http://localhost:3000/',
+  };
+
+  const image: ImageComponent = {
+    id: uuidv4(),
+    type: 'image',
+    alt:'',
+    order: 3123,
+    urlLink:'#',
+    url: '',
+ 
   };
 
   const addNewComponet = (component: any) => {
@@ -79,7 +90,7 @@ export const BuildMenu = () => {
         <MenuItem onClick={() => addNewComponet(typography)}>Text</MenuItem>
         <MenuItem onClick={() => addNewComponet(list)}>List</MenuItem>
         <MenuItem onClick={() => addNewComponet(button)}>Button</MenuItem>
-        <MenuItem onClick={handleClose}>Imagen</MenuItem>
+        <MenuItem onClick={() => addNewComponet(image)}>Imagen</MenuItem>
       </Menu>
     </>
   );

@@ -20,7 +20,14 @@ type Action =
   | {
       type: 'Build - Change Color Page';
       backgroundColor: string;
-    };
+    }
+| {
+      type: 'Build - Deleted Component';
+      id: string;
+    }
+    
+    
+  ;
 
 export const BuildReducer = (state: any, action: Action) => {
   switch (action.type) {
@@ -52,6 +59,14 @@ export const BuildReducer = (state: any, action: Action) => {
                 // (c.id === action.components.id ) ? action.components : c
             )
         };
+        
+        case 'Build - Deleted Component':
+          return {
+            ...state,
+            components:state.components.filter(
+              (e:any) => (e.id !== action.id )
+          ), 
+          };
     case 'Build - Change Color Page':
       return {
         ...state,
