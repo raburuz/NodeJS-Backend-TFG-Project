@@ -80,17 +80,6 @@ export const CustomMenu = () => {
     updateActiveComponent(activeModify)
   }, [activeModify])
   
-  useEffect(() => {
-    setLabelComponent(active)
-  }, [active])
-
-  const [LabelComponent, setLabelComponent] = useState(active);
-
-  useEffect(() => {
-    updateActiveComponent(LabelComponent)
-  }, [LabelComponent])
-
-
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
@@ -200,9 +189,6 @@ export const CustomMenu = () => {
       'aria-controls': `simple-tabpanel-${index}`,
     };
   };
-
-  const { onInputChange, defaultData, t } = this.props;
-    console.log("f"+defaultData);
 
   return (
     <Box
