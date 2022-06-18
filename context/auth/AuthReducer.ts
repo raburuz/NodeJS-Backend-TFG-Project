@@ -18,11 +18,15 @@ export const AuthReducer = (state: Auth, action: Action) => {
         isLoggedIn: true,
       };
     case '[Auth] - Auth Update User':
-      return {
+      return { 
+        
         ...state,
         user: action.user,
-        isLoggedIn: true,
-      };
+        isLoggedIn: true
+      
+      }
+        
+      
 
     default:
       return state;

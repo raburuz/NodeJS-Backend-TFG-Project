@@ -11,7 +11,11 @@ export interface LoginInterface {
   password: string;
   acceptPolicy?: string;
 }
-
+export interface SettingsUserInterface {
+  username?: string;
+  email?: string;
+  password?: string;
+}
 export interface Auth {
   user: User | null;
   isLoggedIn?: boolean;

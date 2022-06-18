@@ -53,13 +53,10 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   };
 
   const updateUser = (user: User) => {
-    const { email, username } = user;
+   
     dispatch({
       type: '[Auth] - Auth Update User',
-      user: {
-        email,
-        username,
-      },
+      user,
     });
   };
 

@@ -8,6 +8,7 @@ export interface Website {
     | ListComponent[]
     | ButtonComponent[]
     | ImageComponent[];
+  active: any
 }
 
 export interface Page {
@@ -20,7 +21,7 @@ export interface Component {
   id: string;
   type: ContentType;
   order: number;
-  sx?: StyleHTMLAttributes<HTMLStyleElement>;
+  sx?: object;
 }
 
 export interface TypoComponent extends Component {
@@ -39,6 +40,7 @@ export interface ButtonComponent extends Component {
 
 export interface ImageComponent extends Component {
   url: string;
+  urlLink: string;
   alt: string;
 }
 

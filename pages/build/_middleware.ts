@@ -10,7 +10,7 @@ export async function middleware(req: NextRequest, ev: NextFetchEvent) {
   const requestedPage = req.page.name;
 
   try {
-    const response = await fetch('http://localhost:3003/api/token/revalidate', {
+    const response = await fetch('http://localhost:3002/api/token/revalidate', {
       method: 'post',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(body),

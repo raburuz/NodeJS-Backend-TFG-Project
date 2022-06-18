@@ -1,7 +1,8 @@
-import { useRef } from 'react';
+import { useContext, useRef } from 'react';
 import { ListComponent } from '../../../interfaces';
 import { useDraggable } from '../../../hooks/useDraggable';
 import style from './List.module.css';
+import { BuildContext } from '../../../context';
 
 interface Props {
   data: ListComponent;
@@ -9,12 +10,18 @@ interface Props {
 
 export const List = ({ data }: Props) => {
   const { id, items, sx } = data;
-
+ const {activeComponent} =  useContext(BuildContext);
   const element = useRef<HTMLDivElement>(null);
   const { isDragging, handleDragEnd, handleDragStart, handleDragEnter } =
     useDraggable({ element, style: '' });
+
+    const handleActiveClick = ( data:any) => {
+      console.log(data);
+       activeComponent(data);
+ 
+    }
   return (
-    <div ref={element} id={id}>
+    <div ref={element} id={id} onClick={() => handleActiveClick(data)}>
       <div
         draggable="true"
         onDragStart={handleDragStart}
