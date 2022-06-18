@@ -8,6 +8,7 @@ import { Dragbox, Typo } from '../Draggable';
 import { BuildContext } from '../../context/build/BuildContext';
 import { List } from '../Draggable/list/List.component';
 import { Button } from '../Draggable/button/Button.component';
+import { Image } from '../Draggable/image/Image.component';
 
 export const BuildMain = () => {
   const { components, page } = useContext(BuildContext);
@@ -26,10 +27,10 @@ export const BuildMain = () => {
       }}
     >
       <BuildMenu />
+      <CustomMenu />
       <div style={{height:'50px'}}>
           <CustomMenu />
       </div>
-
       <div id='containerDrag'>
         <Container
           maxWidth="md"
@@ -50,6 +51,7 @@ export const BuildMain = () => {
             <Dragbox>
             <>
                 {components?.map((component: any) => {
+                  
                   if (component.type === 'text') {
                     return <Typo key={component.id} data={component}/>;
                   }
@@ -59,7 +61,13 @@ export const BuildMain = () => {
                   if (component.type === 'button') {
                     return <Button key={component.id} data={component} />;
                   }
+                  if (component.type === 'image') {
+                  
+                    return <Image key={component.id} data={component} />;
+                  }
+
                 })}
+
               </>
             </Dragbox>
           </DragProvider>

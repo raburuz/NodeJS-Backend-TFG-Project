@@ -36,7 +36,21 @@ export const BuildProvider: FC<Props> = ({ children }) => {
       components,
     });
   };
+  const deletedComponent = (id: string) => {
+    dispatch({
+      type: 'Build - Deleted Component',
+      id,
+    });
+  };
+
   
+  const addUrlImage = (url: string,id:string) => {
+    dispatch({
+      type: 'Build - Add Url Image',
+      id,
+      url,
+    });
+  };
   const changeColorPage = (backgroundColor: string) => {
     dispatch({
       type: 'Build - Change Color Page',
@@ -52,7 +66,7 @@ export const BuildProvider: FC<Props> = ({ children }) => {
   };
 
   return (
-    <BuildContext.Provider value={{ ...state, addComponent,changeColorPage,activeComponent,updateActiveComponent, changeTextElement}}>
+    <BuildContext.Provider value={{ ...state, addComponent,changeColorPage,activeComponent,updateActiveComponent, changeTextElement,deletedComponent,addUrlImage}}>
       {children}
     </BuildContext.Provider>
   );

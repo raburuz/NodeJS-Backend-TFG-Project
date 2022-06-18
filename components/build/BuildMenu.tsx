@@ -6,23 +6,50 @@ import Box from '@mui/material/Box';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { v4 as uuidv4 } from 'uuid';
-import { BuildContext } from '../../context';
+import { AuthContext, BuildContext } from '../../context';
 import {
   TypoComponent,
   ListComponent,
   ButtonComponent,
+  ImageComponent,
 } from '../../interfaces/components';
 import Link from 'next/link';
-import { AuthContext } from '../../context';
+import html2canvas from 'html2canvas';
 
 export const BuildMenu = () => {
-  const { userData } = useContext(AuthContext);
   const { addComponent } = useContext(BuildContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
+  const { userData } = useContext(AuthContext);
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
   };
+  function click(){
+    const objetivo:any = document.querySelector('#containerDrag');
+    html2canvas(objetivo,{
+      allowTaint:true,
+      useCORS:true
+    }).then(function(canvas){
+      let enlace = document.createElement('a');
+          enlace.download = userData.user?.username + "- Puzzle.png";
+          enlace.href = canvas.toDataURL();
+          enlace.click();
+
+
+    })
+    // html2canvas.then(html2canvas => {
+    //   // html2canvas.default(objetivo).then(canvas => {
+    //   //   let enlace = document.createElement('a');
+    //   //   enlace.download = userData.user?.username + "- Puzzle.png";
+    //   //   enlace.href = canvas.toDataURL();
+    //   //   enlace.click();
+    //   // })
+
+    //   html2canvas((objetivo), { letterRendering: 1, allowTaint : true, onrendered : function (canvas) { } })
+  
+      
+    // }).catch(e => {console.log(e) })
+  }
   const handleClose = () => {
     setAnchorEl(null);
   };
@@ -48,21 +75,19 @@ export const BuildMenu = () => {
     // url: '',
   };
 
+  const image: ImageComponent = {
+    id: uuidv4(),
+    type: 'image',
+    alt:'',
+    order: 3123,
+    urlLink:'#',
+    url: '',
+ 
+  };
+
   const addNewComponet = (component: any) => {
     addComponent(component);
   };
-
-  function click(){
-    const objetivo:any = document.querySelector('#containerDrag');
-    import('html2canvas').then(html2canvas => {
-      html2canvas.default(objetivo).then(canvas => {
-        let enlace = document.createElement('a');
-        enlace.download = userData.user?.username + "- Puzzle.png";
-        enlace.href = canvas.toDataURL();
-        enlace.click();
-      })
-    }).catch(e => {console.log(e) })
-  }
 
   return (
     <>
@@ -94,7 +119,7 @@ export const BuildMenu = () => {
         <MenuItem onClick={() => addNewComponet(typography)}>Text</MenuItem>
         <MenuItem onClick={() => addNewComponet(list)}>List</MenuItem>
         <MenuItem onClick={() => addNewComponet(button)}>Button</MenuItem>
-        <MenuItem onClick={handleClose}>Imagen</MenuItem>
+        <MenuItem onClick={() => addNewComponet(image)}>Imagen</MenuItem>
       </Menu>
     </>
   );

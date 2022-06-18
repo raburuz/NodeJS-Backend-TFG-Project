@@ -9,6 +9,8 @@ interface BuildProps extends Website {
   activeComponent: (activeComponent: object) => void;
   changeColorPage: (backgroundColor: string) => void;
   changeTextElement: (component: object) => void;
+  addUrlImage: (url: string, id:string) => void;
+  deletedComponent: (id: string) => void;
 }
 
 export const BuildContext = createContext({} as BuildProps);

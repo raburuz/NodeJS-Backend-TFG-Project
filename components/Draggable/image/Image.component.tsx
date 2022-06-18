@@ -1,18 +1,17 @@
-import { height } from '@mui/system';
 import { useContext, useRef } from 'react';
 import { BuildContext } from '../../../context';
 import { useDraggable } from '../../../hooks/useDraggable';
-import { ButtonComponent } from '../../../interfaces';
-import style from './Button.module.css';
+import { ImageComponent } from '../../../interfaces';
+import style from './Image.module.css';
 
 interface Props {
-  data: ButtonComponent;
+  data: ImageComponent;
 }
 
-export const Button = ({ data }: Props) => {
-  const { id, label, order, url, sx } = data;
+export const Image = ({ data }: Props) => {
+  const { id, order, urlLink ,url, sx } = data;
   const element = useRef<HTMLDivElement>(null);
-  const {activeComponent} =  useContext(BuildContext);
+  const {activeComponent,active} =  useContext(BuildContext);
   const {
     isDragging,
     handleDragEnd,
@@ -39,13 +38,22 @@ export const Button = ({ data }: Props) => {
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
-          width:'100%',
-          height:'100%'
         }}
       >
-        <a className={style.btn} href={url} style={sx} target="_blank" rel='noreferrer'>
-          {label}
-        </a>
+
+        {
+            (url === '') ? (<a className={style.img} href={urlLink} style={sx} target="_blank" rel='noreferrer'></a>) 
+            : (
+                <a className={style.imgUploaded} href={urlLink} style={{width:'100%',height:'100%'}} target="_blank" rel='noreferrer'>
+                        <img style={sx}  src={url} />
+                </a>
+                
+              )
+
+        }
+        
+
+
       </div>
     </div>
   );

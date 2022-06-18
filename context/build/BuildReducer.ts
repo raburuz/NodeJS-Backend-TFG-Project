@@ -22,10 +22,22 @@ type Action =
       type: 'Build - Change Color Page';
       backgroundColor: string;
     }
+
   | {
     type: 'Build - Change text element';
     components: TypoComponent;
-  };  
+  }
+| {
+      type: 'Build - Deleted Component';
+      id: string;
+    }
+| {
+      type: 'Build - Add Url Image';
+      id: string;
+      url:string;
+    }
+    
+  ;
 
 export const BuildReducer = (state: any, action: Action) => {
   switch (action.type) {
@@ -57,11 +69,34 @@ export const BuildReducer = (state: any, action: Action) => {
                 // (c.id === action.components.id ) ? action.components : c
             )
         };
-    case 'Build - Change Color Page':
-      return {
-        ...state,
-        page: { backgroundColor: action.backgroundColor },
-      };
+        
+        case 'Build - Deleted Component':
+          return {
+            ...state,
+            components:state.components.filter(
+              (e:any) => (e.id !== action.id )
+          ), 
+          };
+
+          
+
+          case 'Build - Change Color Page':
+            return {
+              ...state,
+              page: { backgroundColor: action.backgroundColor },
+            };
+        case 'Build - Add Url Image':
+          return {
+            ...state,
+            components: state.components.map(
+                (c:any) =>{
+                  if(c.id === action.id){
+                    return {...c,url:action.url}
+                  }
+                  return c;
+                }
+            )
+              };
 
       case 'Build - Change text element':
 

@@ -11,6 +11,10 @@ const tokenApi = axios.create({
   baseURL: `${api.baseUrl}${api.token}`,
 });
 
+const uploadApi = axios.create({
+  baseURL: `${api.baseUrlCloudinary}`,
+});
+
 export const loginApi = async (userData: LoginInterface) => {
   console.log(userData);
   try {
@@ -23,6 +27,27 @@ export const loginApi = async (userData: LoginInterface) => {
     };
   }
 };
+
+export const uploadImg = async (file:any) => {
+ const formData =  new FormData();
+ 
+ formData.append('upload_preset','next-aplication');
+ formData.append('file',file);
+
+console.log(formData);
+  try {
+    const response = await uploadApi.post('',formData);
+ 
+    if( response.status != 200  )  return 
+
+    return response.data;
+  } catch (error: any) {
+    return {
+      error: true,
+    };
+  }
+};
+
 export const updateApi = async (userData: SettingsUserInterface,id: string ) => {
   const cookie = Cookies.get('x_token') ?? '';
   
