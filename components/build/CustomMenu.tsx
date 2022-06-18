@@ -1,5 +1,8 @@
+
 import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
-import { Tab, Tabs, Box, Typography, Snackbar, Alert, TextField } from '@mui/material';
+import { Tab, Tabs, Box, Typography, Snackbar, Alert, TextField, AppBar } from '@mui/material';
+
+
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
@@ -17,7 +20,8 @@ import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { uploadImg } from '../../apis/authApi';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
-
+import { TabPanelChangeLabel } from '../ui/TabPanelChangeLabel';
+import { useTheme } from '@mui/material/styles';
 const PrettoSlider = styled(Slider)({
   color: 'linear-gradient(30deg, rgba(121,82,119,0.975) 30%, #355192 85%)',
   height: 8,
@@ -59,17 +63,26 @@ const PrettoSlider = styled(Slider)({
 });
 
 
-
-
 export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
   const [heigth, setHeigth] = useState(5);
+
   const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent,addUrlImage ,updateLabelText}  =  useContext(BuildContext);
+
+  const [width, setWidth] = useState(5);
+  const [colors, setColors] = useState("#121212");
+  const [size, setSize] = useState(5);
+  const [changeLabel, setChangeLabel] = useState(5);
+  const [background, setbackground] = useState("#121212");
+  const [radius, setradius] = useState(5);
+
   const [open, setOpen] = useState(false);
+  const [labelOpen, setOpenErrorLabel] = useState(false);
   const [label, setInputField] = useState('');
   const [openSuccess, setOpenSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const theme = useTheme();
   useEffect(() => {
     setActiveComponent(active)
   }, [active])
@@ -80,13 +93,16 @@ export const CustomMenu = () => {
     updateActiveComponent(activeModify)
   }, [activeModify])
 
+
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
     setOpenSuccess(false);
     setOpen(false);
+    setOpenErrorLabel(false);
   };
+
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -94,10 +110,11 @@ export const CustomMenu = () => {
     deletedComponent(id);
   }
 
+
   
   const handleModifyLabel = (event:any ) => {
     if(active.type === ''){
-      setOpen(true);
+      setOpenErrorLabel(true);
       return;
     }else{
       
@@ -110,6 +127,7 @@ export const CustomMenu = () => {
 
   }
   
+
   const onFileInputChange = async({target}:any) => {
     console.log(target.files)
     const response = await uploadImg(target.files[0]);
@@ -122,22 +140,20 @@ export const CustomMenu = () => {
     }
     console.log(response)
   }
+
   const handleChangeColor = (value:string ) => {
     setColor(value)
     changeColorPage(value);
-
-
   }
+
+
   const handleChangeHeigth = (event:any ) => {
-    
     console.log(event.target.value)
     setHeigth(event.target.value)
     if(active.type === ''){
-      setOpen(true);
+      setOpenErrorLabel(true);
       return;
     }else{
-      
-     
             setActiveComponent((state:any) => ({
                             
               ...state,    
@@ -148,14 +164,105 @@ export const CustomMenu = () => {
           
         }));
         updateActiveComponent(activeModify);
-
-
-      
     }
   }
 
+  const handleChangeWidth = (event:any ) => {
+    console.log(event.target.value)
+    setWidth(event.target.value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
+          setActiveComponent((state:any) => ({       
+                ...state,    
+                sx: {
+                  ...state.sx,
+                  width: event.target.value
+                }      
+          }));
 
-  
+  }
+    updateActiveComponent(activeModify);
+  }
+
+  const handleColor = (value:any ) => {
+    console.log(value)
+    setColors(value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            color: value
+          }      
+    }));
+
+  }
+    updateActiveComponent(activeModify);
+  }
+
+  const handleBackground = (value:any ) => {
+    console.log(value)
+    setbackground(value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            background: value
+          }      
+    }));
+
+  }
+    updateActiveComponent(activeModify);
+  }
+
+  const handleChangeSize = (event:any ) => {
+    console.log(event.target.value)
+    setSize(event.target.value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            fontSize: event.target.value
+          }      
+    }));
+
+  }
+    updateActiveComponent(activeModify);
+  }
+
+  const handleChangeRadius = (event:any ) => {
+    console.log(event.target.value)
+    setradius(event.target.value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            borderRadius: event.target.value
+          }      
+    }));
+
+  }
+    updateActiveComponent(activeModify);
+  }
+
+ 
   const a11yProps = (index: number) => {
     return {
       id: `simple-tab-${index}`,
@@ -176,11 +283,14 @@ export const CustomMenu = () => {
       }}
     >
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <AppBar position="static" sx={{backgroundColor:'black'}}>
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="Crate your page here"
-          centered
+          indicatorColor="secondary"
+          textColor="inherit"
+          variant="fullWidth"
+          aria-label="full width tabs example"
         >
           {
            (active.type === 'text') ? (<Tab icon={<TextFieldsIcon />} {...a11yProps(0)}  /> ): 
@@ -194,24 +304,42 @@ export const CustomMenu = () => {
           <Tab icon={<ColorLensIcon />} {...a11yProps(1)} />
           <Tab icon={<ChangeCircleIcon />} {...a11yProps(2)} />
         </Tabs>
+        </AppBar>
       </Box>
 
-      
+     
       <TabPanel value={value} index={0} >
      
         <Typography sx={{color:'white'}}>Width:</Typography>
         <PrettoSlider
-            valueLabelDisplay="auto"
+            // valueLabelDisplay="auto"
             aria-label="pretto slider"
-            defaultValue={20}
+            value={width}
+            onChange={handleChangeWidth}
+            max={830}
           />
         <Typography sx={{color:'white'}}>Heigth:</Typography>
         <PrettoSlider
-            valueLabelDisplay="auto"
+            // valueLabelDisplay="auto"
             aria-label="pretto slider"
             value={heigth}
-            max={400}
             onChange={handleChangeHeigth}
+            max={150}
+          />         
+        <Typography sx={{color:'white'}}>Size:</Typography>
+        <PrettoSlider
+            valueLabelDisplay="auto"
+            aria-label="pretto slider"
+            value={size}
+            onChange={handleChangeSize}
+          />
+        <Typography sx={{color:'white'}}>Border:</Typography>
+        <PrettoSlider
+            valueLabelDisplay="auto"
+            aria-label="pretto slider"
+            value={radius}
+            onChange={handleChangeRadius}
+            max={100}
           />
           <Box sx={{display:'flex',justifyContent:'space-evenly'}}>
             <Box sx={{color:'white',backgroundColor:'#355192',borderRadius:'15px',width:'50px',textAlign:'center',cursor:'pointer'}} onClick={() => fileInputRef.current?.click()}  hidden={(active.type === 'image') ? false : true }><UploadFileIcon/></Box>
@@ -220,23 +348,42 @@ export const CustomMenu = () => {
           <input type="file" onChange={onFileInputChange}  ref={fileInputRef as React.LegacyRef<HTMLInputElement>} style={{display:'none'}}/>
           
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={1} >
+      <Typography sx={{color:'white'}}>Background color :</Typography>
         <CustomMenuLayout>
             <HexColorPicker className={style.reactColorful} color={color} onChange={handleChangeColor} />
-   
+        </CustomMenuLayout>
+        <Typography sx={{color:'white'}}>Color text:</Typography>
+        <CustomMenuLayout>
+            <HexColorPicker className={style.reactColorful} color={colors} onChange={handleColor} />
+        </CustomMenuLayout>
+        <Typography sx={{color:'white'}}>Background:</Typography>
+        <CustomMenuLayout>
+            <HexColorPicker className={style.reactColorful} color={background} onChange={handleBackground} />
         </CustomMenuLayout>
       </TabPanel>
-      <TabPanel value={value} index={2}>
-      <TextField
-          id="filled-textarea"
-          label="Multiline Placeholder"
-          placeholder="Placeholder"
-          multiline
-          variant="filled"
-          onChange={handleModifyLabel}
-        />
-      </TabPanel>
+      <TabPanelChangeLabel value={value} index={2}>
+          <CustomMenuLayout>
+                <TextField
+                    id="filled-textarea"
+                    label="Change Label"
+                    placeholder="Label"
+                    multiline
+                    variant="filled"
+                    onChange={handleModifyLabel}
+                  />
+          </CustomMenuLayout>
+      </TabPanelChangeLabel>
+   
     </Box>
+    
+    <Snackbar open={labelOpen} autoHideDuration={4000} onClose={handleClose}>
+                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                  You have to select a component to modify it
+
+
+                  </Alert>
+     </Snackbar>
     <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
                   <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                   You have to select a component to remove it
@@ -245,3 +392,5 @@ export const CustomMenu = () => {
     </>
   );
 };
+
+

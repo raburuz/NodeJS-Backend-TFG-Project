@@ -34,7 +34,7 @@ export interface ListComponent extends Component {
 }
 
 export interface ButtonComponent extends Component {
-  url: string;
+  // url: string;
   label: string;
 }
 

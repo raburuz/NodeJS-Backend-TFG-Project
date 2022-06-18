@@ -5,6 +5,8 @@ import { BuildContext } from './BuildContext';
 import { BuildReducer } from './BuildReducer';
 import { initialValue } from './initialValue';
 import {Component} from '../../interfaces'
+
+
 interface Props {
   children: JSX.Element;
 }
@@ -63,8 +65,19 @@ export const BuildProvider: FC<Props> = ({ children }) => {
       backgroundColor,
     });
   };
+
+  const changeTextElement = (components: TypoComponent) => {
+    dispatch({
+      type: 'Build - Change text element',
+      components,
+    });
+  };
+
   return (
+
     <BuildContext.Provider value={{ ...state, addComponent,changeColorPage,activeComponent,updateActiveComponent ,deletedComponent,addUrlImage,updateLabelText}}>
+
+
       {children}
     </BuildContext.Provider>
   );

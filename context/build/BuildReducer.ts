@@ -1,6 +1,10 @@
 import { Components } from '@mui/material';
 
+
 import {Component, TypoComponent} from '../../interfaces'
+
+
+
 type Action =
   | {
       type: 'Build - Add New Component';
@@ -22,6 +26,11 @@ type Action =
       type: 'Build - Change Color Page';
       backgroundColor: string;
     }
+
+  | {
+    type: 'Build - Change text element';
+    components: TypoComponent;
+  }
 | {
       type: 'Build - Deleted Component';
       id: string;
@@ -108,6 +117,21 @@ export const BuildReducer = (state: any, action: Action) => {
                 }
             )
               };
+
+      case 'Build - Change text element':
+
+        return {
+            ...state,
+            components: state.components.map(
+                (c:any) =>{
+                  if(c.id === action.components.id){
+                    return {...c,label:action.components.label}
+                  }
+                  return c;
+                }
+                // (c.id === action.components.id ) ? action.components : c
+            )
+        };  
 
     default:
       return state;
