@@ -1,6 +1,6 @@
 import { Components } from '@mui/material';
 
-import {Component} from '../../interfaces'
+import {Component, TypoComponent} from '../../interfaces'
 type Action =
   | {
       type: 'Build - Add New Component';
@@ -12,7 +12,8 @@ type Action =
     }
   | {
       type: 'Build - Update Active Component';
-      components: Component;    }
+      components: Component;  
+      }
   | {
       type: 'Build - Update One Component';
       backgroundColor: string;
@@ -30,6 +31,11 @@ type Action =
       id: string;
       url:string;
     }
+| {
+      type: 'Build - Update Label Text';
+      id:string;
+      label: string;  
+      }
     
   ;
 
@@ -73,7 +79,18 @@ export const BuildReducer = (state: any, action: Action) => {
           };
 
           
-
+          case 'Build - Update Label Text':
+            return {
+              ...state,
+              components: state.components.map(
+                  (c:any) =>{
+                    if(c.id === action.id){
+                      return {...c,label:action.label}
+                    }
+                    return c;
+                  }
+              )
+                };
           case 'Build - Change Color Page':
             return {
               ...state,

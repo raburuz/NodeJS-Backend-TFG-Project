@@ -1,5 +1,5 @@
 import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
-import { Tab, Tabs, Box, Typography, Snackbar, Alert } from '@mui/material';
+import { Tab, Tabs, Box, Typography, Snackbar, Alert, TextField } from '@mui/material';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
@@ -16,7 +16,7 @@ import ImageIcon from '@mui/icons-material/Image';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { uploadImg } from '../../apis/authApi';
-
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 
 const PrettoSlider = styled(Slider)({
   color: 'linear-gradient(30deg, rgba(121,82,119,0.975) 30%, #355192 85%)',
@@ -65,8 +65,9 @@ export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
   const [heigth, setHeigth] = useState(5);
-  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent,addUrlImage }  =  useContext(BuildContext);
+  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent,addUrlImage ,updateLabelText}  =  useContext(BuildContext);
   const [open, setOpen] = useState(false);
+  const [label, setInputField] = useState('');
   const [openSuccess, setOpenSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
   useEffect(() => {
@@ -93,8 +94,21 @@ export const CustomMenu = () => {
     deletedComponent(id);
   }
 
- 
+  
+  const handleModifyLabel = (event:any ) => {
+    if(active.type === ''){
+      setOpen(true);
+      return;
+    }else{
+      
+      setInputField(event.target.value)
+        updateLabelText(label,active.id);
 
+
+      
+    }
+
+  }
   
   const onFileInputChange = async({target}:any) => {
     console.log(target.files)
@@ -120,6 +134,7 @@ export const CustomMenu = () => {
     setHeigth(event.target.value)
     if(active.type === ''){
       setOpen(true);
+      return;
     }else{
       
      
@@ -177,7 +192,7 @@ export const CustomMenu = () => {
     
 
           <Tab icon={<ColorLensIcon />} {...a11yProps(1)} />
-          <Tab icon={<EnhancedEncryptionIcon />} {...a11yProps(2)} />
+          <Tab icon={<ChangeCircleIcon />} {...a11yProps(2)} />
         </Tabs>
       </Box>
 
@@ -212,9 +227,14 @@ export const CustomMenu = () => {
         </CustomMenuLayout>
       </TabPanel>
       <TabPanel value={value} index={2}>
-        <CustomMenuLayout>
-          <h1>Hola</h1>
-        </CustomMenuLayout>
+      <TextField
+          id="filled-textarea"
+          label="Multiline Placeholder"
+          placeholder="Placeholder"
+          multiline
+          variant="filled"
+          onChange={handleModifyLabel}
+        />
       </TabPanel>
     </Box>
     <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>

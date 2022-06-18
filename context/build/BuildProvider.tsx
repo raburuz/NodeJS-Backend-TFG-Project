@@ -1,6 +1,6 @@
 import { FC, useReducer } from 'react';
 import { Components } from '@mui/material';
-import { Website } from '../../interfaces';
+import { TypoComponent, Website } from '../../interfaces';
 import { BuildContext } from './BuildContext';
 import { BuildReducer } from './BuildReducer';
 import { initialValue } from './initialValue';
@@ -42,6 +42,14 @@ export const BuildProvider: FC<Props> = ({ children }) => {
   };
 
   
+  const updateLabelText = (label: string,id:string) => {
+   
+    dispatch({
+      type: 'Build - Update Label Text',
+      id,
+      label,
+    });
+  };
   const addUrlImage = (url: string,id:string) => {
     dispatch({
       type: 'Build - Add Url Image',
@@ -56,7 +64,7 @@ export const BuildProvider: FC<Props> = ({ children }) => {
     });
   };
   return (
-    <BuildContext.Provider value={{ ...state, addComponent,changeColorPage,activeComponent,updateActiveComponent ,deletedComponent,addUrlImage}}>
+    <BuildContext.Provider value={{ ...state, addComponent,changeColorPage,activeComponent,updateActiveComponent ,deletedComponent,addUrlImage,updateLabelText}}>
       {children}
     </BuildContext.Provider>
   );
