@@ -9,7 +9,8 @@ interface Props {
 }
 
 export const Image = ({ data }: Props) => {
-  const { id, order, urlLink ,url, sx } = data;
+  // const { id, order, urlLink ,url, sx } = data;
+  const { id, order ,url, sx } = data;
   const element = useRef<HTMLDivElement>(null);
   const {activeComponent,active} =  useContext(BuildContext);
   const {
@@ -41,7 +42,7 @@ export const Image = ({ data }: Props) => {
         }}
       >
 
-        {
+        {/* {
             (url === '') ? (<a className={style.img} href={urlLink} style={sx} target="_blank" rel='noreferrer'></a>) 
             : (
                 <a className={style.imgUploaded} href={urlLink} style={{width:'100%',height:'100%'}} target="_blank" rel='noreferrer'>
@@ -50,8 +51,18 @@ export const Image = ({ data }: Props) => {
                 
               )
 
-        }
+        } */}
         
+        {
+            (url === '') ? (<a className={style.img} style={sx} target="_blank" rel='noreferrer'></a>) 
+            : (
+                <a className={style.imgUploaded} style={{width:'100%',height:'100%'}} target="_blank" rel='noreferrer'>
+                        <img style={sx}  src={url} />
+                </a>
+                
+              )
+
+        }
 
 
       </div>

@@ -1,8 +1,9 @@
-
+import * as React from 'react';
 import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
 import { Tab, Tabs, Box, Typography, Snackbar, Alert,TextField } from '@mui/material';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
+import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
 import { HexColorPicker } from "react-colorful";
 import { TabPanel } from '../ui';
@@ -17,6 +18,13 @@ import ImageIcon from '@mui/icons-material/Image';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { uploadImg } from '../../apis/authApi';
+import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
+import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
+import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
+import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
+import ToggleButton from '@mui/material/ToggleButton';
+import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import Checkbox from '@mui/material/Checkbox';
 
 
 const PrettoSlider = styled(Slider)({
@@ -74,6 +82,7 @@ export const CustomMenu = () => {
   const [open, setOpen] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+ 
 
   useEffect(() => {
     setActiveComponent(active)
@@ -222,6 +231,68 @@ export const CustomMenu = () => {
     };
   };
 
+  const [alignment, setAlignment] = useState<string | null>('left');
+
+  const handleAlignment = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string | null,
+  ) => {
+    setAlignment(newAlignment);
+    setActiveComponent((state:any) => ({       
+      ...state,    
+      sx: {
+        ...state.sx,
+        textAlign: newAlignment
+      }      
+    }));
+    updateActiveComponent(activeModify);
+  };
+
+  const [alignmentImage, setAlignmentImage] = useState<string | null>('left');
+  const handleAlignmentImage = (
+    event: React.MouseEvent<HTMLElement>,
+    newAlignment: string | null,
+  ) => {
+    setAlignmentImage(newAlignment);
+    setActiveComponent((state:any) => ({       
+      ...state,    
+      sx: {
+        ...state.sx,
+        float: newAlignment
+      }      
+    }));
+    updateActiveComponent(activeModify);
+  };
+
+  const [checked, setChecked] = React.useState(true);
+
+  const handleChangeRadios = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setChecked(event.target.checked);
+  };
+
+  const handleChangeRadio = (event:any ) => {
+    console.log(event.target.checked)
+    setChecked(event.target.checked);
+    if(event.target.checked==true){  
+      setActiveComponent((state:any) => ({       
+            ...state,    
+            sx: {
+              ...state.sx,
+              listStyle: ''
+            }      
+      }));
+    }else{
+      setActiveComponent((state:any) => ({       
+        ...state,    
+        sx: {
+          ...state.sx,
+          listStyle: 'none'
+        }      
+  }));
+    }
+    updateActiveComponent(activeModify);
+  }
+
   return (
     <>
     <Box
@@ -242,16 +313,13 @@ export const CustomMenu = () => {
           centered
         >
           {
-           (active.type === 'text') ? (<Tab icon={<TextFieldsIcon />} {...a11yProps(0)}  /> ): 
+           (active.type === 'text') ? (<Tab icon={<FormatColorTextIcon />} {...a11yProps(0)}  /> ): 
            (active.type === 'button') ?  (<Tab icon={<RadioButtonUncheckedIcon />} {...a11yProps(0)} />) : (active.type === 'list') ?
            (<Tab icon={<FilterListIcon />} {...a11yProps(0)} />) : (active.type === 'image') ? (<Tab icon={<ImageIcon />} {...a11yProps(0)} />) :
-           (<Tab icon={<TextFieldsIcon />} {...a11yProps(0)}  /> )
-           
+           (<Tab icon={<FormatColorTextIcon />} {...a11yProps(0)}  /> )
           } 
-    
-
           <Tab icon={<ColorLensIcon />} {...a11yProps(1)} />
-          <Tab icon={<EnhancedEncryptionIcon />} {...a11yProps(2)} />
+          <Tab icon={<TextFieldsIcon />} {...a11yProps(2)} />
         </Tabs>
       </Box>
 
@@ -272,7 +340,7 @@ export const CustomMenu = () => {
             aria-label="pretto slider"
             value={heigth}
             onChange={handleChangeHeigth}
-            max={150}
+            max={400}
           />         
         <Typography sx={{color:'white'}}>Size:</Typography>
         <PrettoSlider
@@ -311,11 +379,38 @@ export const CustomMenu = () => {
         </CustomMenuLayout>
       </TabPanel>
       <TabPanel value={value} index={2}>
+      <Typography sx={{color:'white'}}>Change text:</Typography>
         <CustomMenuLayout>
-          <h1>Hola</h1>
-          
+          <TextField id="outlined-basic" label="Outlined" variant="outlined" onChange={handleChangeLabel}/>
         </CustomMenuLayout>
-        <TextField id="outlined-basic" label="Outlined" variant="outlined" onChange={handleChangeLabel}/>
+        <Typography sx={{color:'white'}}>Align items:</Typography>
+        <CustomMenuLayout>
+          <ToggleButtonGroup
+            value={alignment}
+            exclusive
+            onChange={handleAlignment}
+            aria-label="text alignment"
+          >
+            <ToggleButton value="left" aria-label="left aligned">
+              <FormatAlignLeftIcon />
+            </ToggleButton>
+            <ToggleButton value="center" aria-label="centered">
+              <FormatAlignCenterIcon />
+            </ToggleButton>
+            <ToggleButton value="right" aria-label="right aligned">
+              <FormatAlignRightIcon />
+            </ToggleButton>
+            <ToggleButton value="justify" aria-label="justified">
+              <FormatAlignJustifyIcon />
+            </ToggleButton>
+          </ToggleButtonGroup>  
+        </CustomMenuLayout>
+        <Typography sx={{color:'white'}}>Delete point list:</Typography>
+        <Checkbox
+          checked={checked}
+          onChange={handleChangeRadio}
+          inputProps={{ 'aria-label': 'controlled' }}
+        />
       </TabPanel>
     </Box>
     <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>

@@ -38,7 +38,6 @@
 }
 
 .templateMenu{
-    background-color: #7785a3;
     width: 500px;
     height: 300px;
     margin: 30px;
@@ -55,13 +54,13 @@
 }
 
 
-.templateMenu:hover{
+/* .templateMenu:hover{
     background-color: #7375794d;
 }
 
 .templateMenu:hover > .botonSelect{
     display: block;
-}
+} */
 
 
 /*-----------------------------------Mediaqueries-------------------------------*/

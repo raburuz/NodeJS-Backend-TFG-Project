@@ -19,10 +19,10 @@ export const TemplateMyList = () => {
             <div className={style.templatesMenu}>
               {
                 isLoggedIn &&
-                <div className={style.templateMenu}><Link href="/build" className={style.botonSelect}>Choose</Link></div>
+                <div className={style.templateMenu}></div>
                 
               }
-                <div className={style.templateMenu}><Link href="/index" className={style.botonSelect}>Choose</Link></div>
+                <div className={style.templateMenu}></div>
                 
             </div>
         </div>

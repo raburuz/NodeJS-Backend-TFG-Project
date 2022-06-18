@@ -28,7 +28,7 @@ export const BuildMain = () => {
     >
       <BuildMenu />
       <CustomMenu />
-      <div style={{height:'50px'}}>
+      <div style={{height:'70px'}}>
           <CustomMenu />
       </div>
       <div id='containerDrag'>

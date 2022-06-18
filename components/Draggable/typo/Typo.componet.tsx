@@ -58,7 +58,7 @@ export const Typo: FC<Props> = ({ data }) => {
           ...sx,
           
         }}
-        className={`${style.draggable} ${select ? style.selected : ''} `}
+        className={`${style.draggable} ${select ? style.selected :''} `}
         onClick={() => handleActiveClick(data)}
 
       >
