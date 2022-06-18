@@ -1,5 +1,6 @@
+
 import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
-import { Tab, Tabs, Box, Typography, Snackbar, Alert } from '@mui/material';
+import { Tab, Tabs, Box, Typography, Snackbar, Alert,TextField } from '@mui/material';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
@@ -59,16 +60,21 @@ const PrettoSlider = styled(Slider)({
 });
 
 
-
-
 export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
   const [heigth, setHeigth] = useState(5);
+  const [width, setWidth] = useState(5);
+  const [colors, setColors] = useState("#121212");
+  const [size, setSize] = useState(5);
+  const [changeLabel, setChangeLabel] = useState(5);
+  const [background, setbackground] = useState("#121212");
+  const [radius, setradius] = useState(5);
   const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent,addUrlImage }  =  useContext(BuildContext);
   const [open, setOpen] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
   useEffect(() => {
     setActiveComponent(active)
   }, [active])
@@ -79,6 +85,7 @@ export const CustomMenu = () => {
     updateActiveComponent(activeModify)
   }, [activeModify])
 
+
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
@@ -86,6 +93,7 @@ export const CustomMenu = () => {
     setOpenSuccess(false);
     setOpen(false);
   };
+
   const handleChange = (event: SyntheticEvent, newValue: number) => {
     setValue(newValue);
   };
@@ -93,9 +101,6 @@ export const CustomMenu = () => {
     deletedComponent(id);
   }
 
- 
-
-  
   const onFileInputChange = async({target}:any) => {
     console.log(target.files)
     const response = await uploadImg(target.files[0]);
@@ -108,21 +113,19 @@ export const CustomMenu = () => {
     }
     console.log(response)
   }
+
   const handleChangeColor = (value:string ) => {
     setColor(value)
     changeColorPage(value);
-
-
   }
+
+
   const handleChangeHeigth = (event:any ) => {
-    
     console.log(event.target.value)
     setHeigth(event.target.value)
     if(active.type === ''){
       setOpen(true);
     }else{
-      
-     
             setActiveComponent((state:any) => ({
                             
               ...state,    
@@ -133,14 +136,85 @@ export const CustomMenu = () => {
           
         }));
         updateActiveComponent(activeModify);
-
-
-      
     }
   }
 
+  const handleChangeWidth = (event:any ) => {
+    console.log(event.target.value)
+    setWidth(event.target.value)
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            width: event.target.value
+          }      
+    }));
+    updateActiveComponent(activeModify);
+  }
 
-  
+  const handleColor = (value:any ) => {
+    console.log(value)
+    setColors(value)
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            color: value
+          }      
+    }));
+    updateActiveComponent(activeModify);
+  }
+
+  const handleBackground = (value:any ) => {
+    console.log(value)
+    setbackground(value)
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            background: value
+          }      
+    }));
+    updateActiveComponent(activeModify);
+  }
+
+  const handleChangeSize = (event:any ) => {
+    console.log(event.target.value)
+    setSize(event.target.value)
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            fontSize: event.target.value
+          }      
+    }));
+    updateActiveComponent(activeModify);
+  }
+
+  const handleChangeRadius = (event:any ) => {
+    console.log(event.target.value)
+    setradius(event.target.value)
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            borderRadius: event.target.value
+          }      
+    }));
+    updateActiveComponent(activeModify);
+  }
+
+  const handleChangeLabel = (event:any ) => {
+    console.log("label"+event.target.value)
+    setChangeLabel(event.target.value)
+    setActiveComponent((state:any) => ({       
+          ...state,         
+         label:event.target.value
+          
+    }));
+    updateActiveComponent(activeModify);
+  }
+
   const a11yProps = (index: number) => {
     return {
       id: `simple-tab-${index}`,
@@ -186,17 +260,34 @@ export const CustomMenu = () => {
      
         <Typography sx={{color:'white'}}>Width:</Typography>
         <PrettoSlider
-            valueLabelDisplay="auto"
+            // valueLabelDisplay="auto"
             aria-label="pretto slider"
-            defaultValue={20}
+            value={width}
+            onChange={handleChangeWidth}
+            max={830}
           />
         <Typography sx={{color:'white'}}>Heigth:</Typography>
         <PrettoSlider
-            valueLabelDisplay="auto"
+            // valueLabelDisplay="auto"
             aria-label="pretto slider"
             value={heigth}
-            max={400}
             onChange={handleChangeHeigth}
+            max={150}
+          />         
+        <Typography sx={{color:'white'}}>Size:</Typography>
+        <PrettoSlider
+            valueLabelDisplay="auto"
+            aria-label="pretto slider"
+            value={size}
+            onChange={handleChangeSize}
+          />
+        <Typography sx={{color:'white'}}>Border:</Typography>
+        <PrettoSlider
+            valueLabelDisplay="auto"
+            aria-label="pretto slider"
+            value={radius}
+            onChange={handleChangeRadius}
+            max={100}
           />
           <Box sx={{display:'flex',justifyContent:'space-evenly'}}>
             <Box sx={{color:'white',backgroundColor:'#355192',borderRadius:'15px',width:'50px',textAlign:'center',cursor:'pointer'}} onClick={() => fileInputRef.current?.click()}  hidden={(active.type === 'image') ? false : true }><UploadFileIcon/></Box>
@@ -206,15 +297,25 @@ export const CustomMenu = () => {
           
       </TabPanel>
       <TabPanel value={value} index={1}>
+      <Typography sx={{color:'white'}}>Background color :</Typography>
         <CustomMenuLayout>
             <HexColorPicker className={style.reactColorful} color={color} onChange={handleChangeColor} />
-   
+        </CustomMenuLayout>
+        <Typography sx={{color:'white'}}>Color text:</Typography>
+        <CustomMenuLayout>
+            <HexColorPicker className={style.reactColorful} color={colors} onChange={handleColor} />
+        </CustomMenuLayout>
+        <Typography sx={{color:'white'}}>Background:</Typography>
+        <CustomMenuLayout>
+            <HexColorPicker className={style.reactColorful} color={background} onChange={handleBackground} />
         </CustomMenuLayout>
       </TabPanel>
       <TabPanel value={value} index={2}>
         <CustomMenuLayout>
           <h1>Hola</h1>
+          
         </CustomMenuLayout>
+        <TextField id="outlined-basic" label="Outlined" variant="outlined" onChange={handleChangeLabel}/>
       </TabPanel>
     </Box>
     <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
@@ -225,3 +326,5 @@ export const CustomMenu = () => {
     </>
   );
 };
+
+

@@ -89,6 +89,16 @@ export const Navbar = () => {
               sx={{color:'white'}}
             />
 
+            {isLoggedIn && (
+              <BottomNavigationAction
+                label="Settings"
+                value="settings"
+                icon={<SettingsApplicationsTwoToneIcon />}
+                onClick={() => onLink('/settings/')}
+                sx={{color:'white'}}
+              />
+            )}
+          
             <BottomNavigationAction
               label={isLoggedIn ? 'Logout' : 'Login'}
               value={isLoggedIn ? 'Logout' : 'Login'}
@@ -100,16 +110,9 @@ export const Navbar = () => {
               }
               sx={{color:'white'}}
             />
-            {isLoggedIn && (
-              <BottomNavigationAction
-                label="Settings"
-                value="settings"
-                icon={<SettingsApplicationsTwoToneIcon />}
-                onClick={() => onLink('/settings/')}
-                sx={{color:'white'}}
-              />
-            )}
-          </BottomNavigation>
+            
+            </BottomNavigation>
+
         </Grid>
       </Grid>
     </nav>

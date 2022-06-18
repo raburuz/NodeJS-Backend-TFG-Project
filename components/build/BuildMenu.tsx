@@ -13,6 +13,7 @@ import {
   ButtonComponent,
   ImageComponent,
 } from '../../interfaces/components';
+import Link from 'next/link';
 import html2canvas from 'html2canvas';
 
 export const BuildMenu = () => {
@@ -24,9 +25,7 @@ export const BuildMenu = () => {
     setAnchorEl(event.currentTarget);
   };
   function click(){
-    const objetivo:any = document.querySelector('#dragbox');
-
-
+    const objetivo:any = document.querySelector('#containerDrag');
     html2canvas(objetivo,{
       allowTaint:true,
       useCORS:true
@@ -73,7 +72,7 @@ export const BuildMenu = () => {
     type: 'button',
     order: 132421,
     label: 'Button',
-    url: 'http://localhost:3000/',
+    // url: '',
   };
 
   const image: ImageComponent = {
@@ -104,7 +103,7 @@ export const BuildMenu = () => {
             Add
           </Button>
           <Button onClick={click}>Save</Button>
-          <Button>Settings</Button>
+          <Link href={'/'}><Button>Back home</Button></Link>
         </ButtonGroup>
       </Box>
 
