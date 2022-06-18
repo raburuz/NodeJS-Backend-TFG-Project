@@ -1,6 +1,8 @@
 
 import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
-import { Tab, Tabs, Box, Typography, Snackbar, Alert,TextField } from '@mui/material';
+import { Tab, Tabs, Box, Typography, Snackbar, Alert, TextField, AppBar } from '@mui/material';
+
+
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import EnhancedEncryptionIcon from '@mui/icons-material/EnhancedEncryption';
@@ -17,8 +19,9 @@ import ImageIcon from '@mui/icons-material/Image';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { uploadImg } from '../../apis/authApi';
-
-
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import { TabPanelChangeLabel } from '../ui/TabPanelChangeLabel';
+import { useTheme } from '@mui/material/styles';
 const PrettoSlider = styled(Slider)({
   color: 'linear-gradient(30deg, rgba(121,82,119,0.975) 30%, #355192 85%)',
   height: 8,
@@ -64,17 +67,22 @@ export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
   const [heigth, setHeigth] = useState(5);
+
+  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent,addUrlImage ,updateLabelText}  =  useContext(BuildContext);
+
   const [width, setWidth] = useState(5);
   const [colors, setColors] = useState("#121212");
   const [size, setSize] = useState(5);
   const [changeLabel, setChangeLabel] = useState(5);
   const [background, setbackground] = useState("#121212");
   const [radius, setradius] = useState(5);
-  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent,addUrlImage }  =  useContext(BuildContext);
+
   const [open, setOpen] = useState(false);
+  const [labelOpen, setOpenErrorLabel] = useState(false);
+  const [label, setInputField] = useState('');
   const [openSuccess, setOpenSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
+  const theme = useTheme();
   useEffect(() => {
     setActiveComponent(active)
   }, [active])
@@ -92,6 +100,7 @@ export const CustomMenu = () => {
     }
     setOpenSuccess(false);
     setOpen(false);
+    setOpenErrorLabel(false);
   };
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
@@ -100,6 +109,24 @@ export const CustomMenu = () => {
   const   handleClickDelete = (id:string ) => {
     deletedComponent(id);
   }
+
+
+  
+  const handleModifyLabel = (event:any ) => {
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
+      
+      setInputField(event.target.value)
+        updateLabelText(label,active.id);
+
+
+      
+    }
+
+  }
+  
 
   const onFileInputChange = async({target}:any) => {
     console.log(target.files)
@@ -124,7 +151,8 @@ export const CustomMenu = () => {
     console.log(event.target.value)
     setHeigth(event.target.value)
     if(active.type === ''){
-      setOpen(true);
+      setOpenErrorLabel(true);
+      return;
     }else{
             setActiveComponent((state:any) => ({
                             
@@ -142,19 +170,29 @@ export const CustomMenu = () => {
   const handleChangeWidth = (event:any ) => {
     console.log(event.target.value)
     setWidth(event.target.value)
-    setActiveComponent((state:any) => ({       
-          ...state,    
-          sx: {
-            ...state.sx,
-            width: event.target.value
-          }      
-    }));
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
+          setActiveComponent((state:any) => ({       
+                ...state,    
+                sx: {
+                  ...state.sx,
+                  width: event.target.value
+                }      
+          }));
+
+  }
     updateActiveComponent(activeModify);
   }
 
   const handleColor = (value:any ) => {
     console.log(value)
     setColors(value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
     setActiveComponent((state:any) => ({       
           ...state,    
           sx: {
@@ -162,12 +200,18 @@ export const CustomMenu = () => {
             color: value
           }      
     }));
+
+  }
     updateActiveComponent(activeModify);
   }
 
   const handleBackground = (value:any ) => {
     console.log(value)
     setbackground(value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
     setActiveComponent((state:any) => ({       
           ...state,    
           sx: {
@@ -175,12 +219,18 @@ export const CustomMenu = () => {
             background: value
           }      
     }));
+
+  }
     updateActiveComponent(activeModify);
   }
 
   const handleChangeSize = (event:any ) => {
     console.log(event.target.value)
     setSize(event.target.value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
     setActiveComponent((state:any) => ({       
           ...state,    
           sx: {
@@ -188,12 +238,18 @@ export const CustomMenu = () => {
             fontSize: event.target.value
           }      
     }));
+
+  }
     updateActiveComponent(activeModify);
   }
 
   const handleChangeRadius = (event:any ) => {
     console.log(event.target.value)
     setradius(event.target.value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
     setActiveComponent((state:any) => ({       
           ...state,    
           sx: {
@@ -201,20 +257,12 @@ export const CustomMenu = () => {
             borderRadius: event.target.value
           }      
     }));
+
+  }
     updateActiveComponent(activeModify);
   }
 
-  const handleChangeLabel = (event:any ) => {
-    console.log("label"+event.target.value)
-    setChangeLabel(event.target.value)
-    setActiveComponent((state:any) => ({       
-          ...state,         
-         label:event.target.value
-          
-    }));
-    updateActiveComponent(activeModify);
-  }
-
+ 
   const a11yProps = (index: number) => {
     return {
       id: `simple-tab-${index}`,
@@ -235,11 +283,14 @@ export const CustomMenu = () => {
       }}
     >
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <AppBar position="static" sx={{backgroundColor:'black'}}>
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="Crate your page here"
-          centered
+          indicatorColor="secondary"
+          textColor="inherit"
+          variant="fullWidth"
+          aria-label="full width tabs example"
         >
           {
            (active.type === 'text') ? (<Tab icon={<TextFieldsIcon />} {...a11yProps(0)}  /> ): 
@@ -251,11 +302,12 @@ export const CustomMenu = () => {
     
 
           <Tab icon={<ColorLensIcon />} {...a11yProps(1)} />
-          <Tab icon={<EnhancedEncryptionIcon />} {...a11yProps(2)} />
+          <Tab icon={<ChangeCircleIcon />} {...a11yProps(2)} />
         </Tabs>
+        </AppBar>
       </Box>
 
-      
+     
       <TabPanel value={value} index={0} >
      
         <Typography sx={{color:'white'}}>Width:</Typography>
@@ -296,7 +348,7 @@ export const CustomMenu = () => {
           <input type="file" onChange={onFileInputChange}  ref={fileInputRef as React.LegacyRef<HTMLInputElement>} style={{display:'none'}}/>
           
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={1} >
       <Typography sx={{color:'white'}}>Background color :</Typography>
         <CustomMenuLayout>
             <HexColorPicker className={style.reactColorful} color={color} onChange={handleChangeColor} />
@@ -310,14 +362,28 @@ export const CustomMenu = () => {
             <HexColorPicker className={style.reactColorful} color={background} onChange={handleBackground} />
         </CustomMenuLayout>
       </TabPanel>
-      <TabPanel value={value} index={2}>
-        <CustomMenuLayout>
-          <h1>Hola</h1>
-          
-        </CustomMenuLayout>
-        <TextField id="outlined-basic" label="Outlined" variant="outlined" onChange={handleChangeLabel}/>
-      </TabPanel>
+      <TabPanelChangeLabel value={value} index={2}>
+          <CustomMenuLayout>
+                <TextField
+                    id="filled-textarea"
+                    label="Change Label"
+                    placeholder="Label"
+                    multiline
+                    variant="filled"
+                    onChange={handleModifyLabel}
+                  />
+          </CustomMenuLayout>
+      </TabPanelChangeLabel>
+   
     </Box>
+    
+    <Snackbar open={labelOpen} autoHideDuration={4000} onClose={handleClose}>
+                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                  You have to select a component to modify it
+
+
+                  </Alert>
+     </Snackbar>
     <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
                   <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                   You have to select a component to remove it

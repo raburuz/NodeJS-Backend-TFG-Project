@@ -10,7 +10,7 @@ interface Props {
 }
 
 export const Button = ({ data }: Props) => {
-  const { id, label, order, url, sx } = data;
+  const { id, label, order, sx } = data;
   const element = useRef<HTMLDivElement>(null);
   const {activeComponent} =  useContext(BuildContext);
   const {
@@ -43,7 +43,7 @@ export const Button = ({ data }: Props) => {
           height:'100%'
         }}
       >
-        <a className={style.btn} href={url} style={sx} target="_blank" rel='noreferrer'>
+        <a className={style.btn} style={sx} target="_blank" rel='noreferrer'>
           {label}
         </a>
       </div>

@@ -27,6 +27,7 @@
     "react-dom": "18.1.0",
     "react-haiku": "^2.0.1",
     "react-hook-form": "^7.32.0",
+    "react-swipeable-views": "^0.14.0",
     "uuid": "^8.3.2"
   },
   "devDependencies": {
