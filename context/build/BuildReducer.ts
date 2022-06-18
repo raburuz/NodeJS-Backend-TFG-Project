@@ -25,7 +25,11 @@ type Action =
       type: 'Build - Deleted Component';
       id: string;
     }
-    
+| {
+      type: 'Build - Add Url Image';
+      id: string;
+      url:string;
+    }
     
   ;
 
@@ -67,11 +71,26 @@ export const BuildReducer = (state: any, action: Action) => {
               (e:any) => (e.id !== action.id )
           ), 
           };
-    case 'Build - Change Color Page':
-      return {
-        ...state,
-        page: { backgroundColor: action.backgroundColor },
-      };
+
+          
+
+          case 'Build - Change Color Page':
+            return {
+              ...state,
+              page: { backgroundColor: action.backgroundColor },
+            };
+        case 'Build - Add Url Image':
+          return {
+            ...state,
+            components: state.components.map(
+                (c:any) =>{
+                  if(c.id === action.id){
+                    return {...c,url:action.url}
+                  }
+                  return c;
+                }
+            )
+              };
 
     default:
       return state;

@@ -15,6 +15,7 @@ import FilterListIcon from '@mui/icons-material/FilterList';
 import ImageIcon from '@mui/icons-material/Image';
 import DeleteForeverIcon from '@mui/icons-material/DeleteForever';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
+import { uploadImg } from '../../apis/authApi';
 
 
 const PrettoSlider = styled(Slider)({
@@ -64,7 +65,7 @@ export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
   const [heigth, setHeigth] = useState(5);
-  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent }  =  useContext(BuildContext);
+  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent,addUrlImage }  =  useContext(BuildContext);
   const [open, setOpen] = useState(false);
   const [openSuccess, setOpenSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
@@ -92,12 +93,20 @@ export const CustomMenu = () => {
     deletedComponent(id);
   }
 
-  console.log(activeModify);
+ 
 
   
-  const onFileInputChange = ({target}:any) => {
-    console.log(target.file);
+  const onFileInputChange = async({target}:any) => {
+    console.log(target.files)
+    const response = await uploadImg(target.files[0]);
 
+
+    if(active.type === 'image'){
+      addUrlImage(response.secure_url,active.id);
+      
+
+    }
+    console.log(response)
   }
   const handleChangeColor = (value:string ) => {
     setColor(value)
