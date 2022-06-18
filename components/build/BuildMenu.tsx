@@ -13,8 +13,10 @@ import {
   ButtonComponent,
 } from '../../interfaces/components';
 import Link from 'next/link';
+import { AuthContext } from '../../context';
 
 export const BuildMenu = () => {
+  const { userData } = useContext(AuthContext);
   const { addComponent } = useContext(BuildContext);
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
   const open = Boolean(anchorEl);
@@ -50,6 +52,18 @@ export const BuildMenu = () => {
     addComponent(component);
   };
 
+  function click(){
+    const objetivo:any = document.querySelector('#containerDrag');
+    import('html2canvas').then(html2canvas => {
+      html2canvas.default(objetivo).then(canvas => {
+        let enlace = document.createElement('a');
+        enlace.download = userData.user?.username + "- Puzzle.png";
+        enlace.href = canvas.toDataURL();
+        enlace.click();
+      })
+    }).catch(e => {console.log(e) })
+  }
+
   return (
     <>
       <Box sx={{ position: 'fixed', right: 20, top: 20 }}>
@@ -63,7 +77,7 @@ export const BuildMenu = () => {
           >
             Add
           </Button>
-          <Button>Save</Button>
+          <Button onClick={click}>Save</Button>
           <Link href={'/'}><Button>Back home</Button></Link>
         </ButtonGroup>
       </Box>

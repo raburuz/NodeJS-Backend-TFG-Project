@@ -16,7 +16,7 @@ export const BuildMain = () => {
     <main
       style={{
         position: 'relative',
-        backgroundColor: page.backgroundColor,
+        backgroundColor: 'white',
         lineHeight: 1.5,
         backgroundImage:
           'radial-gradient(#ddd 1px,transparent 0),radial-gradient(#ddd 1px,transparent 0)',
@@ -26,36 +26,45 @@ export const BuildMain = () => {
       }}
     >
       <BuildMenu />
-      <CustomMenu />
-      <Container
-        maxWidth="md"
-        sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          alignItems: 'center',
-          height: '100%',
-          minHeight: '1080px',
-          color: '#000',
-        }}
-      >
-        <DragProvider>
-          <Dragbox>
-          <>
-              {components?.map((component: any) => {
-                if (component.type === 'text') {
-                  return <Typo key={component.id} data={component}/>;
-                }
-                if (component.type === 'list') {
-                  return <List key={component.id} data={component} />;
-                }
-                if (component.type === 'button') {
-                  return <Button key={component.id} data={component} />;
-                }
-              })}
-            </>
-          </Dragbox>
-        </DragProvider>
-      </Container>
+      <div style={{height:'50px'}}>
+          <CustomMenu />
+      </div>
+
+      <div id='containerDrag'>
+        <Container
+          maxWidth="md"
+          sx={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            height: '100%',
+            minHeight: '1080px',
+            color: '#000',
+            flexFlow:'wrap row',
+            backgroundColor: page.backgroundColor,
+            backgroundImage:
+          'radial-gradient(#ddd 1px,transparent 0),radial-gradient(#ddd 1px,transparent 0)',
+          }}
+        >
+          <DragProvider>
+            <Dragbox>
+            <>
+                {components?.map((component: any) => {
+                  if (component.type === 'text') {
+                    return <Typo key={component.id} data={component}/>;
+                  }
+                  if (component.type === 'list') {
+                    return <List key={component.id} data={component} />;
+                  }
+                  if (component.type === 'button') {
+                    return <Button key={component.id} data={component} />;
+                  }
+                })}
+              </>
+            </Dragbox>
+          </DragProvider>
+        </Container>
+      </div>
     </main>
   );
 };
