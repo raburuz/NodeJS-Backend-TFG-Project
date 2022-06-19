@@ -12,12 +12,14 @@ import { WebsiteModel } from '../models/website';
  */
 
 export const loginUser = async (req: Request, res: Response) => {
-  const { username, email, id, role }: UserData = req.user!;
+  const { username, email, id, role,img }: UserData = req.user!;
+  console.log(req.user)
   const user = {
     id,
     username,
     email,
     role,
+    img,
   };
   try {
     const token = await signJWT(id!);
@@ -26,6 +28,7 @@ export const loginUser = async (req: Request, res: Response) => {
       ok: true,
       msg: 'Logging Success',
       user,
+      img,
       token,
     });
   } catch (error) {
@@ -43,13 +46,15 @@ export const loginUser = async (req: Request, res: Response) => {
  * @returns
  */
 export const registerUser = async (req: Request, res: Response) => {
-  const { password, ...userData }: UserData = req.body;
+  const { password, img ,...userData  }: UserData = req.body;
+  console.log(img)
   const hashPassword = hashPasswordWithBcrypt(password);
   const role: Role = Role.NORMAL_USER_ROLE;
   const user = new UserModel({
     ...userData,
     password: hashPassword,
     role,
+    img,
     isValidate: false,
     isDeleted: false,
   });
@@ -64,6 +69,7 @@ export const registerUser = async (req: Request, res: Response) => {
         username: user.username,
         email: user.email,
         role: user.role,
+        img:user.img
       },
       token,
     });
@@ -83,6 +89,7 @@ export const registerUser = async (req: Request, res: Response) => {
  */
 export const updateUser = async (req: Request, res: Response) => {
   const { id } = req.params;
+  console.log(req.body);
   const {
     password,
     newPassword,
@@ -118,6 +125,7 @@ export const updateUser = async (req: Request, res: Response) => {
         username: user?.username,
         email: user?.email,
         role: user?.role,
+        img: user?.img
       },
       token,
     });

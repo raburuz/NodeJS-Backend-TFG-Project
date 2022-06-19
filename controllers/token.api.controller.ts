@@ -11,7 +11,7 @@ export const revalidateToken = async (req: Request, res: Response) => {
       currentUser
     );
     if (user) {
-      const { id, email, username, role } = user;
+      const { id, email, username, img,role } = user;
       const token = await signJWT(id!);
 
       return res.status(200).json({
@@ -22,6 +22,7 @@ export const revalidateToken = async (req: Request, res: Response) => {
           email,
           username,
           role,
+          img,
         },
         token,
       });

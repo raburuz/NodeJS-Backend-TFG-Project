@@ -18,7 +18,7 @@ const User = new Schema<UserData>({
     type: String,
     required: [true, 'Password is required'],
   },
-  role: {
+  role:{
     type: String,
     enum: Role,
     default: Role.NORMAL_USER_ROLE,

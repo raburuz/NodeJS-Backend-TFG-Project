@@ -29,6 +29,11 @@ export const userUpdateValidators = [
     .not()
     .isEmpty()
     .custom(isUserRole),
+  check('img', 'Something was wrong')
+    .trim()
+    .not()
+    .isEmpty()
+    .optional(),
   check('email', 'Something was wrong')
     .trim()
     .not()

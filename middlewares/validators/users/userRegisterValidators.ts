@@ -31,7 +31,11 @@ export const registerUserValidators = [
     .isEmpty()
     .isLength({ min: 8 })
     .withMessage('Password must be greater than 8'),
-
+  check('img', 'Something was wrong')
+    .trim()
+    .not()
+    .isEmpty()
+    .optional(),
   check('acceptPolicy', 'Accept Policy is required').not().isEmpty().isDate(),
   validateRequest,
 ];
