@@ -1,8 +1,10 @@
 import { GetServerSideProps } from 'next';
 import { Container, Grid } from '@mui/material';
 import { Main } from '../../layouts/Main';
-import { getSession } from 'next-auth/react';
+import { getSession, useSession } from 'next-auth/react';
 import {AuthSettings} from '../../components/settings/AuthSettings';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
 
 
 const SettingsScreen = () => {
@@ -10,7 +12,17 @@ const SettingsScreen = () => {
     title: 'Settings',
     description: 'Settings',
   };
-
+  const { data, status } = useSession();
+  const router = useRouter();
+  
+  useEffect(() => {
+    if (status === 'authenticated') {
+     
+      
+    }else{
+      router.push("/templates");
+    }
+  }, [status, data]);
   return (
     <Main metaTags={metaTags}>
       <>

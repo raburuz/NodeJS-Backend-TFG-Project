@@ -19,7 +19,7 @@ import React, { useContext } from 'react';
 const Home: NextPage = () => {
   const metaTags: MetaTags = {
     title: '',
-    description: '',
+    description: ''
   };
 
   const { userData } = useContext(AuthContext);

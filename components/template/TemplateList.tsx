@@ -1,5 +1,5 @@
 import style from './Menu.module.css'
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AuthContext } from '../../context/auth/AuthContext';
 import { Link } from '@mui/material';
 

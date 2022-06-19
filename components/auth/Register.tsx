@@ -8,15 +8,16 @@ import CardContent from '@mui/material/CardContent';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Divider from '@mui/material/Divider';
-import { FormGroup, Link } from '@mui/material';
+import { Alert, Box, FormGroup, Link, Snackbar } from '@mui/material';
 import { Input } from '../form/input/Input.component';
 import { Checkbox } from '../form/Checkbox/Checkbox.component';
 import { useRouter } from 'next/router';
-import { registerApi } from '../../apis/authApi';
-import { useRef, useState } from 'react';
+import { registerApi, uploadImg } from '../../apis/authApi';
+import { SetStateAction, useContext, useEffect, useRef, useState } from 'react';
 import { formatDate } from '../../helpers/date';
 import { signIn } from 'next-auth/react';
-
+import { AuthContext } from '../../context';
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 const isValidEmail = (email: string) => {
   return validate(email) ? undefined : 'Email is invalid';
 };
@@ -35,6 +36,7 @@ interface IFormInput {
   password: string;
   password2: string;
   acceptPolicy: boolean;
+  img?:string;
 }
 
 const inputs: InputComponent[] = [
@@ -83,6 +85,10 @@ const inputs: InputComponent[] = [
 export const Register = () => {
   const [blockButton, setBlockButton] = useState(false);
   const router = useRouter();
+  const { userData, logout,updateUser,loginUser} = useContext(AuthContext);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [files,setFile] = useState([]);
+  const [open, setOpen] = useState(false);
   const {
     control,
     handleSubmit,
@@ -100,22 +106,55 @@ export const Register = () => {
     setBlockButton(true);
     const { acceptPolicy } = data;
     if (!acceptPolicy) return;
+    if(files === null){
 
+
+    }else{
+        const response = await uploadImg(files);
+
+        data.img = response.secure_url;
+
+    }
     //Database
     const date = formatDate(new Date());
+    
     const userData = await registerApi({ ...data, acceptPolicy: date });
+   
+ 
+    if(userData.hasOwnProperty('error')){
 
-    if (userData.error) {
-      setBlockButton(false);
+      setOpen(true);
+      return;
+
+    }else{
+
+      await signIn('credentials', {
+        username: data.username,
+        password: data.password,
+      });
+      loginUser(userData);
+    } 
+    
+ 
+
+  };
+  const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
+    if (reason === 'clickaway') {
       return;
     }
-
-    await signIn('credentials', {
-      username: data.username,
-      password: data.password,
-    });
+   
+    setOpen(false);
   };
-
+  const onFileInputChange = ({target}:any) => {
+  
+   
+    setFile(target.files[0]);
+ 
+   
+  }
+  useEffect(() => {
+    setFile(files)
+  }, [setFile])
   return (
     <>
       <Typography
@@ -164,6 +203,17 @@ export const Register = () => {
                 );
               })}
             </CardContent>
+            <Box sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+                <Box sx={{color:'white',backgroundColor:'#355192',borderRadius:'15px',
+                width:'80px',
+                height:'40px',
+                textAlign:'center',
+                cursor:'pointer',
+                display:'flex',
+                justifyContent:'center',alignItems:'center',marginBottom:'20px'}} onClick={() => fileInputRef.current?.click()} ><UploadFileIcon/>
+                </Box>
+            </Box>
+            <input type="file" onChange={onFileInputChange}  ref={fileInputRef as React.LegacyRef<HTMLInputElement>} style={{display:'none'}}/>
             <Divider variant="middle" />
             <CardActions
               sx={{
@@ -204,6 +254,12 @@ export const Register = () => {
           <Link sx={{color:'#FFFFFF',textDecoration:'none'}} href={`/auth/login?page=${destination}`}>Log In</Link>
         </NextLink>
       </Typography>
+      <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
+                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                     This username is already being used
+                  </Alert>
+                </Snackbar>
+         
     </>
   );
 };

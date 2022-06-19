@@ -3,6 +3,7 @@ export interface User {
   email: string;
   username: string;
   role?: string;
+  img?:string;
 }
 
 export interface LoginInterface {
@@ -10,11 +11,13 @@ export interface LoginInterface {
   email?: string;
   password: string;
   acceptPolicy?: string;
+  img?:string;
 }
 export interface SettingsUserInterface {
   username?: string;
   email?: string;
   password?: string;
+  img?:string;
 }
 export interface Auth {
   user: User | null;

@@ -18,11 +18,12 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   const [userData, dispatch] = useReducer(AuthReducer, AUTH_INITIAL_STATE);
   const { data, status } = useSession();
   const router = useRouter();
-
+  
   useEffect(() => {
     if (status === 'authenticated') {
       Cookies.set('x_token', data.token as string);
       loginUser(data.user as User);
+      
     }
   }, [status, data]);
 
@@ -66,7 +67,7 @@ export const AuthProvider: FC<Props> = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ userData, updateUser, logout }}>
+    <AuthContext.Provider value={{ userData, updateUser, logout ,loginUser}}>
       {children}
     </AuthContext.Provider>
   );

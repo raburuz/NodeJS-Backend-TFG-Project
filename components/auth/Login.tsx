@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { getSession, signIn } from 'next-auth/react';
@@ -14,6 +14,8 @@ import { FormGroup,Snackbar } from '@mui/material';
 
 import { Input } from '../form/input/Input.component';
 import { LoginInterface } from '../../interfaces';
+import { AuthContext } from '../../context';
+import { loginApi } from '../../apis/authApi';
 
 interface InputComponent {
   name: string;
@@ -39,21 +41,27 @@ const inputs: InputComponent[] = [
     },
   },
 ];
-
+interface ResponseLogin {
+  error: string;
+  status: number;
+  ok: boolean;
+  url: string;
+}
 export const Login = () => {
   const router = useRouter();
   const [showError, setShowError] = useState(false);
-  const [blockButton, setBlockButton] = useState(false);
+  const [valueResponse, setResponse] = useState<ResponseLogin[]>([])
+  const [blockButton, setBlockButton] = useState();
   const destination = router.query.page?.toString() ?? '/';
   const session = getSession();
-  
-  
+  const {loginUser} = useContext(AuthContext)
+  const { error } = useRouter().query;
   if(session === null){
 
     setShowError(true);
 
  }
- console.log(session)
+ 
   const {
     control,
     handleSubmit,
@@ -62,17 +70,19 @@ export const Login = () => {
   } = useForm<LoginInterface>();
 
   const onSubmit: SubmitHandler<LoginInterface> = async data => {
-    setBlockButton(true);
-
+   
+    
     const response = await signIn('credentials', {
       username: data.username,
-      password: data.password,
+      password: data.password
     });
-
- console.log(response)
-    if(response === undefined){
-      setShowError(true);
-    }
+    console.log(error)
+    // const response = await loginApi(data);
+    // loginUser(response.data)
+     console.log(response)
+    // if(response){
+    //   setShowError(true);
+    // }
     
   };
 

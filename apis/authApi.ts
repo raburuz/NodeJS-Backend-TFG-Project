@@ -16,10 +16,11 @@ const uploadApi = axios.create({
 });
 
 export const loginApi = async (userData: LoginInterface) => {
-  console.log(userData);
+ 
   try {
     const response = await userApi.post(`/login`, userData);
     const { data } = response;
+    console.log(data);
     return data;
   } catch (error: any) {
     return {
@@ -80,10 +81,11 @@ export const revalidateToken = async () => {
 
 export const registerApi = async (userData: LoginInterface) => {
   try {
-    await userApi.post(`/register`, userData);
-    return {
-      error: false,
-    };
+    console.log(userData)
+  const response =   await userApi.post(`/register`, userData);
+    const {data} = response;
+  
+  return data;
   } catch (error: any) {
     console.log(error);
     return {

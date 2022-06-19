@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect, useRef, useState } from 'react';
 import { RegisterOptions, useForm,SubmitHandler } from 'react-hook-form';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -12,7 +12,7 @@ import { AuthContext } from '../../context';
 import style from './settings.module.css'
 import { SettingsUserInterface } from '../../interfaces';
 import { Input } from '../form/input/Input.component';
-import { updateApi } from '../../apis/authApi';
+import { updateApi, uploadImg } from '../../apis/authApi';
 import { Alert, Snackbar } from '@mui/material';
 import { validate } from 'email-validator';
 import Backdrop from '@mui/material/Backdrop';
@@ -20,7 +20,7 @@ import Modal from '@mui/material/Modal';
 import Fade from '@mui/material/Fade';
 import { useRouter } from 'next/router';
 import { useSession} from "next-auth/react"
-
+import UploadFileIcon from '@mui/icons-material/UploadFile';
 
 
 interface InputComponent {
@@ -34,24 +34,37 @@ interface InputComponent {
 
 
  export function AuthSettings() {
-  const { userData, logout,updateUser } = useContext(AuthContext);
+  const { userData, logout,updateUser,loginUser } = useContext(AuthContext);
   const { data: session } = useSession();
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  const [user, setUser] = useState(session?.user);
+  const [user, setUser] = useState(userData?.user);
   const [openSuccess, setOpenSuccess] = useState(false);
   const [openModal, setOpenModal] = useState(false);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [files,setFile] = useState([]);
   const {
     control,
     handleSubmit,
     resetField,
     formState: { errors },
   } = useForm<SettingsUserInterface>();
-  console.log(userData?.user);
+
+
+
+  console.log(userData);
+  
+  
+    const onFileInputChange = ({target}:any) => {
+  
+   
+    setFile(target.files[0]);
+ 
+   
+  }
   useEffect(() => {
-  
-  }, [])
-  
+    setFile(files)
+  }, [setFile])
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
@@ -65,7 +78,15 @@ interface InputComponent {
   const onSubmit: SubmitHandler<SettingsUserInterface> = async data => {
     
 
+    if(files === null){
 
+
+    }else{
+        const response = await uploadImg(files);
+
+        data.img = response.secure_url;
+
+    }
  
     setOpenModal(false);
     if(userData != null){
@@ -173,6 +194,7 @@ interface InputComponent {
   const handleCloseModal = () => setOpenModal(false);
   
 
+  
 
 
   return (
@@ -185,7 +207,7 @@ interface InputComponent {
             <div className={style.log}>
                 <div className={style.imagePerfil}>
                 <Stack direction="row" spacing={10}>
-                    <Avatar  sx={{ width: 250, height: 250 }} alt="Usuario" src="/static/images/avatar/1.jpg" />
+                    <Avatar  sx={{ width: 250, height: 250 }} alt="Usuario" src={userData.user?.img} />
                 </Stack>
                 </div>
                 <form id='my-form' onSubmit={handleSubmit(onSubmit)}>
@@ -205,6 +227,17 @@ interface InputComponent {
                           
                           );
                       })}
+              <Box sx={{width:'100%',display:'flex',justifyContent:'center',alignItems:'center'}}>
+                    <Box sx={{color:'white',backgroundColor:'#355192',borderRadius:'15px',
+                    width:'80px',
+                    height:'40px',
+                    textAlign:'center',
+                    cursor:'pointer',
+                    display:'flex',
+                    justifyContent:'center',alignItems:'center',marginBottom:'20px'}} onClick={() => fileInputRef.current?.click()} ><UploadFileIcon/>
+                    </Box>
+            </Box>
+            <input type="file" onChange={onFileInputChange}  ref={fileInputRef as React.LegacyRef<HTMLInputElement>} style={{display:'none'}}/>
                     <Button onClick={handleOpen} variant="text" sx={{background:'purple',color:'white'}}>Confirm</Button>
                 </div>
       <Modal
