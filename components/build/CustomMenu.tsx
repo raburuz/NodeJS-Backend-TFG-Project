@@ -344,7 +344,7 @@ export const CustomMenu = () => {
   }
 
   return (
-    <div id="hola">
+    <>
     <Box
       
       sx={{
@@ -496,7 +496,7 @@ export const CustomMenu = () => {
                   You have to select a component to remove it
                   </Alert>
      </Snackbar>
-    </div>
+    </>
   );
 };
 
