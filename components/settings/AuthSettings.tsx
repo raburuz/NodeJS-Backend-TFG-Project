@@ -49,22 +49,17 @@ interface InputComponent {
     resetField,
     formState: { errors },
   } = useForm<SettingsUserInterface>();
-<<<<<<< HEAD
 
 
 
-  console.log(userData);
   
-  
-    const onFileInputChange = ({target}:any) => {
+  const onFileInputChange = ({target}:any) => {
   
    
-    setFile(target.files[0]);
+       setFile(target.files[0]);
  
    
   }
-=======
->>>>>>> 162b4e1a470c4ee275649a5afe181017ea7d43bb
   useEffect(() => {
     setFile(files)
   }, [setFile])
@@ -93,16 +88,29 @@ interface InputComponent {
  
     setOpenModal(false);
     if(userData != null){
+
       const value = await updateApi(data,userData.user?.id ?? '');
+
+          console.log(value);
+   
       if(value.hasOwnProperty('error')){
+        
+        
+     
         setOpen(true);
+        
+        
       }else{
+        
+
         updateUser(value.user);
         setOpenSuccess(true);
         setTimeout(() => {
           router.push("/templates");
         }, 4000);
+       
       }
+
 
     }
  

@@ -103,7 +103,7 @@ export const Register = () => {
   const destination = router.query.page?.toString() ?? '/';
 
   const onSubmit: SubmitHandler<IFormInput> = async data => {
-    setBlockButton(true);
+    
     const { acceptPolicy } = data;
     if (!acceptPolicy) return;
     if(files === null){
