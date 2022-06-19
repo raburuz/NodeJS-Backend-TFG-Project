@@ -33,12 +33,13 @@ export const Typo: FC<Props> = ({ data }) => {
   }, [active])
   
   const handleActiveClick = ( data:any) => {
-    console.log(data)
-
-     activeComponent(data);
+    console.log("data"+data)
+    activeComponent(data);
     if(select){
-      setSelect(false);
+      setSelect(false);  
+      
     }
+    
     setSelect(true);
 
   }
@@ -55,6 +56,7 @@ export const Typo: FC<Props> = ({ data }) => {
           margin: 0,
           opacity: isDragging ? 0.3 : 1,
           transition: 'all 0.3s',
+          overflowWrap: 'break-word',
           ...sx,
           
         }}

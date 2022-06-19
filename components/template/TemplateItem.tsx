@@ -36,7 +36,7 @@ export const TemplateItem = () => {
             centered
           >
             <Tab label="Last Websites" {...a11yProps(0)}/>
-            {isLoggedIn && <Tab label="My Websites" {...a11yProps(1)} />}
+            {/* {isLoggedIn && <Tab label="My Websites" {...a11yProps(1)} />} */}
           </Tabs>
         </Box>
         <TabPanel value={value} index={0}>

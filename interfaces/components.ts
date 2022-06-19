@@ -40,7 +40,7 @@ export interface ButtonComponent extends Component {
 
 export interface ImageComponent extends Component {
   url: string;
-  urlLink: string;
+  // urlLink: string;
   alt: string;
 }
 

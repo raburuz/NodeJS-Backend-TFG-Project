@@ -7,3 +7,11 @@
 .selected{
   border:3px solid red;
 }
+
+.selected2{
+  border:3px solid rgb(153, 135, 135);
+}
+
+#hola{
+  display: none;
+}

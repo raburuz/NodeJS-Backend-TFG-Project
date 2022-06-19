@@ -80,7 +80,7 @@ export const BuildMenu = () => {
     type: 'image',
     alt:'',
     order: 3123,
-    urlLink:'#',
+    // urlLink:'#',
     url: '',
  
   };
@@ -91,7 +91,7 @@ export const BuildMenu = () => {
 
   return (
     <>
-      <Box sx={{ position: 'fixed', right: 20, top: 20 }}>
+      <Box sx={{ position: 'fixed', right: 20, top: 20, background:'white' }}>
         <ButtonGroup variant="outlined" aria-label="outlined button group">
           <Button
             id="basic-button"
