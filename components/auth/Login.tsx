@@ -61,7 +61,7 @@ export const Login = () => {
     setShowError(true);
 
  }
- 
+
   const {
     control,
     handleSubmit,
@@ -76,6 +76,7 @@ export const Login = () => {
       username: data.username,
       password: data.password
     });
+
     console.log(error)
     // const response = await loginApi(data);
     // loginUser(response.data)
@@ -83,6 +84,11 @@ export const Login = () => {
     // if(response){
     //   setShowError(true);
     // }
+
+    if(response === undefined){
+      setShowError(true);
+    }
+
     
   };
 

@@ -13,7 +13,6 @@
 /*-----------------------------------Information-------------------------------*/
 .informationMenu{
     width: 60%;
-    height: 300px;
     text-align: center;
     margin-top: 50px;
 }
@@ -38,7 +37,6 @@
 }
 
 .templateMenu{
-    background-color: #7785a3;
     width: 500px;
     height: 300px;
     margin: 30px;
@@ -53,16 +51,6 @@
     padding: 20px;
     cursor: pointer;
 }
-
-
-.templateMenu:hover{
-    background-color: #7375794d;
-}
-
-.templateMenu:hover > .botonSelect{
-    display: block;
-}
-
 
 /*-----------------------------------Mediaqueries-------------------------------*/
 
@@ -88,6 +76,10 @@
     .logBack{
         width: 40px;
         height: 40px;
+    }
+
+    .templateMenu{
+        margin: 0;
     }
 
     .lista{

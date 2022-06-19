@@ -19,11 +19,12 @@ import React, { useContext } from 'react';
 const Home: NextPage = () => {
   const metaTags: MetaTags = {
     title: '',
-    description: ''
+    description: '',
+    link:'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
+
   };
 
   const { userData } = useContext(AuthContext);
-  console.log(userData)
 
   return (
     <Main metaTags={metaTags}>
@@ -32,10 +33,7 @@ const Home: NextPage = () => {
           <div className={styles.cont}>
             <div className={styles.logo}><Image alt="logo" className={styles.log} src={logo} /></div>
             <div className={styles.textInfo}>A place where you can create your page quickly and easily. Let your imagination fly.</div>
-            {/* <div className={styles.menu}><Link href='/menu' sx={{color:'#FFFFFF'}}>Choose your template</Link></div>
-        <div className={styles.login}><Link href='/auth/login' sx={{color:'#FFFFFF'}}>Login</Link></div>
-        <div className={styles.register}>You are not <Link href='/auth/register' sx={{color:'#FFFFFF'}}>registered</Link> yet?</div> */}
-          </div>
+            </div>
           <div className={styles.information}>
             <div className={styles.info}>
               <div className={styles.textInformation}>

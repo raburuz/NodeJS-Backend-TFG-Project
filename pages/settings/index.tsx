@@ -11,6 +11,7 @@ const SettingsScreen = () => {
   const metaTags = {
     title: 'Settings',
     description: 'Settings',
+    link:'https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css'
   };
   const { data, status } = useSession();
   const router = useRouter();
@@ -53,29 +54,5 @@ const SettingsScreen = () => {
     </Main>
   );
 };
-
-// export const getServerSideProps: GetServerSideProps = async ({
-//   req,
-//   query,
-// }) => {
-//   const session = await getSession({ req });
-
-//   console.log('***sessionnnnn*******');
-//   console.log(session);
-
-//   const { page = '/' } = query;
-//   if (session) {
-//     return {
-//       redirect: {
-//         destination: page.toString(),
-//         permanent: false,
-//       },
-//     };
-//   }
-
-//   return {
-//     props: {},
-//   };
-// };
 
 export default SettingsScreen;

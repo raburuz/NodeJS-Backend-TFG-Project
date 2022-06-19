@@ -48,8 +48,6 @@ export const getServerSideProps: GetServerSideProps = async ({
   const session = await getSession({ req });
   const { callbackUrl = null } = query;
 
-  console.log(session);
-
   if (session) {
     return {
       redirect: {

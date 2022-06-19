@@ -21,10 +21,9 @@ export default NextAuth({
           username: credentials?.username ?? '',
           password: credentials?.password ?? '',
         });
-        console.log(user)
+
         //SOmething was wrong
         if (user.error) {
-          console.log("error")
           return null;
         }
         return user;

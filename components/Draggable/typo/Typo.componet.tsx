@@ -35,15 +35,11 @@ export const Typo: FC<Props> = ({ data }) => {
 
 
   
-  const handleActiveClick = ( data:any,e:any) => {
+  const handleActiveClick = ( data:any) => {
    
 
      activeComponent(data);
-    if(select){
-      setSelect(false);
-    }
-    setSelect(true);
-    console.log(e.target.classList.contains(style.selected))
+
   }
   return (
     <div ref={element} id={id} style={{width:'100%',height:'100%'}}>
@@ -58,11 +54,12 @@ export const Typo: FC<Props> = ({ data }) => {
           margin: 0,
           opacity: isDragging ? 0.3 : 1,
           transition: 'all 0.3s',
+          overflowWrap: 'break-word',
           ...sx,
           
         }}
         className={`${style.draggable} ${select && style.selected} `}
-        onClick={(e) => handleActiveClick(data,e)}
+        onClick={() => handleActiveClick(data)}
 
       >
         {label}

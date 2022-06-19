@@ -58,6 +58,7 @@ export const Navbar = () => {
             </div>
           </Box>
         </Grid>
+        
         <Grid item xs={8} md={5}>
           <BottomNavigation
             showLabels
@@ -70,6 +71,7 @@ export const Navbar = () => {
               maxWidth: 500,
               background:'transparent'
             }}
+            className={style.navVisibility}
           >
             {isLoggedIn && (
               <BottomNavigationAction
@@ -112,6 +114,57 @@ export const Navbar = () => {
             />
             
             </BottomNavigation>
+
+            <div className={style.navHide}>
+           <PopupState variant="popover" popupId="demo-popup-menu">
+             {(popupState: any) => (
+               <React.Fragment>
+                 <Button sx={{ background: 'transparent' }} variant="contained" {...bindTrigger(popupState)}>
+                   <MenuIcon />
+                 </Button>
+                 <Menu {...bindMenu(popupState)} sx={{ background: 'transparent' }}>
+                   <MenuItem onClick={() => onLink('/build')}>
+                     {isLoggedIn && (
+                       <BottomNavigationAction
+                         label="Build"
+                         value="build"
+                         icon={<FiberNewTwoToneIcon />}
+                       />
+                     )}
+                   </MenuItem>
+                   <MenuItem onClick={() => onLink('/templates')}>
+                     <BottomNavigationAction
+                       label="Websites"
+                       value="Websites"
+                       icon={<FolderIcon />}
+                     />
+                   </MenuItem>
+                   <MenuItem onClick={() => onLink('/settings/')}>
+                     {isLoggedIn && (
+                       <BottomNavigationAction
+                         label="Settings"
+                         value="settings"
+                         icon={<SettingsApplicationsTwoToneIcon />}
+                         onClick={() => onLink('/settings/')}
+                       />
+                     )}
+                   </MenuItem>
+                   <MenuItem onClick={() =>
+                         isLoggedIn
+                           ? onAuthLink()
+                           : onLink(`/auth/login?page=${router.asPath}`)
+                       }>
+                     <BottomNavigationAction
+                       label={isLoggedIn ? 'Logout' : 'Login'}
+                       value={isLoggedIn ? 'Logout' : 'Login'}
+                       icon={<AccountCircleTwoToneIcon />}
+                     />
+                   </MenuItem>
+                 </Menu>
+               </React.Fragment>
+             )}
+           </PopupState>
+         </div>
 
         </Grid>
       </Grid>
