@@ -28,8 +28,10 @@ import Checkbox from '@mui/material/Checkbox';
 import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
 import { TabPanelChangeLabel } from '../ui/TabPanelChangeLabel';
 import { useTheme } from '@mui/material/styles';
-
-
+import Button from '@mui/material/Button';
+import AlignHorizontalLeftIcon from '@mui/icons-material/AlignHorizontalLeft';
+import ArrowBackIosIcon from '@mui/icons-material/ArrowBackIos';
+import 'animate.css';
 
 const PrettoSlider = styled(Slider)({
   color: 'linear-gradient(30deg, rgba(121,82,119,0.975) 30%, #355192 85%)',
@@ -349,11 +351,32 @@ export const CustomMenu = () => {
     updateActiveComponent(activeModify);
   }
 
+  function opened(){
+   const button = document.getElementById('box');
+   if (button != null) {
+    button.style.display = "block"
+    button.classList.add("animate__animated")
+    button.classList.add("animate__fadeInLeft")
+   }
+  }
+
+  function closed(){
+    const button = document.getElementById('box');
+    if (button != null) {
+      button.style.display = "none"      
+    }
+   }
+
   return (
     <>
+    <Button onClick={opened} variant="contained" endIcon={<AlignHorizontalLeftIcon />} sx={{minWidth:'20px',margin:'22px 30px',background:'purple'}}/>      
+    
     <Box
+      id='box'
+      className={style.menu}
+      // className="animate__animated animate__backInRight"
       sx={{
-         width: 300,
+        width: 350,
         position: 'fixed',
         left: 0,
         top: 0,
@@ -363,7 +386,6 @@ export const CustomMenu = () => {
         overflow: "hidden",
         overflowY: "scroll",
       }}
-      
     >
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
       <AppBar position="static" sx={{backgroundColor:'black'}}>
@@ -385,6 +407,13 @@ export const CustomMenu = () => {
           <Tab icon={<ColorLensIcon />} {...a11yProps(1)} />
 
           <Tab icon={<TextFieldsIcon />} {...a11yProps(2)} />
+          <div className={style.buttonShow}>
+            <Tab onClick={closed} icon={<ArrowBackIosIcon />} {...a11yProps(3)} />
+          </div>
+          
+          {/* <div className={style.buttonShow}>
+            <Button className={style.buttonShow} endIcon={<ArrowBackIosIcon sx={{width:'30px',height:'30px'}}/>} onClick={closed} sx={{width:'50px',margin:'30px',float:'right'}}/>  
+          </div> */}
         </Tabs>
         </AppBar>
       </Box>
@@ -488,10 +517,7 @@ export const CustomMenu = () => {
           inputProps={{ 'aria-label': 'controlled' }}
         />
       </TabPanel> 
-      
-
     </Box>
-    
     <Snackbar open={labelOpen} autoHideDuration={4000} onClose={handleClose}>
                   <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                   You have to select a component to modify it
