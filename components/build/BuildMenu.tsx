@@ -34,21 +34,7 @@ export const BuildMenu = () => {
           enlace.download = userData.user?.username + "- Puzzle.png";
           enlace.href = canvas.toDataURL();
           enlace.click();
-
-
     })
-    // html2canvas.then(html2canvas => {
-    //   // html2canvas.default(objetivo).then(canvas => {
-    //   //   let enlace = document.createElement('a');
-    //   //   enlace.download = userData.user?.username + "- Puzzle.png";
-    //   //   enlace.href = canvas.toDataURL();
-    //   //   enlace.click();
-    //   // })
-
-    //   html2canvas((objetivo), { letterRendering: 1, allowTaint : true, onrendered : function (canvas) { } })
-  
-      
-    // }).catch(e => {console.log(e) })
   }
   const handleClose = () => {
     setAnchorEl(null);

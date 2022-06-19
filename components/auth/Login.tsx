@@ -53,7 +53,6 @@ export const Login = () => {
     setShowError(true);
 
  }
- console.log(session)
   const {
     control,
     handleSubmit,
@@ -68,8 +67,6 @@ export const Login = () => {
       username: data.username,
       password: data.password,
     });
-
- console.log(response)
     if(response === undefined){
       setShowError(true);
     }

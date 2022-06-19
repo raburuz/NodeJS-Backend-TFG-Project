@@ -30,6 +30,7 @@ import { TabPanelChangeLabel } from '../ui/TabPanelChangeLabel';
 import { useTheme } from '@mui/material/styles';
 
 
+
 const PrettoSlider = styled(Slider)({
   color: 'linear-gradient(30deg, rgba(121,82,119,0.975) 30%, #355192 85%)',
   height: 8,
@@ -75,7 +76,6 @@ export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
   const [heigth, setHeigth] = useState(5);
-
   const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent,addUrlImage ,updateLabelText}  =  useContext(BuildContext);
 
   const [width, setWidth] = useState(5);
@@ -90,6 +90,7 @@ export const CustomMenu = () => {
   const [label, setInputField] = useState('');
   const [openSuccess, setOpenSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
+  const [backgroundBorder, setbackgroundBorder] = useState("#121212");
 
   const theme = useTheme();
 
@@ -128,28 +129,17 @@ export const CustomMenu = () => {
       setOpenErrorLabel(true);
       return;
     }else{
-      
       setInputField(event.target.value)
-        updateLabelText(label,active.id);
-
-
-      
+      updateLabelText(label , active.id);
     }
-
   }
   
 
   const onFileInputChange = async({target}:any) => {
-    console.log(target.files)
     const response = await uploadImg(target.files[0]);
-
-
     if(active.type === 'image'){
       addUrlImage(response.secure_url,active.id);
-      
-
     }
-    console.log(response)
   }
 
   const handleChangeColor = (value:string ) => {
@@ -159,7 +149,6 @@ export const CustomMenu = () => {
 
 
   const handleChangeHeigth = (event:any ) => {
-    console.log(event.target.value)
     setHeigth(event.target.value)
     if(active.type === ''){
       setOpenErrorLabel(true);
@@ -179,7 +168,6 @@ export const CustomMenu = () => {
   }
 
   const handleChangeWidth = (event:any ) => {
-    console.log(event.target.value)
     setWidth(event.target.value)
     if(active.type === ''){
       setOpenErrorLabel(true);
@@ -189,7 +177,7 @@ export const CustomMenu = () => {
                 ...state,    
                 sx: {
                   ...state.sx,
-                  width: event.target.value
+                  width: event.target.value+"%"
                 }      
           }));
 
@@ -198,7 +186,6 @@ export const CustomMenu = () => {
   }
 
   const handleColor = (value:any ) => {
-    console.log(value)
     setColors(value)
     if(active.type === ''){
       setOpenErrorLabel(true);
@@ -217,7 +204,6 @@ export const CustomMenu = () => {
   }
 
   const handleBackground = (value:any ) => {
-    console.log(value)
     setbackground(value)
     if(active.type === ''){
       setOpenErrorLabel(true);
@@ -236,7 +222,6 @@ export const CustomMenu = () => {
   }
 
   const handleChangeSize = (event:any ) => {
-    console.log(event.target.value)
     setSize(event.target.value)
     if(active.type === ''){
       setOpenErrorLabel(true);
@@ -255,7 +240,6 @@ export const CustomMenu = () => {
   }
 
   const handleChangeRadius = (event:any ) => {
-    console.log(event.target.value)
     setradius(event.target.value)
     if(active.type === ''){
       setOpenErrorLabel(true);
@@ -298,30 +282,10 @@ export const CustomMenu = () => {
     updateActiveComponent(activeModify);
   };
 
-  const [alignmentImage, setAlignmentImage] = useState<string | null>('left');
-  const handleAlignmentImage = (
-    event: React.MouseEvent<HTMLElement>,
-    newAlignment: string | null,
-  ) => {
-    setAlignmentImage(newAlignment);
-    setActiveComponent((state:any) => ({       
-      ...state,    
-      sx: {
-        ...state.sx,
-        float: newAlignment
-      }      
-    }));
-    updateActiveComponent(activeModify);
-  };
 
   const [checked, setChecked] = React.useState(true);
 
-  const handleChangeRadios = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setChecked(event.target.checked);
-  };
-
   const handleChangeRadio = (event:any ) => {
-    console.log(event.target.checked)
     setChecked(event.target.checked);
     if(event.target.checked==true){  
       setActiveComponent((state:any) => ({       
@@ -343,10 +307,51 @@ export const CustomMenu = () => {
     updateActiveComponent(activeModify);
   }
 
+  const [checkedBorder, setCheckedBorder] = React.useState(true);
+
+  const handleChangeBorder = (event:any ) => {
+    setCheckedBorder(event.target.checked);
+    if(event.target.checked==true){  
+      setActiveComponent((state:any) => ({       
+            ...state,    
+            sx: {
+              ...state.sx,
+              border: '1px solid red'
+            }      
+      }));
+    }else{
+      setActiveComponent((state:any) => ({       
+        ...state,    
+        sx: {
+          ...state.sx,
+          border: 0
+        }      
+  }));
+    }
+    updateActiveComponent(activeModify);
+  }
+
+  const handleBackgroundBorder = (value:any ) => {
+    setbackgroundBorder(value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
+    setActiveComponent((state:any) => ({       
+          ...state,    
+          sx: {
+            ...state.sx,
+            border: '1px solid'+value
+          }      
+    }));
+
+  }
+    updateActiveComponent(activeModify);
+  }
+
   return (
     <>
     <Box
-      
       sx={{
          width: 300,
         position: 'fixed',
@@ -384,14 +389,13 @@ export const CustomMenu = () => {
         </AppBar>
       </Box>
      <TabPanel value={value} index={0}>
-      
         <Typography sx={{color:'white'}}>Width:</Typography>
         <PrettoSlider
             // valueLabelDisplay="auto"
             aria-label="pretto slider"
             value={width}
             onChange={handleChangeWidth}
-            max={830}
+            max={100}
           />
         <Typography sx={{color:'white'}}>Heigth:</Typography>
         <PrettoSlider
@@ -436,24 +440,22 @@ export const CustomMenu = () => {
         <CustomMenuLayout>
             <HexColorPicker className={style.reactColorful} color={background} onChange={handleBackground} />
         </CustomMenuLayout>
+        <Typography sx={{color:'white'}}>Background border:</Typography>
+        <CustomMenuLayout>
+            <HexColorPicker className={style.reactColorful} color={backgroundBorder} onChange={handleBackgroundBorder} />
+        </CustomMenuLayout>
       </TabPanel>
       <TabPanel value={value} index={2}>
-      <Typography sx={{color:'white'}}>Change text:</Typography>
-        {/* <CustomMenuLayout>
-          <TextField id="outlined-basic" label="Outlined" variant="outlined" onChange={handleChangeLabel}/>
-        </CustomMenuLayout> */}
-        <CustomMenuLayout>
-                <TextField
-                    id="filled-textarea"
-                    label="Change Label"
-                    placeholder="Label"
-                    multiline
-                    variant="filled"
-                    onChange={handleModifyLabel}
-                  />
-          </CustomMenuLayout>
-        <Typography sx={{color:'white'}}>Align items:</Typography>
-        <CustomMenuLayout>
+      <Typography sx={{color:'white',margin:'20px 0px'}}>Change text:</Typography>
+          <TextField
+              id="filled-textarea"
+              label="Change Label"
+              placeholder="Label"
+              multiline
+              variant="filled"
+              onChange={handleModifyLabel}
+            />
+        <Typography sx={{color:'white',margin:'20px 0px'}}>Align items:</Typography>
           <ToggleButtonGroup
             value={alignment}
             exclusive
@@ -472,15 +474,19 @@ export const CustomMenu = () => {
             <ToggleButton value="justify" aria-label="justified">
               <FormatAlignJustifyIcon />
             </ToggleButton>
-          </ToggleButtonGroup>  
-        </CustomMenuLayout>
-        <Typography sx={{color:'white'}}>Delete point list:</Typography>
+          </ToggleButtonGroup>
+        <Typography sx={{color:'white',margin:'20px 0px'}}>Delete point list:</Typography>
         <Checkbox
           checked={checked}
           onChange={handleChangeRadio}
           inputProps={{ 'aria-label': 'controlled' }}
         />
-       
+       <Typography sx={{color:'white',margin:'20px 0px'}}>Delete border:</Typography>
+        <Checkbox
+          checked={checkedBorder}
+          onChange={handleChangeBorder}
+          inputProps={{ 'aria-label': 'controlled' }}
+        />
       </TabPanel> 
       
 

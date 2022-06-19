@@ -26,7 +26,7 @@ export const TemplateItem = () => {
   return (
     <>
       <Box sx={{ width: '100%', marginTop: 5 }}>
-        <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Box sx={{ borderBottom: 1, borderColor: 'divider'}}>
           <Tabs
             value={value}
             onChange={handleChange}
@@ -35,7 +35,7 @@ export const TemplateItem = () => {
             aria-label="Template for build your page"
             centered
           >
-            <Tab label="Last Websites" {...a11yProps(0)}/>
+            <Tab label="Last Websites" {...a11yProps(0)} sx={{color:'rgb(194, 196, 199) !important'}}/>
             {/* {isLoggedIn && <Tab label="My Websites" {...a11yProps(1)} />} */}
           </Tabs>
         </Box>
