@@ -20,7 +20,7 @@ export const BuildMain = () => {
         backgroundColor: 'white',
         lineHeight: 1.5,
         backgroundImage:
-          'radial-gradient(#ddd 1px,transparent 0),radial-gradient(#ddd 1px,transparent 0)',
+          'radial-gradient(#000000 1px,transparent 0),radial-gradient(#000000 1px,transparent 0)',
         backgroundPosition: '0 0,25px 25px',
         backgroundAttachment: 'fixed',
         backgroundSize: '50px 50px',

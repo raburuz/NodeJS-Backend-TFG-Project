@@ -7,6 +7,7 @@ interface BuildProps extends Website {
   addComponent: (component: Components) => void;
   updateActiveComponent: (component: object) => void;
   activeComponent: (activeComponent: object) => void;
+  updateLabelText: (label: string, id:string) => void;
   changeColorPage: (backgroundColor: string) => void;
   changeTextElement: (component: object) => void;
   addUrlImage: (url: string, id:string) => void;

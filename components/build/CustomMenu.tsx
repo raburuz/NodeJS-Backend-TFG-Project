@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { SyntheticEvent, useContext, useEffect, useRef, useState } from 'react';
-import { Tab, Tabs, Box, Typography, Snackbar, Alert,TextField } from '@mui/material';
+import { Tab, Tabs, Box, Typography, Snackbar, Alert, TextField, AppBar } from '@mui/material';
 import TextFieldsIcon from '@mui/icons-material/TextFields';
 import ColorLensIcon from '@mui/icons-material/ColorLens';
 import FormatColorTextIcon from '@mui/icons-material/FormatColorText';
@@ -25,6 +25,9 @@ import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
 import ToggleButton from '@mui/material/ToggleButton';
 import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
 import Checkbox from '@mui/material/Checkbox';
+import ChangeCircleIcon from '@mui/icons-material/ChangeCircle';
+import { TabPanelChangeLabel } from '../ui/TabPanelChangeLabel';
+import { useTheme } from '@mui/material/styles';
 
 
 const PrettoSlider = styled(Slider)({
@@ -72,17 +75,23 @@ export const CustomMenu = () => {
   const [value, setValue] = useState<number>(0);
   const [color, setColor] = useState("#121212");
   const [heigth, setHeigth] = useState(5);
+
+  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent,addUrlImage ,updateLabelText}  =  useContext(BuildContext);
+
   const [width, setWidth] = useState(5);
   const [colors, setColors] = useState("#121212");
   const [size, setSize] = useState(5);
   const [changeLabel, setChangeLabel] = useState(5);
   const [background, setbackground] = useState("#121212");
   const [radius, setradius] = useState(5);
-  const {active,addComponent,changeColorPage,activeComponent, updateActiveComponent,deletedComponent,addUrlImage }  =  useContext(BuildContext);
+
   const [open, setOpen] = useState(false);
+  const [labelOpen, setOpenErrorLabel] = useState(false);
+  const [label, setInputField] = useState('');
   const [openSuccess, setOpenSuccess] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
- 
+
+  const theme = useTheme();
 
   useEffect(() => {
     setActiveComponent(active)
@@ -95,12 +104,14 @@ export const CustomMenu = () => {
   }, [activeModify])
 
 
+  
   const handleClose = (event?: React.SyntheticEvent | Event, reason?: string) => {
     if (reason === 'clickaway') {
       return;
     }
     setOpenSuccess(false);
     setOpen(false);
+    setOpenErrorLabel(false);
   };
 
   const handleChange = (event: SyntheticEvent, newValue: number) => {
@@ -109,6 +120,24 @@ export const CustomMenu = () => {
   const   handleClickDelete = (id:string ) => {
     deletedComponent(id);
   }
+
+
+  
+  const handleModifyLabel = (event:any ) => {
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
+      
+      setInputField(event.target.value)
+        updateLabelText(label,active.id);
+
+
+      
+    }
+
+  }
+  
 
   const onFileInputChange = async({target}:any) => {
     console.log(target.files)
@@ -133,7 +162,8 @@ export const CustomMenu = () => {
     console.log(event.target.value)
     setHeigth(event.target.value)
     if(active.type === ''){
-      setOpen(true);
+      setOpenErrorLabel(true);
+      return;
     }else{
             setActiveComponent((state:any) => ({
                             
@@ -151,19 +181,29 @@ export const CustomMenu = () => {
   const handleChangeWidth = (event:any ) => {
     console.log(event.target.value)
     setWidth(event.target.value)
-    setActiveComponent((state:any) => ({       
-          ...state,    
-          sx: {
-            ...state.sx,
-            width: event.target.value
-          }      
-    }));
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
+          setActiveComponent((state:any) => ({       
+                ...state,    
+                sx: {
+                  ...state.sx,
+                  width: event.target.value
+                }      
+          }));
+
+  }
     updateActiveComponent(activeModify);
   }
 
   const handleColor = (value:any ) => {
     console.log(value)
     setColors(value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
     setActiveComponent((state:any) => ({       
           ...state,    
           sx: {
@@ -171,12 +211,18 @@ export const CustomMenu = () => {
             color: value
           }      
     }));
+
+  }
     updateActiveComponent(activeModify);
   }
 
   const handleBackground = (value:any ) => {
     console.log(value)
     setbackground(value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
     setActiveComponent((state:any) => ({       
           ...state,    
           sx: {
@@ -184,12 +230,18 @@ export const CustomMenu = () => {
             background: value
           }      
     }));
+
+  }
     updateActiveComponent(activeModify);
   }
 
   const handleChangeSize = (event:any ) => {
     console.log(event.target.value)
     setSize(event.target.value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
     setActiveComponent((state:any) => ({       
           ...state,    
           sx: {
@@ -197,12 +249,18 @@ export const CustomMenu = () => {
             fontSize: event.target.value
           }      
     }));
+
+  }
     updateActiveComponent(activeModify);
   }
 
   const handleChangeRadius = (event:any ) => {
     console.log(event.target.value)
     setradius(event.target.value)
+    if(active.type === ''){
+      setOpenErrorLabel(true);
+      return;
+    }else{
     setActiveComponent((state:any) => ({       
           ...state,    
           sx: {
@@ -210,20 +268,12 @@ export const CustomMenu = () => {
             borderRadius: event.target.value
           }      
     }));
+
+  }
     updateActiveComponent(activeModify);
   }
 
-  const handleChangeLabel = (event:any ) => {
-    console.log("label"+event.target.value)
-    setChangeLabel(event.target.value)
-    setActiveComponent((state:any) => ({       
-          ...state,         
-         label:event.target.value
-          
-    }));
-    updateActiveComponent(activeModify);
-  }
-
+ 
   const a11yProps = (index: number) => {
     return {
       id: `simple-tab-${index}`,
@@ -294,23 +344,32 @@ export const CustomMenu = () => {
   }
 
   return (
-    <>
+    <div id="hola">
     <Box
+      
       sx={{
-        width: 300,
+         width: 300,
         position: 'fixed',
         left: 0,
         top: 0,
         bgcolor: '#313131',
         zIndex: 9999,
+        height: 700,
+        overflow: "hidden",
+        overflowY: "scroll",
       }}
+      
     >
       <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+      <AppBar position="static" sx={{backgroundColor:'black'}}>
         <Tabs
           value={value}
           onChange={handleChange}
-          aria-label="Crate your page here"
-          centered
+          indicatorColor="secondary"
+          textColor="inherit"
+          variant="fullWidth"
+          aria-label="full width tabs example"
+          
         >
           {
            (active.type === 'text') ? (<Tab icon={<FormatColorTextIcon />} {...a11yProps(0)}  /> ): 
@@ -319,13 +378,13 @@ export const CustomMenu = () => {
            (<Tab icon={<FormatColorTextIcon />} {...a11yProps(0)}  /> )
           } 
           <Tab icon={<ColorLensIcon />} {...a11yProps(1)} />
+
           <Tab icon={<TextFieldsIcon />} {...a11yProps(2)} />
         </Tabs>
+        </AppBar>
       </Box>
-
+     <TabPanel value={value} index={0}>
       
-      <TabPanel value={value} index={0} >
-     
         <Typography sx={{color:'white'}}>Width:</Typography>
         <PrettoSlider
             // valueLabelDisplay="auto"
@@ -364,7 +423,7 @@ export const CustomMenu = () => {
           <input type="file" onChange={onFileInputChange}  ref={fileInputRef as React.LegacyRef<HTMLInputElement>} style={{display:'none'}}/>
           
       </TabPanel>
-      <TabPanel value={value} index={1}>
+      <TabPanel value={value} index={1} >
       <Typography sx={{color:'white'}}>Background color :</Typography>
         <CustomMenuLayout>
             <HexColorPicker className={style.reactColorful} color={color} onChange={handleChangeColor} />
@@ -380,9 +439,19 @@ export const CustomMenu = () => {
       </TabPanel>
       <TabPanel value={value} index={2}>
       <Typography sx={{color:'white'}}>Change text:</Typography>
-        <CustomMenuLayout>
+        {/* <CustomMenuLayout>
           <TextField id="outlined-basic" label="Outlined" variant="outlined" onChange={handleChangeLabel}/>
-        </CustomMenuLayout>
+        </CustomMenuLayout> */}
+        <CustomMenuLayout>
+                <TextField
+                    id="filled-textarea"
+                    label="Change Label"
+                    placeholder="Label"
+                    multiline
+                    variant="filled"
+                    onChange={handleModifyLabel}
+                  />
+          </CustomMenuLayout>
         <Typography sx={{color:'white'}}>Align items:</Typography>
         <CustomMenuLayout>
           <ToggleButtonGroup
@@ -411,14 +480,23 @@ export const CustomMenu = () => {
           onChange={handleChangeRadio}
           inputProps={{ 'aria-label': 'controlled' }}
         />
-      </TabPanel>
+       
+      </TabPanel> 
+      
+
     </Box>
+    
+    <Snackbar open={labelOpen} autoHideDuration={4000} onClose={handleClose}>
+                  <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
+                  You have to select a component to modify it
+                  </Alert>
+     </Snackbar>
     <Snackbar open={open} autoHideDuration={4000} onClose={handleClose}>
                   <Alert onClose={handleClose} severity="error" sx={{ width: '100%' }}>
                   You have to select a component to remove it
                   </Alert>
      </Snackbar>
-    </>
+    </div>
   );
 };
 

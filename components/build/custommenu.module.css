@@ -1,3 +1,7 @@
 .reactColorful {
     height: 200px;
   }
+
+  #hola{
+    display: none;
+  }
