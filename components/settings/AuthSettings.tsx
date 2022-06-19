@@ -47,7 +47,6 @@ interface InputComponent {
     resetField,
     formState: { errors },
   } = useForm<SettingsUserInterface>();
-  console.log(userData?.user);
   useEffect(() => {
   
   }, [])
@@ -69,29 +68,16 @@ interface InputComponent {
  
     setOpenModal(false);
     if(userData != null){
-
       const value = await updateApi(data,userData.user?.id ?? '');
-
-          console.log(value);
-   
       if(value.hasOwnProperty('error')){
-        
-        
-     
         setOpen(true);
-        
-        
       }else{
-        
-
         updateUser(value.user);
         setOpenSuccess(true);
         setTimeout(() => {
           router.push("/templates");
         }, 4000);
-       
       }
-
 
     }
  

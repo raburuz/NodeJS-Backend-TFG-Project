@@ -10,13 +10,12 @@ interface Props {
 
 export const List = ({ data }: Props) => {
   const { id, items, sx } = data;
- const {activeComponent} =  useContext(BuildContext);
+  const {activeComponent} =  useContext(BuildContext);
   const element = useRef<HTMLDivElement>(null);
   const { isDragging, handleDragEnd, handleDragStart, handleDragEnter } =
     useDraggable({ element, style: '' });
 
     const handleActiveClick = ( data:any) => {
-      console.log(data);
        activeComponent(data);
  
     }

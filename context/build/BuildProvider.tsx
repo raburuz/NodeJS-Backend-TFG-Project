@@ -30,7 +30,6 @@ export const BuildProvider: FC<Props> = ({ children }) => {
     });
   };
   const updateActiveComponent = (components: Component) => {
-    console.log(components)
     dispatch({
       type: 'Build - Update Active Component',
       components,
@@ -45,7 +44,6 @@ export const BuildProvider: FC<Props> = ({ children }) => {
 
   
   const updateLabelText = (label: string,id:string) => {
-   
     dispatch({
       type: 'Build - Update Label Text',
       id,

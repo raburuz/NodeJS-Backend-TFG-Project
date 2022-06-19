@@ -33,7 +33,6 @@ export const Typo: FC<Props> = ({ data }) => {
   }, [active])
   
   const handleActiveClick = ( data:any) => {
-    console.log("data"+data)
     activeComponent(data);
     if(select){
       setSelect(false);  
