@@ -27,7 +27,7 @@ export const BuildMain = () => {
       }}
     >
       <BuildMenu />
-      <CustomMenu />
+      
       <div style={{height:'70px'}}>
           <CustomMenu />
       </div>
